@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model lectures {
+  id                Int @id @default(autoincrement())
+  chapter_id        Int
+  title             String
+  video_url         String
+  duration          Int
+  position          Int
+  is_published      Boolean  @default(false)
+  created_at        DateTime @default(now())
+
+  chapters          chapter @relation(fields: [chapter_id], references: [id])
+}
+
+model chapter {
+  id            Int @id @default(autoincrement())
+  course_id     Int
+  title         String
+  position      Int
+
+  courses       courses @relation(fields: [course_id], references: [id])
+
+  lectures      lectures[]
+}
+
+model courses {
+  id            Int @id @default(autoincrement())
+  title         String
+  description   String
+  instructor    String
+  thumbnail     String
+  difficulty    String
+  category_id   Int
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+
+  category      categories @relation(fields: [category_id], references: [id])
+
+  chapters      chapter[]
+}
+
+model categories {
+  id            Int @id @default(autoincrement())
+  name          String
+  created_at    DateTime @default(now())
+
+  courses       courses[]
+}
+
+// model lectures_progress {
+//   id         Int      @id @default(autoincrement())
+//   user_id    Int
+//   lecture_id Int
+//   progress   Int
+//   updated_at DateTime @updatedAt
+// }
