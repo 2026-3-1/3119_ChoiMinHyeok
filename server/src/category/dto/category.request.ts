@@ -1,3 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class createCategory {
-    name : string
+  @ApiProperty({ example: 'Backend' })
+  name: string;
 }

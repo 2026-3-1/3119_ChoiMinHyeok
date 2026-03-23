@@ -387,7 +387,9 @@ export const ModelName = {
   lectures: 'lectures',
   chapter: 'chapter',
   courses: 'courses',
-  categories: 'categories'
+  categories: 'categories',
+  course_comment: 'course_comment',
+  lecture_comment: 'lecture_comment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "lectures" | "chapter" | "courses" | "categories"
+    modelProps: "lectures" | "chapter" | "courses" | "categories" | "course_comment" | "lecture_comment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +705,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    course_comment: {
+      payload: Prisma.$course_commentPayload<ExtArgs>
+      fields: Prisma.course_commentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.course_commentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.course_commentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>
+        }
+        findFirst: {
+          args: Prisma.course_commentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.course_commentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>
+        }
+        findMany: {
+          args: Prisma.course_commentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>[]
+        }
+        create: {
+          args: Prisma.course_commentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>
+        }
+        createMany: {
+          args: Prisma.course_commentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.course_commentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>[]
+        }
+        delete: {
+          args: Prisma.course_commentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>
+        }
+        update: {
+          args: Prisma.course_commentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>
+        }
+        deleteMany: {
+          args: Prisma.course_commentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.course_commentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.course_commentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>[]
+        }
+        upsert: {
+          args: Prisma.course_commentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$course_commentPayload>
+        }
+        aggregate: {
+          args: Prisma.Course_commentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourse_comment>
+        }
+        groupBy: {
+          args: Prisma.course_commentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Course_commentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.course_commentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Course_commentCountAggregateOutputType> | number
+        }
+      }
+    }
+    lecture_comment: {
+      payload: Prisma.$lecture_commentPayload<ExtArgs>
+      fields: Prisma.lecture_commentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.lecture_commentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.lecture_commentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>
+        }
+        findFirst: {
+          args: Prisma.lecture_commentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.lecture_commentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>
+        }
+        findMany: {
+          args: Prisma.lecture_commentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>[]
+        }
+        create: {
+          args: Prisma.lecture_commentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>
+        }
+        createMany: {
+          args: Prisma.lecture_commentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.lecture_commentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>[]
+        }
+        delete: {
+          args: Prisma.lecture_commentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>
+        }
+        update: {
+          args: Prisma.lecture_commentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>
+        }
+        deleteMany: {
+          args: Prisma.lecture_commentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.lecture_commentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.lecture_commentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>[]
+        }
+        upsert: {
+          args: Prisma.lecture_commentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lecture_commentPayload>
+        }
+        aggregate: {
+          args: Prisma.Lecture_commentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLecture_comment>
+        }
+        groupBy: {
+          args: Prisma.lecture_commentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Lecture_commentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.lecture_commentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Lecture_commentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -747,6 +897,7 @@ export const LecturesScalarFieldEnum = {
   chapter_id: 'chapter_id',
   title: 'title',
   video_url: 'video_url',
+  thumbnail_url: 'thumbnail_url',
   duration: 'duration',
   position: 'position',
   is_published: 'is_published',
@@ -770,10 +921,11 @@ export const CoursesScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  instructor: 'instructor',
+  instructor_id: 'instructor_id',
   thumbnail: 'thumbnail',
   difficulty: 'difficulty',
   category_id: 'category_id',
+  slug: 'slug',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -788,6 +940,30 @@ export const CategoriesScalarFieldEnum = {
 } as const
 
 export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
+
+
+export const Course_commentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  user_id: 'user_id',
+  course_id: 'course_id',
+  create_at: 'create_at'
+} as const
+
+export type Course_commentScalarFieldEnum = (typeof Course_commentScalarFieldEnum)[keyof typeof Course_commentScalarFieldEnum]
+
+
+export const Lecture_commentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  user_id: 'user_id',
+  lecture_id: 'lecture_id',
+  create_at: 'create_at'
+} as const
+
+export type Lecture_commentScalarFieldEnum = (typeof Lecture_commentScalarFieldEnum)[keyof typeof Lecture_commentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -858,6 +1034,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Difficulty'
+ */
+export type EnumDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Difficulty'>
+    
+
+
+/**
+ * Reference to a field of type 'Difficulty[]'
+ */
+export type ListEnumDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Difficulty[]'>
     
 
 
@@ -973,6 +1163,8 @@ export type GlobalOmitConfig = {
   chapter?: Prisma.chapterOmit
   courses?: Prisma.coursesOmit
   categories?: Prisma.categoriesOmit
+  course_comment?: Prisma.course_commentOmit
+  lecture_comment?: Prisma.lecture_commentOmit
 }
 
 /* Types for Logging */

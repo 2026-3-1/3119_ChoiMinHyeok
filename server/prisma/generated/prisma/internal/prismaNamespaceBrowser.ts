@@ -54,7 +54,9 @@ export const ModelName = {
   lectures: 'lectures',
   chapter: 'chapter',
   courses: 'courses',
-  categories: 'categories'
+  categories: 'categories',
+  course_comment: 'course_comment',
+  lecture_comment: 'lecture_comment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,6 +80,7 @@ export const LecturesScalarFieldEnum = {
   chapter_id: 'chapter_id',
   title: 'title',
   video_url: 'video_url',
+  thumbnail_url: 'thumbnail_url',
   duration: 'duration',
   position: 'position',
   is_published: 'is_published',
@@ -101,10 +104,11 @@ export const CoursesScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  instructor: 'instructor',
+  instructor_id: 'instructor_id',
   thumbnail: 'thumbnail',
   difficulty: 'difficulty',
   category_id: 'category_id',
+  slug: 'slug',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -119,6 +123,30 @@ export const CategoriesScalarFieldEnum = {
 } as const
 
 export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
+
+
+export const Course_commentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  user_id: 'user_id',
+  course_id: 'course_id',
+  create_at: 'create_at'
+} as const
+
+export type Course_commentScalarFieldEnum = (typeof Course_commentScalarFieldEnum)[keyof typeof Course_commentScalarFieldEnum]
+
+
+export const Lecture_commentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  user_id: 'user_id',
+  lecture_id: 'lecture_id',
+  create_at: 'create_at'
+} as const
+
+export type Lecture_commentScalarFieldEnum = (typeof Lecture_commentScalarFieldEnum)[keyof typeof Lecture_commentScalarFieldEnum]
 
 
 export const SortOrder = {

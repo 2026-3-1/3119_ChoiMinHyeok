@@ -37,3 +37,13 @@ export type courses = Prisma.coursesModel
  * 
  */
 export type categories = Prisma.categoriesModel
+/**
+ * Model course_comment
+ * 
+ */
+export type course_comment = Prisma.course_commentModel
+/**
+ * Model lecture_comment
+ * 
+ */
+export type lecture_comment = Prisma.lecture_commentModel

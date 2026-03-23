@@ -231,6 +231,7 @@ export type chapterOrderByWithRelationInput = {
 
 export type chapterWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  course_id_position?: Prisma.chapterCourse_idPositionCompoundUniqueInput
   AND?: Prisma.chapterWhereInput | Prisma.chapterWhereInput[]
   OR?: Prisma.chapterWhereInput[]
   NOT?: Prisma.chapterWhereInput | Prisma.chapterWhereInput[]
@@ -239,7 +240,7 @@ export type chapterWhereUniqueInput = Prisma.AtLeast<{
   position?: Prisma.IntFilter<"chapter"> | number
   courses?: Prisma.XOR<Prisma.CoursesScalarRelationFilter, Prisma.coursesWhereInput>
   lectures?: Prisma.LecturesListRelationFilter
-}, "id">
+}, "id" | "course_id_position">
 
 export type chapterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -315,6 +316,11 @@ export type chapterUncheckedUpdateManyInput = {
 export type ChapterScalarRelationFilter = {
   is?: Prisma.chapterWhereInput
   isNot?: Prisma.chapterWhereInput
+}
+
+export type chapterCourse_idPositionCompoundUniqueInput = {
+  course_id: number
+  position: number
 }
 
 export type chapterCountOrderByAggregateInput = {

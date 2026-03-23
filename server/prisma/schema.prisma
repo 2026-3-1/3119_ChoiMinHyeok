@@ -14,17 +14,26 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
 model lectures {
   id                Int @id @default(autoincrement())
   chapter_id        Int
   title             String
   video_url         String
+  thumbnail_url     String
   duration          Int
   position          Int
   is_published      Boolean  @default(false)
   created_at        DateTime @default(now())
 
   chapters          chapter @relation(fields: [chapter_id], references: [id])
+
+  @@unique([chapter_id, position])
 }
 
 model chapter {
@@ -36,18 +45,21 @@ model chapter {
   courses       courses @relation(fields: [course_id], references: [id])
 
   lectures      lectures[]
+
+  @@unique([course_id, position])
 }
 
 model courses {
   id            Int @id @default(autoincrement())
   title         String
   description   String
-  instructor    String
+  instructor_id Int
   thumbnail     String
-  difficulty    String
+  difficulty    Difficulty
   category_id   Int
+  slug          String @unique
   created_at    DateTime @default(now())
-  updated_at    DateTime @default(now())
+  updated_at    DateTime
 
   category      categories @relation(fields: [category_id], references: [id])
 
@@ -60,6 +72,24 @@ model categories {
   created_at    DateTime @default(now())
 
   courses       courses[]
+}
+
+model course_comment {
+  id            Int @id @default(autoincrement())
+  title         String
+  content       String
+  user_id       Int
+  course_id     Int
+  create_at     DateTime @default(now())
+}
+
+model lecture_comment {
+  id            Int @id @default(autoincrement())
+  title         String
+  content       String
+  user_id       Int
+  lecture_id     Int
+  create_at     DateTime @default(now())
 }
 
 // model lectures_progress {

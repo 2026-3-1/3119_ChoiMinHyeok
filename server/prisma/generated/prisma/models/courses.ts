@@ -28,11 +28,13 @@ export type AggregateCourses = {
 
 export type CoursesAvgAggregateOutputType = {
   id: number | null
+  instructor_id: number | null
   category_id: number | null
 }
 
 export type CoursesSumAggregateOutputType = {
   id: number | null
+  instructor_id: number | null
   category_id: number | null
 }
 
@@ -40,10 +42,11 @@ export type CoursesMinAggregateOutputType = {
   id: number | null
   title: string | null
   description: string | null
-  instructor: string | null
+  instructor_id: number | null
   thumbnail: string | null
-  difficulty: string | null
+  difficulty: $Enums.Difficulty | null
   category_id: number | null
+  slug: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -52,10 +55,11 @@ export type CoursesMaxAggregateOutputType = {
   id: number | null
   title: string | null
   description: string | null
-  instructor: string | null
+  instructor_id: number | null
   thumbnail: string | null
-  difficulty: string | null
+  difficulty: $Enums.Difficulty | null
   category_id: number | null
+  slug: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -64,10 +68,11 @@ export type CoursesCountAggregateOutputType = {
   id: number
   title: number
   description: number
-  instructor: number
+  instructor_id: number
   thumbnail: number
   difficulty: number
   category_id: number
+  slug: number
   created_at: number
   updated_at: number
   _all: number
@@ -76,11 +81,13 @@ export type CoursesCountAggregateOutputType = {
 
 export type CoursesAvgAggregateInputType = {
   id?: true
+  instructor_id?: true
   category_id?: true
 }
 
 export type CoursesSumAggregateInputType = {
   id?: true
+  instructor_id?: true
   category_id?: true
 }
 
@@ -88,10 +95,11 @@ export type CoursesMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
-  instructor?: true
+  instructor_id?: true
   thumbnail?: true
   difficulty?: true
   category_id?: true
+  slug?: true
   created_at?: true
   updated_at?: true
 }
@@ -100,10 +108,11 @@ export type CoursesMaxAggregateInputType = {
   id?: true
   title?: true
   description?: true
-  instructor?: true
+  instructor_id?: true
   thumbnail?: true
   difficulty?: true
   category_id?: true
+  slug?: true
   created_at?: true
   updated_at?: true
 }
@@ -112,10 +121,11 @@ export type CoursesCountAggregateInputType = {
   id?: true
   title?: true
   description?: true
-  instructor?: true
+  instructor_id?: true
   thumbnail?: true
   difficulty?: true
   category_id?: true
+  slug?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -211,10 +221,11 @@ export type CoursesGroupByOutputType = {
   id: number
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
   category_id: number
+  slug: string
   created_at: Date
   updated_at: Date
   _count: CoursesCountAggregateOutputType | null
@@ -246,10 +257,11 @@ export type coursesWhereInput = {
   id?: Prisma.IntFilter<"courses"> | number
   title?: Prisma.StringFilter<"courses"> | string
   description?: Prisma.StringFilter<"courses"> | string
-  instructor?: Prisma.StringFilter<"courses"> | string
+  instructor_id?: Prisma.IntFilter<"courses"> | number
   thumbnail?: Prisma.StringFilter<"courses"> | string
-  difficulty?: Prisma.StringFilter<"courses"> | string
+  difficulty?: Prisma.EnumDifficultyFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntFilter<"courses"> | number
+  slug?: Prisma.StringFilter<"courses"> | string
   created_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   category?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.categoriesWhereInput>
@@ -260,10 +272,11 @@ export type coursesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  instructor?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   category?: Prisma.categoriesOrderByWithRelationInput
@@ -272,29 +285,31 @@ export type coursesOrderByWithRelationInput = {
 
 export type coursesWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  slug?: string
   AND?: Prisma.coursesWhereInput | Prisma.coursesWhereInput[]
   OR?: Prisma.coursesWhereInput[]
   NOT?: Prisma.coursesWhereInput | Prisma.coursesWhereInput[]
   title?: Prisma.StringFilter<"courses"> | string
   description?: Prisma.StringFilter<"courses"> | string
-  instructor?: Prisma.StringFilter<"courses"> | string
+  instructor_id?: Prisma.IntFilter<"courses"> | number
   thumbnail?: Prisma.StringFilter<"courses"> | string
-  difficulty?: Prisma.StringFilter<"courses"> | string
+  difficulty?: Prisma.EnumDifficultyFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntFilter<"courses"> | number
   created_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   category?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.categoriesWhereInput>
   chapters?: Prisma.ChapterListRelationFilter
-}, "id">
+}, "id" | "slug">
 
 export type coursesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  instructor?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.coursesCountOrderByAggregateInput
@@ -311,10 +326,11 @@ export type coursesScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"courses"> | number
   title?: Prisma.StringWithAggregatesFilter<"courses"> | string
   description?: Prisma.StringWithAggregatesFilter<"courses"> | string
-  instructor?: Prisma.StringWithAggregatesFilter<"courses"> | string
+  instructor_id?: Prisma.IntWithAggregatesFilter<"courses"> | number
   thumbnail?: Prisma.StringWithAggregatesFilter<"courses"> | string
-  difficulty?: Prisma.StringWithAggregatesFilter<"courses"> | string
+  difficulty?: Prisma.EnumDifficultyWithAggregatesFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntWithAggregatesFilter<"courses"> | number
+  slug?: Prisma.StringWithAggregatesFilter<"courses"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"courses"> | Date | string
 }
@@ -322,11 +338,12 @@ export type coursesScalarWhereWithAggregatesInput = {
 export type coursesCreateInput = {
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
   category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
   chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
 }
@@ -335,21 +352,23 @@ export type coursesUncheckedCreateInput = {
   id?: number
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
   category_id: number
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
   chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
 }
 
 export type coursesUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
@@ -360,10 +379,11 @@ export type coursesUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
@@ -373,20 +393,22 @@ export type coursesCreateManyInput = {
   id?: number
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
   category_id: number
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
 }
 
 export type coursesUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -395,10 +417,11 @@ export type coursesUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -412,16 +435,18 @@ export type coursesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  instructor?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type coursesAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
 }
 
@@ -429,10 +454,11 @@ export type coursesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  instructor?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -441,16 +467,18 @@ export type coursesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  instructor?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type coursesSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  instructor_id?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
 }
 
@@ -476,6 +504,10 @@ export type coursesUpdateOneRequiredWithoutChaptersNestedInput = {
   upsert?: Prisma.coursesUpsertWithoutChaptersInput
   connect?: Prisma.coursesWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutChaptersInput, Prisma.coursesUpdateWithoutChaptersInput>, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
+}
+
+export type EnumDifficultyFieldUpdateOperationsInput = {
+  set?: $Enums.Difficulty
 }
 
 export type coursesCreateNestedManyWithoutCategoryInput = {
@@ -523,11 +555,12 @@ export type coursesUncheckedUpdateManyWithoutCategoryNestedInput = {
 export type coursesCreateWithoutChaptersInput = {
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
   category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
 }
 
@@ -535,12 +568,13 @@ export type coursesUncheckedCreateWithoutChaptersInput = {
   id?: number
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
   category_id: number
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
 }
 
 export type coursesCreateOrConnectWithoutChaptersInput = {
@@ -562,9 +596,10 @@ export type coursesUpdateToOneWithWhereWithoutChaptersInput = {
 export type coursesUpdateWithoutChaptersInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
@@ -574,10 +609,11 @@ export type coursesUncheckedUpdateWithoutChaptersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -585,11 +621,12 @@ export type coursesUncheckedUpdateWithoutChaptersInput = {
 export type coursesCreateWithoutCategoryInput = {
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
   chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
 }
 
@@ -597,11 +634,12 @@ export type coursesUncheckedCreateWithoutCategoryInput = {
   id?: number
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
   chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
 }
 
@@ -638,10 +676,11 @@ export type coursesScalarWhereInput = {
   id?: Prisma.IntFilter<"courses"> | number
   title?: Prisma.StringFilter<"courses"> | string
   description?: Prisma.StringFilter<"courses"> | string
-  instructor?: Prisma.StringFilter<"courses"> | string
+  instructor_id?: Prisma.IntFilter<"courses"> | number
   thumbnail?: Prisma.StringFilter<"courses"> | string
-  difficulty?: Prisma.StringFilter<"courses"> | string
+  difficulty?: Prisma.EnumDifficultyFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntFilter<"courses"> | number
+  slug?: Prisma.StringFilter<"courses"> | string
   created_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"courses"> | Date | string
 }
@@ -650,19 +689,21 @@ export type coursesCreateManyCategoryInput = {
   id?: number
   title: string
   description: string
-  instructor: string
+  instructor_id: number
   thumbnail: string
-  difficulty: string
+  difficulty: $Enums.Difficulty
+  slug: string
   created_at?: Date | string
-  updated_at?: Date | string
+  updated_at: Date | string
 }
 
 export type coursesUpdateWithoutCategoryInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
@@ -672,9 +713,10 @@ export type coursesUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
@@ -684,9 +726,10 @@ export type coursesUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -726,10 +769,11 @@ export type coursesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   title?: boolean
   description?: boolean
-  instructor?: boolean
+  instructor_id?: boolean
   thumbnail?: boolean
   difficulty?: boolean
   category_id?: boolean
+  slug?: boolean
   created_at?: boolean
   updated_at?: boolean
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
@@ -741,10 +785,11 @@ export type coursesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
-  instructor?: boolean
+  instructor_id?: boolean
   thumbnail?: boolean
   difficulty?: boolean
   category_id?: boolean
+  slug?: boolean
   created_at?: boolean
   updated_at?: boolean
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
@@ -754,10 +799,11 @@ export type coursesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
-  instructor?: boolean
+  instructor_id?: boolean
   thumbnail?: boolean
   difficulty?: boolean
   category_id?: boolean
+  slug?: boolean
   created_at?: boolean
   updated_at?: boolean
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
@@ -767,15 +813,16 @@ export type coursesSelectScalar = {
   id?: boolean
   title?: boolean
   description?: boolean
-  instructor?: boolean
+  instructor_id?: boolean
   thumbnail?: boolean
   difficulty?: boolean
   category_id?: boolean
+  slug?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type coursesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "instructor" | "thumbnail" | "difficulty" | "category_id" | "created_at" | "updated_at", ExtArgs["result"]["courses"]>
+export type coursesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "instructor_id" | "thumbnail" | "difficulty" | "category_id" | "slug" | "created_at" | "updated_at", ExtArgs["result"]["courses"]>
 export type coursesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   chapters?: boolean | Prisma.courses$chaptersArgs<ExtArgs>
@@ -798,10 +845,11 @@ export type $coursesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: number
     title: string
     description: string
-    instructor: string
+    instructor_id: number
     thumbnail: string
-    difficulty: string
+    difficulty: $Enums.Difficulty
     category_id: number
+    slug: string
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["courses"]>
@@ -1232,10 +1280,11 @@ export interface coursesFieldRefs {
   readonly id: Prisma.FieldRef<"courses", 'Int'>
   readonly title: Prisma.FieldRef<"courses", 'String'>
   readonly description: Prisma.FieldRef<"courses", 'String'>
-  readonly instructor: Prisma.FieldRef<"courses", 'String'>
+  readonly instructor_id: Prisma.FieldRef<"courses", 'Int'>
   readonly thumbnail: Prisma.FieldRef<"courses", 'String'>
-  readonly difficulty: Prisma.FieldRef<"courses", 'String'>
+  readonly difficulty: Prisma.FieldRef<"courses", 'Difficulty'>
   readonly category_id: Prisma.FieldRef<"courses", 'Int'>
+  readonly slug: Prisma.FieldRef<"courses", 'String'>
   readonly created_at: Prisma.FieldRef<"courses", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"courses", 'DateTime'>
 }

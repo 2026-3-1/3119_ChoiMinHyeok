@@ -45,6 +45,7 @@ export type LecturesMinAggregateOutputType = {
   chapter_id: number | null
   title: string | null
   video_url: string | null
+  thumbnail_url: string | null
   duration: number | null
   position: number | null
   is_published: boolean | null
@@ -56,6 +57,7 @@ export type LecturesMaxAggregateOutputType = {
   chapter_id: number | null
   title: string | null
   video_url: string | null
+  thumbnail_url: string | null
   duration: number | null
   position: number | null
   is_published: boolean | null
@@ -67,6 +69,7 @@ export type LecturesCountAggregateOutputType = {
   chapter_id: number
   title: number
   video_url: number
+  thumbnail_url: number
   duration: number
   position: number
   is_published: number
@@ -94,6 +97,7 @@ export type LecturesMinAggregateInputType = {
   chapter_id?: true
   title?: true
   video_url?: true
+  thumbnail_url?: true
   duration?: true
   position?: true
   is_published?: true
@@ -105,6 +109,7 @@ export type LecturesMaxAggregateInputType = {
   chapter_id?: true
   title?: true
   video_url?: true
+  thumbnail_url?: true
   duration?: true
   position?: true
   is_published?: true
@@ -116,6 +121,7 @@ export type LecturesCountAggregateInputType = {
   chapter_id?: true
   title?: true
   video_url?: true
+  thumbnail_url?: true
   duration?: true
   position?: true
   is_published?: true
@@ -214,6 +220,7 @@ export type LecturesGroupByOutputType = {
   chapter_id: number
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published: boolean
@@ -248,6 +255,7 @@ export type lecturesWhereInput = {
   chapter_id?: Prisma.IntFilter<"lectures"> | number
   title?: Prisma.StringFilter<"lectures"> | string
   video_url?: Prisma.StringFilter<"lectures"> | string
+  thumbnail_url?: Prisma.StringFilter<"lectures"> | string
   duration?: Prisma.IntFilter<"lectures"> | number
   position?: Prisma.IntFilter<"lectures"> | number
   is_published?: Prisma.BoolFilter<"lectures"> | boolean
@@ -260,6 +268,7 @@ export type lecturesOrderByWithRelationInput = {
   chapter_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   video_url?: Prisma.SortOrder
+  thumbnail_url?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   position?: Prisma.SortOrder
   is_published?: Prisma.SortOrder
@@ -269,24 +278,27 @@ export type lecturesOrderByWithRelationInput = {
 
 export type lecturesWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  chapter_id_position?: Prisma.lecturesChapter_idPositionCompoundUniqueInput
   AND?: Prisma.lecturesWhereInput | Prisma.lecturesWhereInput[]
   OR?: Prisma.lecturesWhereInput[]
   NOT?: Prisma.lecturesWhereInput | Prisma.lecturesWhereInput[]
   chapter_id?: Prisma.IntFilter<"lectures"> | number
   title?: Prisma.StringFilter<"lectures"> | string
   video_url?: Prisma.StringFilter<"lectures"> | string
+  thumbnail_url?: Prisma.StringFilter<"lectures"> | string
   duration?: Prisma.IntFilter<"lectures"> | number
   position?: Prisma.IntFilter<"lectures"> | number
   is_published?: Prisma.BoolFilter<"lectures"> | boolean
   created_at?: Prisma.DateTimeFilter<"lectures"> | Date | string
   chapters?: Prisma.XOR<Prisma.ChapterScalarRelationFilter, Prisma.chapterWhereInput>
-}, "id">
+}, "id" | "chapter_id_position">
 
 export type lecturesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   chapter_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   video_url?: Prisma.SortOrder
+  thumbnail_url?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   position?: Prisma.SortOrder
   is_published?: Prisma.SortOrder
@@ -306,6 +318,7 @@ export type lecturesScalarWhereWithAggregatesInput = {
   chapter_id?: Prisma.IntWithAggregatesFilter<"lectures"> | number
   title?: Prisma.StringWithAggregatesFilter<"lectures"> | string
   video_url?: Prisma.StringWithAggregatesFilter<"lectures"> | string
+  thumbnail_url?: Prisma.StringWithAggregatesFilter<"lectures"> | string
   duration?: Prisma.IntWithAggregatesFilter<"lectures"> | number
   position?: Prisma.IntWithAggregatesFilter<"lectures"> | number
   is_published?: Prisma.BoolWithAggregatesFilter<"lectures"> | boolean
@@ -315,6 +328,7 @@ export type lecturesScalarWhereWithAggregatesInput = {
 export type lecturesCreateInput = {
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published?: boolean
@@ -327,6 +341,7 @@ export type lecturesUncheckedCreateInput = {
   chapter_id: number
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published?: boolean
@@ -336,6 +351,7 @@ export type lecturesUncheckedCreateInput = {
 export type lecturesUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -348,6 +364,7 @@ export type lecturesUncheckedUpdateInput = {
   chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -359,6 +376,7 @@ export type lecturesCreateManyInput = {
   chapter_id: number
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published?: boolean
@@ -368,6 +386,7 @@ export type lecturesCreateManyInput = {
 export type lecturesUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -379,10 +398,16 @@ export type lecturesUncheckedUpdateManyInput = {
   chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type lecturesChapter_idPositionCompoundUniqueInput = {
+  chapter_id: number
+  position: number
 }
 
 export type lecturesCountOrderByAggregateInput = {
@@ -390,6 +415,7 @@ export type lecturesCountOrderByAggregateInput = {
   chapter_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   video_url?: Prisma.SortOrder
+  thumbnail_url?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   position?: Prisma.SortOrder
   is_published?: Prisma.SortOrder
@@ -408,6 +434,7 @@ export type lecturesMaxOrderByAggregateInput = {
   chapter_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   video_url?: Prisma.SortOrder
+  thumbnail_url?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   position?: Prisma.SortOrder
   is_published?: Prisma.SortOrder
@@ -419,6 +446,7 @@ export type lecturesMinOrderByAggregateInput = {
   chapter_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   video_url?: Prisma.SortOrder
+  thumbnail_url?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   position?: Prisma.SortOrder
   is_published?: Prisma.SortOrder
@@ -507,6 +535,7 @@ export type lecturesUncheckedUpdateManyWithoutChaptersNestedInput = {
 export type lecturesCreateWithoutChaptersInput = {
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published?: boolean
@@ -517,6 +546,7 @@ export type lecturesUncheckedCreateWithoutChaptersInput = {
   id?: number
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published?: boolean
@@ -557,6 +587,7 @@ export type lecturesScalarWhereInput = {
   chapter_id?: Prisma.IntFilter<"lectures"> | number
   title?: Prisma.StringFilter<"lectures"> | string
   video_url?: Prisma.StringFilter<"lectures"> | string
+  thumbnail_url?: Prisma.StringFilter<"lectures"> | string
   duration?: Prisma.IntFilter<"lectures"> | number
   position?: Prisma.IntFilter<"lectures"> | number
   is_published?: Prisma.BoolFilter<"lectures"> | boolean
@@ -567,6 +598,7 @@ export type lecturesCreateManyChaptersInput = {
   id?: number
   title: string
   video_url: string
+  thumbnail_url: string
   duration: number
   position: number
   is_published?: boolean
@@ -576,6 +608,7 @@ export type lecturesCreateManyChaptersInput = {
 export type lecturesUpdateWithoutChaptersInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -586,6 +619,7 @@ export type lecturesUncheckedUpdateWithoutChaptersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -596,6 +630,7 @@ export type lecturesUncheckedUpdateManyWithoutChaptersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -609,6 +644,7 @@ export type lecturesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   chapter_id?: boolean
   title?: boolean
   video_url?: boolean
+  thumbnail_url?: boolean
   duration?: boolean
   position?: boolean
   is_published?: boolean
@@ -621,6 +657,7 @@ export type lecturesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   chapter_id?: boolean
   title?: boolean
   video_url?: boolean
+  thumbnail_url?: boolean
   duration?: boolean
   position?: boolean
   is_published?: boolean
@@ -633,6 +670,7 @@ export type lecturesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   chapter_id?: boolean
   title?: boolean
   video_url?: boolean
+  thumbnail_url?: boolean
   duration?: boolean
   position?: boolean
   is_published?: boolean
@@ -645,13 +683,14 @@ export type lecturesSelectScalar = {
   chapter_id?: boolean
   title?: boolean
   video_url?: boolean
+  thumbnail_url?: boolean
   duration?: boolean
   position?: boolean
   is_published?: boolean
   created_at?: boolean
 }
 
-export type lecturesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chapter_id" | "title" | "video_url" | "duration" | "position" | "is_published" | "created_at", ExtArgs["result"]["lectures"]>
+export type lecturesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chapter_id" | "title" | "video_url" | "thumbnail_url" | "duration" | "position" | "is_published" | "created_at", ExtArgs["result"]["lectures"]>
 export type lecturesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapters?: boolean | Prisma.chapterDefaultArgs<ExtArgs>
 }
@@ -672,6 +711,7 @@ export type $lecturesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     chapter_id: number
     title: string
     video_url: string
+    thumbnail_url: string
     duration: number
     position: number
     is_published: boolean
@@ -1104,6 +1144,7 @@ export interface lecturesFieldRefs {
   readonly chapter_id: Prisma.FieldRef<"lectures", 'Int'>
   readonly title: Prisma.FieldRef<"lectures", 'String'>
   readonly video_url: Prisma.FieldRef<"lectures", 'String'>
+  readonly thumbnail_url: Prisma.FieldRef<"lectures", 'String'>
   readonly duration: Prisma.FieldRef<"lectures", 'Int'>
   readonly position: Prisma.FieldRef<"lectures", 'Int'>
   readonly is_published: Prisma.FieldRef<"lectures", 'Boolean'>
