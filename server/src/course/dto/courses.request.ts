@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsOptional } from 'class-validator';
+import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Difficulty } from 'prisma/generated/prisma/enums';
 
@@ -28,19 +28,29 @@ export class createCourse {
 
 export class getCourse {
   @IsOptional()
+  @IsString()
   @ApiPropertyOptional({ description: '검색어', example: 'web' })
   search?: string;
 
   @IsOptional()
   @Type(() => Number)
+  @IsInt()
+  @Min(1)
   @ApiPropertyOptional({ description: '카테고리 ID', example: 1 })
   categoryId?: number;
 
+  @IsOptional()
   @Type(() => Number)
-  @ApiProperty({ description: '페이지 번호', example: 1 })
-  page: number;
+  @IsInt()
+  @Min(1)
+  @ApiPropertyOptional({ description: '페이지 번호', example: 1, default: 1 })
+  page: number = 1;
 
+  @IsOptional()
   @Type(() => Number)
-  @ApiProperty({ description: '페이지 크기', example: 10 })
-  limit: number;
+  @IsInt()
+  @Min(1)
+  @Max(100)
+  @ApiPropertyOptional({ description: '페이지 크기', example: 10, default: 12 })
+  limit: number = 12;
 }

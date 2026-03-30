@@ -1,0 +1,84 @@
+import { Link } from "react-router-dom";
+import type { Course, Lecture } from "../../types/types";
+import { formatDate, formatDuration, getDifficultyLabel } from "../../utils/Utils";
+
+type CourseHeroSectionProps = {
+  course: Course;
+  categoryName: string;
+  accentColor: string;
+  lectureCount: number;
+  totalDuration: number;
+  firstLecture: Lecture | null;
+  onStartLecture: (lectureId: number) => void;
+};
+
+export function CourseHeroSection({
+  course,
+  categoryName,
+  accentColor,
+  lectureCount,
+  totalDuration,
+  firstLecture,
+  onStartLecture,
+}: CourseHeroSectionProps) {
+  return (
+    <section className="page-banner">
+      <div className="site-container detail-hero">
+        <div className="detail-hero__content">
+          <p className="eyebrow">강의 상세</p>
+          <div className="detail-hero__meta">
+            <span>{categoryName}</span>
+            <span
+              className="difficulty-pill"
+              style={{
+                borderColor: `${accentColor}66`,
+                color: accentColor,
+                backgroundColor: `${accentColor}1a`,
+              }}
+            >
+              {getDifficultyLabel(course.difficulty)}
+            </span>
+          </div>
+          <h1>{course.title}</h1>
+          <p>{course.description}</p>
+
+          <div className="detail-stats">
+            <span>{lectureCount}개 강의</span>
+            <span>{formatDuration(totalDuration)}</span>
+            <span>최근 수정 {formatDate(course.updated_at)}</span>
+            <span>슬러그: {course.slug}</span>
+          </div>
+        </div>
+
+        <aside className="detail-sidebar">
+          {course.thumbnail ? (
+            <img src={course.thumbnail} alt={course.title} className="detail-sidebar__image" />
+          ) : (
+            <div className="detail-sidebar__fallback">SEC101</div>
+          )}
+
+          <div className="detail-sidebar__panel">
+            <strong>학습 시작</strong>
+            <p>
+              현재 서버에는 수강 신청 흐름이 없어서, 등록된 첫 번째 강의로 바로 이동하도록
+              연결했습니다.
+            </p>
+
+            <button
+              type="button"
+              className="button button--primary"
+              disabled={!firstLecture}
+              onClick={() => firstLecture && onStartLecture(firstLecture.id)}
+            >
+              {firstLecture ? "첫 강의 열기" : "열 수 있는 강의 없음"}
+            </button>
+
+            <Link to="/courses" className="button button--ghost">
+              목록으로 돌아가기
+            </Link>
+          </div>
+        </aside>
+      </div>
+    </section>
+  );
+}

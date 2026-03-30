@@ -10,23 +10,18 @@ import { CategoryModule } from './category/category.module';
 import { LectureModule } from './lecture/lecture.module';
 
 @Module({
-  imports: [
-    CourseModule,
-    ChapterModule,
-    CategoryModule,
-    LectureModule,
-  ],
+  imports: [CourseModule, ChapterModule, CategoryModule, LectureModule],
   controllers: [AppController],
   providers: [
     AppService,
     {
-      provide : APP_FILTER,
-      useClass : GlobalExceptionFilter
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
     },
     {
-      provide : APP_INTERCEPTOR,
-      useClass : ResponseInterCeptor
-    }
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterCeptor,
+    },
   ],
 })
 export class AppModule {}
