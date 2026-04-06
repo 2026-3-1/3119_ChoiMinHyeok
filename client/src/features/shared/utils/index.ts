@@ -1,10 +1,10 @@
-import { difficultyLabel } from "../types/types";
+﻿import { difficultyLabel } from "../types";
 import type {
   Category,
   CurriculumChapter,
   Difficulty,
   Lecture,
-} from "../types/types";
+} from "../types";
 
 const difficultyAccentMap: Record<Difficulty, string> = {
   EASY: "#00ff88",
@@ -12,8 +12,22 @@ const difficultyAccentMap: Record<Difficulty, string> = {
   HARD: "#ff6b6b",
 };
 
+const categoryAccentMap: Record<string, string> = {
+  web: "#00ff88",
+  pwn: "#4dabff",
+  pentest: "#ffd166",
+  network: "#4dabff",
+  forensic: "#ffd166",
+  reverse: "#ff6b6b",
+  cloud: "#7cfcf7",
+  ai: "#9bffb0",
+  malware: "#ff8a8a",
+};
+
 const categoryIconMap: Record<string, string> = {
   web: "W",
+  pwn: "PWN",
+  pentest: "PT",
   network: "N",
   forensic: "F",
   reverse: "R",
@@ -85,6 +99,36 @@ export const getCategoryIcon = (categoryName?: string) => {
   }
 
   return categoryName.slice(0, 2).toUpperCase();
+};
+
+export const getCategoryAccent = (categoryName?: string) => {
+  if (!categoryName) {
+    return "#00ff88";
+  }
+
+  const normalizedName = categoryName.toLowerCase();
+
+  for (const [key, accent] of Object.entries(categoryAccentMap)) {
+    if (normalizedName.includes(key)) {
+      return accent;
+    }
+  }
+
+  return "#00ff88";
+};
+
+export const getYouTubeEmbedUrl = (videoUrl?: string) => {
+  if (!videoUrl) {
+    return null;
+  }
+
+  const match = videoUrl.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+
+  if (!match) {
+    return null;
+  }
+
+  return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0`;
 };
 
 export const buildCurriculum = (

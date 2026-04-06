@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CourseBannerSection } from "../features/courses/sections/CourseBannerSection";
 import { CourseResultsSection } from "../features/courses/sections/CourseResultsSection";
-import { useCategories, useCourses } from "../features/hooks/useCourseList";
-import { SiteFooter } from "../features/layout/sections/SiteFooter";
-import { SiteHeader } from "../features/layout/sections/SiteHeader";
-import { getCategoryName } from "../features/utils/Utils";
+import { useCategories, useCourses } from "../features/shared/hooks/useCourseList";
+import { SiteFooter } from "../features/shared/layout/SiteFooter";
+import { SiteHeader } from "../features/shared/layout/SiteHeader";
+import { getCategoryName } from "../features/shared/utils";
 
 const PAGE_SIZE = 12;
 
@@ -77,3 +77,4 @@ export default function CoursePage() {
     </div>
   );
 }
+

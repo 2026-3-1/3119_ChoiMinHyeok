@@ -77,8 +77,8 @@ export class LectureService {
         is_published: lecture.is_published,
         created_at: lecture.created_at,
       },
-      nextLecture: nextLecture?.id,
-      prevLecture: prevLecture?.id,
+      nextLecture: nextLecture ? nextLecture.id : null,
+      prevLecture: prevLecture ? prevLecture.id : null,
     };
   }
 

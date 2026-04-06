@@ -1,4 +1,4 @@
-export type Difficulty = "EASY" | "MEDIUM" | "HARD";
+﻿export type Difficulty = "EASY" | "MEDIUM" | "HARD";
 
 export const difficultyLabel: Record<Difficulty, string> = {
   EASY: "입문",

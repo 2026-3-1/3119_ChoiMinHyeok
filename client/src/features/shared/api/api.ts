@@ -1,4 +1,4 @@
-import axios from "axios";
+﻿import axios from "axios";
 import type {
   ApiResponse,
   Category,
@@ -8,7 +8,7 @@ import type {
   Difficulty,
   Lecture,
   LectureDetail,
-} from "../shared/types/index";
+} from "../types";
 
 const configuredBaseUrl = import.meta.env.VITE_API_URL?.trim();
 
@@ -120,3 +120,4 @@ export interface CreateLecturePayload {
 
 export const createLecture = async (payload: CreateLecturePayload): Promise<void> =>
   unwrapResponse(api.post<ApiResponse<void>>("/api/v1/lectures", payload));
+

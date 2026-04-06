@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import {
@@ -6,12 +6,12 @@ import {
   getCourseDetail,
   getLecture,
   getLectures,
-} from "../features/hooks/api";
-import { useCategories } from "../features/hooks/useCourseList";
+} from "../features/shared/api/api";
+import { useCategories } from "../features/shared/hooks/useCourseList";
 import { LecturePlayerSection } from "../features/lecture/sections/LecturePlayerSection";
 import { LectureSidebarSection } from "../features/lecture/sections/LectureSidebarSection";
 import { LectureTopbarSection } from "../features/lecture/sections/LectureTopbarSection";
-import { buildCurriculum, getCategoryName } from "../features/utils/Utils";
+import { buildCurriculum, getCategoryName } from "../features/shared/utils";
 
 export default function LecturePage() {
   const navigate = useNavigate();
@@ -94,7 +94,7 @@ export default function LecturePage() {
         <main className="page-main">
           <div className="site-container empty-state">
             <strong>강의를 찾을 수 없습니다.</strong>
-            <p>`{lectureId}` 에 해당하는 강의 데이터가 없습니다.</p>
+            <p>`{lectureId}`에 해당하는 강의 데이터가 없습니다.</p>
             <Link
               to={courseId ? `/courses/${courseId}` : "/courses"}
               className="button button--primary"

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import type { CurriculumChapter } from "../../types/types";
-import { formatDuration } from "../../utils/Utils";
+﻿import { useState } from "react";
+import type { CurriculumChapter } from "../../shared/types";
+import { formatDuration } from "../../shared/utils";
 
 type ChapterAccordionProps = {
   chapter: CurriculumChapter;
@@ -19,8 +19,7 @@ export function ChapterAccordion({ chapter }: ChapterAccordionProps) {
         <div>
           <strong>{chapter.title}</strong>
           <span>
-            {chapter.lectures.length}개 강의 ·{" "}
-            {formatDuration(
+            {chapter.lectures.length}개 강의 · {formatDuration(
               chapter.lectures.reduce((total, lecture) => total + lecture.duration, 0)
             )}
           </span>

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { useScrolled } from "../../hooks/useScrolled";
-import { BrandLogo } from "../../main/components/BrandLogo";
+﻿import { Link } from "react-router-dom";
+import { useScrolled } from "../hooks/useScrolled";
+import { BrandLogo } from "../components/BrandLogo";
 
 export function SiteHeader() {
   const isScrolled = useScrolled();

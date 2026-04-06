@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+﻿import { useQuery } from "@tanstack/react-query";
 import {
   getCourseByCategory,
   getCourses,
   getCategories,
   type GetCoursesParams,
-} from "./api";
+} from "../api/api";
  
 export const useCategories = () =>
   useQuery({
@@ -28,3 +28,4 @@ export const useCoursesByCategory = (categoryId: number | null) =>
     enabled: categoryId !== null,
   });
  
+

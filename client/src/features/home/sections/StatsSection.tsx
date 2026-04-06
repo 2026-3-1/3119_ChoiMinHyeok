@@ -1,4 +1,4 @@
-import type { CounterStat } from "../../types/types";
+﻿import type { CounterStat } from "../../shared/types";
 
 type StatsSectionProps = {
   stats: CounterStat[];
@@ -21,3 +21,4 @@ export function StatsSection({ stats }: StatsSectionProps) {
     </section>
   );
 }
+

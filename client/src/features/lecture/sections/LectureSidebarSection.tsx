@@ -1,5 +1,5 @@
-import type { CurriculumChapter } from "../../types/types";
-import { formatDuration } from "../../utils/Utils";
+﻿import type { CurriculumChapter } from "../../shared/types";
+import { formatDuration } from "../../shared/utils";
 
 type LectureSidebarSectionProps = {
   curriculum: CurriculumChapter[];

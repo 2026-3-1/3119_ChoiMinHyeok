@@ -1,6 +1,6 @@
-import { CourseCardSkeleton } from "../components/CourseCardSkeleton";
-import { CourseCard } from "../../main/components/CourseCard";
-import type { CourseCardItem } from "../../types/types";
+﻿import { CourseCardSkeleton } from "../../shared/components/CourseCardSkeleton";
+import { CourseCard } from "../../shared/components/CourseCard";
+import type { CourseCardItem } from "../../shared/types";
 
 type CourseResultsSectionProps = {
   courses: CourseCardItem[];

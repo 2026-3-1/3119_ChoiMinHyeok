@@ -1,19 +1,19 @@
-import { useNavigate, useParams } from "react-router-dom";
+﻿import { useNavigate, useParams } from "react-router-dom";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { getChapters, getCourseDetail, getLectures } from "../features/hooks/api";
-import { useCategories } from "../features/hooks/useCourseList";
+import { getChapters, getCourseDetail, getLectures } from "../features/shared/api/api";
+import { useCategories } from "../features/shared/hooks/useCourseList";
 import { CourseCurriculumSection } from "../features/courseDetail/sections/CourseCurriculumSection";
 import { CourseHeroSection } from "../features/courseDetail/sections/CourseHeroSection";
 import { CourseSummarySection } from "../features/courseDetail/sections/CourseSummarySection";
-import { SiteFooter } from "../features/layout/sections/SiteFooter";
-import { SiteHeader } from "../features/layout/sections/SiteHeader";
+import { SiteFooter } from "../features/shared/layout/SiteFooter";
+import { SiteHeader } from "../features/shared/layout/SiteHeader";
 import {
   buildCurriculum,
   getCategoryName,
   getCurriculumTotals,
   getDifficultyAccent,
   getFirstLecture,
-} from "../features/utils/Utils";
+} from "../features/shared/utils";
 
 export default function CourseDetailPage() {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export default function CourseDetailPage() {
         <main className="page-main">
           <div className="site-container empty-state">
             <strong>강의를 찾을 수 없습니다.</strong>
-            <p>`{courseId}` 에 해당하는 강의 데이터가 없습니다.</p>
+            <p>{courseId}에 해당하는 강의 데이터가 없습니다.</p>
           </div>
         </main>
         <SiteFooter />

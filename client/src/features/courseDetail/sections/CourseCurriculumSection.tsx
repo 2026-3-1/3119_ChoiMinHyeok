@@ -1,5 +1,5 @@
-import { ChapterAccordion } from "../components/ChapterAccordion";
-import type { CurriculumChapter } from "../../types/types";
+﻿import { ChapterAccordion } from "../components/ChapterAccordion";
+import type { CurriculumChapter } from "../../shared/types";
 
 type CourseCurriculumSectionProps = {
   curriculum: CurriculumChapter[];
@@ -30,7 +30,7 @@ export function CourseCurriculumSection({
         ) : (
           <div className="empty-state">
             <strong>커리큘럼이 아직 비어 있습니다.</strong>
-            <p>서버에 챕터나 강의가 추가되면 여기에서 바로 보이게 됩니다.</p>
+            <p>서버에 챕터와 강의가 추가되면 이 영역에서 바로 확인할 수 있습니다.</p>
           </div>
         )}
       </div>

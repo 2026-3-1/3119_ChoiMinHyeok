@@ -1,8 +1,9 @@
-export { BrandLogo } from "./BrandLogo";
+﻿export { BrandLogo } from "./BrandLogo";
 export { CategoryPill } from "./CategoryPill";
 export { CourseCard } from "./CourseCard";
+export { CourseCardSkeleton } from "./CourseCardSkeleton";
 export { HeroCategoryCard } from "./HeroCategoryCard";
 export { RoadmapCard } from "./RoadmapCard";
 export { StatCounter } from "./StatCounter";
-export { CategoryFilter } from "../../courses/components/CategoryFilter";
-export { CourseCardSkeleton } from "../../courses/components/CourseCardSkeleton";
+export { CategoryFilter } from "./CategoryFilter";
+

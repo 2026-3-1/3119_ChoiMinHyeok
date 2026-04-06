@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 
 type LectureTopbarSectionProps = {
   courseId?: string;
@@ -25,7 +25,7 @@ export function LectureTopbarSection({
     <header className="player-topbar">
       <div>
         <Link to={courseId ? `/courses/${courseId}` : "/courses"} className="player-topbar__back">
-          ← 상세로 돌아가기
+          강의 상세로 돌아가기
         </Link>
         <strong>{courseTitle ?? "강의 재생"}</strong>
         <span>

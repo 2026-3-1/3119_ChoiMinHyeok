@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { CategoryFilter } from "../../courses/components/CategoryFilter";
-import { CourseCard } from "../../main/components/CourseCard";
-import type { Category, CourseCardItem } from "../../types/types";
+﻿import { Link } from "react-router-dom";
+import { CategoryFilter } from "../../shared/components/CategoryFilter";
+import { CourseCard } from "../../shared/components/CourseCard";
+import type { Category, CourseCardItem } from "../../shared/types";
 
 type FeaturedCoursesSectionProps = {
   categories: Category[];

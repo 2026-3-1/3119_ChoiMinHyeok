@@ -1,5 +1,5 @@
-import { CategoryFilter } from "../components/CategoryFilter";
-import type { Category } from "../../types/types";
+﻿import { CategoryFilter } from "../../shared/components/CategoryFilter";
+import type { Category } from "../../shared/types";
 
 type CourseBannerSectionProps = {
   searchInput: string;
@@ -26,7 +26,7 @@ export function CourseBannerSection({
         <p className="eyebrow">강의 탐색</p>
         <h1>강의 목록</h1>
         <p>
-          검색, 카테고리 필터, 페이지네이션 상태를 한 곳에서 다루는 상단 영역입니다.
+          검색어, 카테고리 필터, 페이지네이션을 통해 원하는 강의를 빠르게 찾을 수 있습니다.
         </p>
 
         <div className="search-panel">

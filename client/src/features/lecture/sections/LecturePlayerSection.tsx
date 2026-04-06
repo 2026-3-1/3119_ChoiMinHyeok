@@ -1,15 +1,27 @@
-import type { Lecture } from "../../types/types";
-import { formatDuration } from "../../utils/Utils";
+﻿import type { Lecture } from "../../shared/types";
+import { formatDuration, getYouTubeEmbedUrl } from "../../shared/utils";
 
 type LecturePlayerSectionProps = {
   lecture: Lecture;
 };
 
 export function LecturePlayerSection({ lecture }: LecturePlayerSectionProps) {
+  const youtubeEmbedUrl = getYouTubeEmbedUrl(lecture.video_url);
+
   return (
     <main className="player-main">
       <section className="player-video">
-        {lecture.video_url ? (
+        {youtubeEmbedUrl ? (
+          <iframe
+            key={lecture.id}
+            className="player-video__element"
+            src={youtubeEmbedUrl}
+            title={lecture.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        ) : lecture.video_url ? (
           <video
             key={lecture.id}
             controls
@@ -34,6 +46,11 @@ export function LecturePlayerSection({ lecture }: LecturePlayerSectionProps) {
           <span>재생 시간 {formatDuration(lecture.duration)}</span>
           <span>순서 {lecture.position}</span>
           <span>{lecture.is_published ? "공개" : "비공개"}</span>
+          {lecture.video_url ? (
+            <a href={lecture.video_url} target="_blank" rel="noreferrer">
+              원본 링크 열기
+            </a>
+          ) : null}
         </div>
       </section>
     </main>

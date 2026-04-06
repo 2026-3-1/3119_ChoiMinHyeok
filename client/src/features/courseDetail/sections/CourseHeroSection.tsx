@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import type { Course, Lecture } from "../../types/types";
-import { formatDate, formatDuration, getDifficultyLabel } from "../../utils/Utils";
+﻿import { Link } from "react-router-dom";
+import type { Course, Lecture } from "../../shared/types";
+import { formatDate, formatDuration, getDifficultyLabel } from "../../shared/utils";
 
 type CourseHeroSectionProps = {
   course: Course;
@@ -46,7 +46,7 @@ export function CourseHeroSection({
             <span>{lectureCount}개 강의</span>
             <span>{formatDuration(totalDuration)}</span>
             <span>최근 수정 {formatDate(course.updated_at)}</span>
-            <span>슬러그: {course.slug}</span>
+            <span>슬러그 {course.slug}</span>
           </div>
         </div>
 
@@ -60,8 +60,7 @@ export function CourseHeroSection({
           <div className="detail-sidebar__panel">
             <strong>학습 시작</strong>
             <p>
-              현재 서버에는 수강 신청 흐름이 없어서, 등록된 첫 번째 강의로 바로 이동하도록
-              연결했습니다.
+              현재 서비스는 수강 신청 절차 없이 등록된 첫 번째 강의로 바로 이동하도록 구성되어 있습니다.
             </p>
 
             <button
@@ -70,7 +69,7 @@ export function CourseHeroSection({
               disabled={!firstLecture}
               onClick={() => firstLecture && onStartLecture(firstLecture.id)}
             >
-              {firstLecture ? "첫 강의 열기" : "열 수 있는 강의 없음"}
+              {firstLecture ? "첫 강의 보기" : "이용 가능한 강의 없음"}
             </button>
 
             <Link to="/courses" className="button button--ghost">

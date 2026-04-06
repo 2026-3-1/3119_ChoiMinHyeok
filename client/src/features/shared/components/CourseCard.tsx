@@ -1,10 +1,10 @@
-import {
+﻿import {
   formatDate,
   getCategoryIcon,
   getDifficultyAccent,
   getDifficultyLabel,
-} from "../../utils/Utils";
-import type { CourseCardItem } from "../../types/types";
+} from "../utils";
+import type { CourseCardItem } from "../types";
 
 type CourseCardProps = {
   course: CourseCardItem;
@@ -46,7 +46,7 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
 
       <div className="course-card__body">
         <div className="course-card__meta">
-          <span>{course.categoryName ?? "Security"}</span>
+          <span>{course.categoryName ?? "보안"}</span>
           <span>{formatDate(course.updated_at)}</span>
         </div>
 
@@ -56,7 +56,7 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
         <div className="course-card__footer">
           <span className="course-card__symbol">{categoryIcon}</span>
           <span>
-            {course.learners ? `${course.learners.toLocaleString()} learners` : "Open now"}
+            {course.learners ? `${course.learners.toLocaleString()}명 수강` : "바로 학습 가능"}
           </span>
         </div>
       </div>

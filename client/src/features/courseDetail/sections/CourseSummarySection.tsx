@@ -1,5 +1,5 @@
-import type { Course } from "../../types/types";
-import { formatDate } from "../../utils/Utils";
+﻿import type { Course } from "../../shared/types";
+import { formatDate } from "../../shared/utils";
 
 type CourseSummarySectionProps = {
   course: Course;

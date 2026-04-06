@@ -1,4 +1,4 @@
-import type { RoadmapItem } from "../../types/types";
+﻿import type { RoadmapItem } from "../../shared/types";
 
 type RoadmapSectionProps = {
   items: RoadmapItem[];
@@ -10,10 +10,9 @@ export function RoadmapSection({ items }: RoadmapSectionProps) {
       <div className="site-container roadmap-panel">
         <div className="roadmap-panel__intro">
           <p className="eyebrow">학습 로드맵</p>
-          <h2>막히기 전에 다음 학습 흐름을 볼 수 있게 정리했습니다</h2>
+          <h2>막연함 대신 다음 학습 흐름이 보이도록 단계별로 정리했습니다</h2>
           <p>
-            메인 페이지에서 바로 학습 단계와 추천 방향을 볼 수 있도록 별도 section으로
-            분리해 두었습니다.
+            메인 페이지에서 바로 학습 단계와 추천 방향을 확인할 수 있도록 별도 섹션으로 분리했습니다.
           </p>
         </div>
 
