@@ -9,6 +9,9 @@ import type {
   Lecture,
   LectureDetail,
 } from "../types";
+import { normalizeSearchInput } from "../utils";
+
+const MAX_COURSE_PAGE_LIMIT = 100;
 
 const configuredBaseUrl = import.meta.env.VITE_API_URL?.trim();
 
@@ -56,12 +59,37 @@ export interface GetCoursesParams {
   limit: number;
 }
 
+const normalizeGetCoursesParams = (
+  params: GetCoursesParams
+): GetCoursesParams => {
+  const normalizedSearch = normalizeSearchInput(params.search ?? "").value.trim();
+  const normalizedCategoryId =
+    typeof params.categoryId === "number" &&
+    Number.isInteger(params.categoryId) &&
+    params.categoryId > 0
+      ? params.categoryId
+      : undefined;
+  const normalizedPage =
+    Number.isInteger(params.page) && params.page > 0 ? params.page : 1;
+  const normalizedLimit =
+    Number.isInteger(params.limit) && params.limit > 0
+      ? Math.min(params.limit, MAX_COURSE_PAGE_LIMIT)
+      : 12;
+
+  return {
+    search: normalizedSearch || undefined,
+    categoryId: normalizedCategoryId,
+    page: normalizedPage,
+    limit: normalizedLimit,
+  };
+};
+
 export const getCourses = async (
   params: GetCoursesParams
 ): Promise<CourseListData> =>
   unwrapResponse(
     api.get<ApiResponse<CourseListData>>("/api/v1/courses", {
-      params,
+      params: normalizeGetCoursesParams(params),
     })
   );
 

@@ -17,6 +17,8 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true,
+      forbidNonWhitelisted: true,
+      stopAtFirstError: true,
     }),
   );
 
@@ -29,6 +31,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs-v1', app, document);
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3010);
 }
 bootstrap();

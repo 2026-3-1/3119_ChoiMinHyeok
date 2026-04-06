@@ -161,3 +161,50 @@ export const getCurriculumTotals = (curriculum: CurriculumChapter[]) => {
 
 export const getFirstLecture = (curriculum: CurriculumChapter[]) =>
   curriculum.find((chapter) => chapter.lectures.length > 0)?.lectures[0] ?? null;
+
+export const COURSE_SEARCH_MAX_LENGTH = 100;
+
+const allowedSearchCharacter = /[\p{L}\p{N}\s\-_.(),'"/:&+#]/u;
+
+export type SearchValidationResult = {
+  value: string;
+  message: string | null;
+};
+
+export const normalizeSearchInput = (value: string): SearchValidationResult => {
+  const compactValue = value.replace(/[\r\n\t]+/g, " ").replace(/\s{2,}/g, " ");
+  let removedUnsupportedCharacter = false;
+
+  const filteredValue = Array.from(compactValue)
+    .filter((character) => {
+      if (allowedSearchCharacter.test(character)) {
+        return true;
+      }
+
+      removedUnsupportedCharacter = true;
+      return false;
+    })
+    .join("");
+
+  const truncatedValue = filteredValue.slice(0, COURSE_SEARCH_MAX_LENGTH);
+  const isTruncated = filteredValue.length > COURSE_SEARCH_MAX_LENGTH;
+
+  if (removedUnsupportedCharacter) {
+    return {
+      value: truncatedValue,
+      message: "한글, 영문, 숫자와 일부 기호만 입력할 수 있어요.",
+    };
+  }
+
+  if (isTruncated) {
+    return {
+      value: truncatedValue,
+      message: `검색어는 ${COURSE_SEARCH_MAX_LENGTH}자까지 입력할 수 있어요.`,
+    };
+  }
+
+  return {
+    value: truncatedValue,
+    message: null,
+  };
+};

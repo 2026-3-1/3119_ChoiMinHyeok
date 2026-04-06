@@ -597,8 +597,23 @@ img {
   color: #ffffff;
 }
 
+.search-panel input[aria-invalid="true"] {
+  border-color: rgba(255, 107, 107, 0.72);
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.14);
+}
+
 .search-panel span {
   color: #90a7bf;
+}
+
+.search-panel__message {
+  margin: -6px 0 0;
+  color: #90a7bf;
+  font-size: 0.92rem;
+}
+
+.search-panel__message.is-error {
+  color: #ff9a9a;
 }
 
 .empty-state {

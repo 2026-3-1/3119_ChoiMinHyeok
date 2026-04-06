@@ -5,7 +5,11 @@ import { CourseResultsSection } from "../features/courses/sections/CourseResults
 import { useCategories, useCourses } from "../features/shared/hooks/useCourseList";
 import { SiteFooter } from "../features/shared/layout/SiteFooter";
 import { SiteHeader } from "../features/shared/layout/SiteHeader";
-import { getCategoryName } from "../features/shared/utils";
+import {
+  COURSE_SEARCH_MAX_LENGTH,
+  getCategoryName,
+  normalizeSearchInput,
+} from "../features/shared/utils";
 
 const PAGE_SIZE = 12;
 
@@ -13,6 +17,7 @@ export default function CoursePage() {
   const navigate = useNavigate();
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const [searchInput, setSearchInput] = useState("");
+  const [searchError, setSearchError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -42,6 +47,13 @@ export default function CoursePage() {
   const total = data?.count ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
+  const handleSearchInputChange = (value: string) => {
+    const nextSearch = normalizeSearchInput(value);
+
+    setSearchInput(nextSearch.value);
+    setSearchError(nextSearch.message);
+  };
+
   return (
     <div className="page-shell">
       <SiteHeader />
@@ -49,7 +61,9 @@ export default function CoursePage() {
       <main className="page-main">
         <CourseBannerSection
           searchInput={searchInput}
-          onSearchInputChange={setSearchInput}
+          onSearchInputChange={handleSearchInputChange}
+          searchError={searchError}
+          searchMaxLength={COURSE_SEARCH_MAX_LENGTH}
           isFetching={isFetching}
           total={total}
           categories={categories}
