@@ -397,6 +397,10 @@ export async function seedYoutubeTestData(): Promise<YoutubeTestSeedResult> {
           difficulty: courseBlueprint.difficulty,
           category_id: category.id,
           slug: courseBlueprint.slug,
+          price: 39000 + courseCount * 1000,
+          rating: 0,
+          max_capacity: 30,
+          min_enrollment: 1,
           updated_at: new Date(),
         },
       });

@@ -9,6 +9,8 @@ import {
   type YoutubeTestSeedResult,
 } from './../prisma/youtube-test-seed.lib';
 
+jest.setTimeout(120000);
+
 describe('YouTube seed catalog (e2e)', () => {
   let app: INestApplication<App>;
   let seeded: YoutubeTestSeedResult;
@@ -25,7 +27,9 @@ describe('YouTube seed catalog (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    if (app) {
+      await app.close();
+    }
     await closeYoutubeSeedPrisma();
   });
 

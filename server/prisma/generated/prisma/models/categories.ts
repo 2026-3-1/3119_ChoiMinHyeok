@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model categories
@@ -283,11 +283,6 @@ export type categoriesUncheckedUpdateManyInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CategoriesScalarRelationFilter = {
-  is?: Prisma.categoriesWhereInput
-  isNot?: Prisma.categoriesWhereInput
-}
-
 export type categoriesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -312,6 +307,11 @@ export type categoriesMinOrderByAggregateInput = {
 
 export type categoriesSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+}
+
+export type CategoriesScalarRelationFilter = {
+  is?: Prisma.categoriesWhereInput
+  isNot?: Prisma.categoriesWhereInput
 }
 
 export type categoriesCreateNestedOneWithoutCoursesInput = {

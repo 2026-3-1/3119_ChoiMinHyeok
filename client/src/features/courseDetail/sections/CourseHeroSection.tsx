@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import type { Course, Lecture } from "../../shared/types";
 import { formatDate, formatDuration, getDifficultyLabel } from "../../shared/utils";
 
@@ -9,6 +9,11 @@ type CourseHeroSectionProps = {
   lectureCount: number;
   totalDuration: number;
   firstLecture: Lecture | null;
+  isEnrolled?: boolean;
+  isInCart?: boolean;
+  progressPercent?: number;
+  cartButtonLabel?: string;
+  onCartAction?: () => void;
   onStartLecture: (lectureId: number) => void;
 };
 
@@ -19,6 +24,11 @@ export function CourseHeroSection({
   lectureCount,
   totalDuration,
   firstLecture,
+  isEnrolled = false,
+  isInCart = false,
+  progressPercent,
+  cartButtonLabel,
+  onCartAction,
   onStartLecture,
 }: CourseHeroSectionProps) {
   return (
@@ -48,6 +58,17 @@ export function CourseHeroSection({
             <span>최근 수정 {formatDate(course.updated_at)}</span>
             <span>슬러그 {course.slug}</span>
           </div>
+
+          {isEnrolled && progressPercent !== undefined && (
+            <div style={{ marginTop: 16 }}>
+              <div className="progress-bar">
+                <div className="progress-bar__fill" style={{ width: `${progressPercent}%` }} />
+              </div>
+              <p style={{ color: "#90a7bf", fontSize: "0.88rem", marginTop: 6 }}>
+                진도율 {progressPercent}%
+              </p>
+            </div>
+          )}
         </div>
 
         <aside className="detail-sidebar">
@@ -58,19 +79,42 @@ export function CourseHeroSection({
           )}
 
           <div className="detail-sidebar__panel">
-            <strong>학습 시작</strong>
-            <p>
-              현재 서비스는 수강 신청 절차 없이 등록된 첫 번째 강의로 바로 이동하도록 구성되어 있습니다.
-            </p>
+            {isEnrolled ? (
+              <>
+                <strong>수강 중</strong>
+                <p>이 강의를 수강 중입니다. 이어보기 버튼으로 학습을 계속하세요.</p>
+              </>
+            ) : isInCart ? (
+              <>
+                <strong>장바구니에 담겨 있습니다</strong>
+                <p>결제 후 바로 학습을 시작할 수 있습니다.</p>
+              </>
+            ) : (
+              <>
+                <strong>학습 시작</strong>
+                <p>장바구니에 담고 결제하면 바로 수강할 수 있습니다.</p>
+              </>
+            )}
 
-            <button
-              type="button"
-              className="button button--primary"
-              disabled={!firstLecture}
-              onClick={() => firstLecture && onStartLecture(firstLecture.id)}
-            >
-              {firstLecture ? "첫 강의 보기" : "이용 가능한 강의 없음"}
-            </button>
+            {onCartAction && cartButtonLabel ? (
+              <button
+                type="button"
+                className="button button--primary"
+                disabled={cartButtonLabel === "불러오는 중..."}
+                onClick={onCartAction}
+              >
+                {cartButtonLabel}
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="button button--primary"
+                disabled={!firstLecture}
+                onClick={() => firstLecture && onStartLecture(firstLecture.id)}
+              >
+                {firstLecture ? "첫 강의 보기" : "이용 가능한 강의 없음"}
+              </button>
+            )}
 
             <Link to="/courses" className="button button--ghost">
               목록으로 돌아가기

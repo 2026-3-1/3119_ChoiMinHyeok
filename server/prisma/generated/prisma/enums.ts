@@ -16,3 +16,115 @@ export const Difficulty = {
 } as const
 
 export type Difficulty = (typeof Difficulty)[keyof typeof Difficulty]
+
+
+export const Roles = {
+  STUDENT: 'STUDENT',
+  INSTRUCTOR: 'INSTRUCTOR',
+  ADMIN: 'ADMIN'
+} as const
+
+export type Roles = (typeof Roles)[keyof typeof Roles]
+
+
+export const CourseLifecycleStatus = {
+  OPEN: 'OPEN',
+  CANCELED: 'CANCELED'
+} as const
+
+export type CourseLifecycleStatus = (typeof CourseLifecycleStatus)[keyof typeof CourseLifecycleStatus]
+
+
+export const CartItemStatus = {
+  ACTIVE: 'ACTIVE',
+  CHECKED_OUT: 'CHECKED_OUT',
+  REMOVED: 'REMOVED'
+} as const
+
+export type CartItemStatus = (typeof CartItemStatus)[keyof typeof CartItemStatus]
+
+
+export const EnrollmentStatus = {
+  ACTIVE: 'ACTIVE',
+  CANCELED: 'CANCELED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof EnrollmentStatus]
+
+
+export const OrderStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  PARTIALLY_REFUNDED: 'PARTIALLY_REFUNDED',
+  REFUNDED: 'REFUNDED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+export const OrderItemStatus = {
+  PENDING: 'PENDING',
+  ENROLLED: 'ENROLLED',
+  CANCELED: 'CANCELED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type OrderItemStatus = (typeof OrderItemStatus)[keyof typeof OrderItemStatus]
+
+
+export const PaymentProvider = {
+  TOSS: 'TOSS',
+  DEMO: 'DEMO'
+} as const
+
+export type PaymentProvider = (typeof PaymentProvider)[keyof typeof PaymentProvider]
+
+
+export const PaymentTransactionType = {
+  PAYMENT: 'PAYMENT',
+  REFUND: 'REFUND',
+  CANCEL: 'CANCEL'
+} as const
+
+export type PaymentTransactionType = (typeof PaymentTransactionType)[keyof typeof PaymentTransactionType]
+
+
+export const PaymentTransactionStatus = {
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type PaymentTransactionStatus = (typeof PaymentTransactionStatus)[keyof typeof PaymentTransactionStatus]
+
+
+export const CancellationReason = {
+  USER_REQUEST: 'USER_REQUEST',
+  COURSE_CANCELED: 'COURSE_CANCELED',
+  CAPACITY_EXCEEDED: 'CAPACITY_EXCEEDED',
+  UNDER_ENROLLED: 'UNDER_ENROLLED',
+  OTHER: 'OTHER'
+} as const
+
+export type CancellationReason = (typeof CancellationReason)[keyof typeof CancellationReason]
+
+
+export const EnrollmentHistoryType = {
+  ENROLLED: 'ENROLLED',
+  CANCELED: 'CANCELED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type EnrollmentHistoryType = (typeof EnrollmentHistoryType)[keyof typeof EnrollmentHistoryType]
+
+
+export const LecturePlaybackEventType = {
+  STARTED: 'STARTED',
+  PROGRESS: 'PROGRESS',
+  RESUMED: 'RESUMED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type LecturePlaybackEventType = (typeof LecturePlaybackEventType)[keyof typeof LecturePlaybackEventType]

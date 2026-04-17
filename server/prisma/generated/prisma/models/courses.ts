@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model courses
@@ -30,12 +30,20 @@ export type CoursesAvgAggregateOutputType = {
   id: number | null
   instructor_id: number | null
   category_id: number | null
+  price: number | null
+  rating: number | null
+  max_capacity: number | null
+  min_enrollment: number | null
 }
 
 export type CoursesSumAggregateOutputType = {
   id: number | null
   instructor_id: number | null
   category_id: number | null
+  price: number | null
+  rating: number | null
+  max_capacity: number | null
+  min_enrollment: number | null
 }
 
 export type CoursesMinAggregateOutputType = {
@@ -47,6 +55,13 @@ export type CoursesMinAggregateOutputType = {
   difficulty: $Enums.Difficulty | null
   category_id: number | null
   slug: string | null
+  price: number | null
+  rating: number | null
+  max_capacity: number | null
+  min_enrollment: number | null
+  status: $Enums.CourseLifecycleStatus | null
+  canceled_at: Date | null
+  cancel_reason: $Enums.CancellationReason | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -60,6 +75,13 @@ export type CoursesMaxAggregateOutputType = {
   difficulty: $Enums.Difficulty | null
   category_id: number | null
   slug: string | null
+  price: number | null
+  rating: number | null
+  max_capacity: number | null
+  min_enrollment: number | null
+  status: $Enums.CourseLifecycleStatus | null
+  canceled_at: Date | null
+  cancel_reason: $Enums.CancellationReason | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -73,6 +95,13 @@ export type CoursesCountAggregateOutputType = {
   difficulty: number
   category_id: number
   slug: number
+  price: number
+  rating: number
+  max_capacity: number
+  min_enrollment: number
+  status: number
+  canceled_at: number
+  cancel_reason: number
   created_at: number
   updated_at: number
   _all: number
@@ -83,12 +112,20 @@ export type CoursesAvgAggregateInputType = {
   id?: true
   instructor_id?: true
   category_id?: true
+  price?: true
+  rating?: true
+  max_capacity?: true
+  min_enrollment?: true
 }
 
 export type CoursesSumAggregateInputType = {
   id?: true
   instructor_id?: true
   category_id?: true
+  price?: true
+  rating?: true
+  max_capacity?: true
+  min_enrollment?: true
 }
 
 export type CoursesMinAggregateInputType = {
@@ -100,6 +137,13 @@ export type CoursesMinAggregateInputType = {
   difficulty?: true
   category_id?: true
   slug?: true
+  price?: true
+  rating?: true
+  max_capacity?: true
+  min_enrollment?: true
+  status?: true
+  canceled_at?: true
+  cancel_reason?: true
   created_at?: true
   updated_at?: true
 }
@@ -113,6 +157,13 @@ export type CoursesMaxAggregateInputType = {
   difficulty?: true
   category_id?: true
   slug?: true
+  price?: true
+  rating?: true
+  max_capacity?: true
+  min_enrollment?: true
+  status?: true
+  canceled_at?: true
+  cancel_reason?: true
   created_at?: true
   updated_at?: true
 }
@@ -126,6 +177,13 @@ export type CoursesCountAggregateInputType = {
   difficulty?: true
   category_id?: true
   slug?: true
+  price?: true
+  rating?: true
+  max_capacity?: true
+  min_enrollment?: true
+  status?: true
+  canceled_at?: true
+  cancel_reason?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -226,6 +284,13 @@ export type CoursesGroupByOutputType = {
   difficulty: $Enums.Difficulty
   category_id: number
   slug: string
+  price: number
+  rating: number
+  max_capacity: number
+  min_enrollment: number
+  status: $Enums.CourseLifecycleStatus
+  canceled_at: Date | null
+  cancel_reason: $Enums.CancellationReason | null
   created_at: Date
   updated_at: Date
   _count: CoursesCountAggregateOutputType | null
@@ -262,10 +327,22 @@ export type coursesWhereInput = {
   difficulty?: Prisma.EnumDifficultyFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntFilter<"courses"> | number
   slug?: Prisma.StringFilter<"courses"> | string
+  price?: Prisma.IntFilter<"courses"> | number
+  rating?: Prisma.FloatFilter<"courses"> | number
+  max_capacity?: Prisma.IntFilter<"courses"> | number
+  min_enrollment?: Prisma.IntFilter<"courses"> | number
+  status?: Prisma.EnumCourseLifecycleStatusFilter<"courses"> | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.DateTimeNullableFilter<"courses"> | Date | string | null
+  cancel_reason?: Prisma.EnumCancellationReasonNullableFilter<"courses"> | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   category?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.categoriesWhereInput>
   chapters?: Prisma.ChapterListRelationFilter
+  cart_items?: Prisma.Cart_itemsListRelationFilter
+  order_items?: Prisma.Order_itemsListRelationFilter
+  enrollments?: Prisma.EnrollmentsListRelationFilter
+  enrollment_histories?: Prisma.Enrollment_historyListRelationFilter
+  comments?: Prisma.Course_commentListRelationFilter
 }
 
 export type coursesOrderByWithRelationInput = {
@@ -277,10 +354,22 @@ export type coursesOrderByWithRelationInput = {
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  canceled_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancel_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   category?: Prisma.categoriesOrderByWithRelationInput
   chapters?: Prisma.chapterOrderByRelationAggregateInput
+  cart_items?: Prisma.cart_itemsOrderByRelationAggregateInput
+  order_items?: Prisma.order_itemsOrderByRelationAggregateInput
+  enrollments?: Prisma.enrollmentsOrderByRelationAggregateInput
+  enrollment_histories?: Prisma.enrollment_historyOrderByRelationAggregateInput
+  comments?: Prisma.course_commentOrderByRelationAggregateInput
 }
 
 export type coursesWhereUniqueInput = Prisma.AtLeast<{
@@ -295,10 +384,22 @@ export type coursesWhereUniqueInput = Prisma.AtLeast<{
   thumbnail?: Prisma.StringFilter<"courses"> | string
   difficulty?: Prisma.EnumDifficultyFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntFilter<"courses"> | number
+  price?: Prisma.IntFilter<"courses"> | number
+  rating?: Prisma.FloatFilter<"courses"> | number
+  max_capacity?: Prisma.IntFilter<"courses"> | number
+  min_enrollment?: Prisma.IntFilter<"courses"> | number
+  status?: Prisma.EnumCourseLifecycleStatusFilter<"courses"> | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.DateTimeNullableFilter<"courses"> | Date | string | null
+  cancel_reason?: Prisma.EnumCancellationReasonNullableFilter<"courses"> | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   category?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.categoriesWhereInput>
   chapters?: Prisma.ChapterListRelationFilter
+  cart_items?: Prisma.Cart_itemsListRelationFilter
+  order_items?: Prisma.Order_itemsListRelationFilter
+  enrollments?: Prisma.EnrollmentsListRelationFilter
+  enrollment_histories?: Prisma.Enrollment_historyListRelationFilter
+  comments?: Prisma.Course_commentListRelationFilter
 }, "id" | "slug">
 
 export type coursesOrderByWithAggregationInput = {
@@ -310,6 +411,13 @@ export type coursesOrderByWithAggregationInput = {
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  canceled_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancel_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.coursesCountOrderByAggregateInput
@@ -331,6 +439,13 @@ export type coursesScalarWhereWithAggregatesInput = {
   difficulty?: Prisma.EnumDifficultyWithAggregatesFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntWithAggregatesFilter<"courses"> | number
   slug?: Prisma.StringWithAggregatesFilter<"courses"> | string
+  price?: Prisma.IntWithAggregatesFilter<"courses"> | number
+  rating?: Prisma.FloatWithAggregatesFilter<"courses"> | number
+  max_capacity?: Prisma.IntWithAggregatesFilter<"courses"> | number
+  min_enrollment?: Prisma.IntWithAggregatesFilter<"courses"> | number
+  status?: Prisma.EnumCourseLifecycleStatusWithAggregatesFilter<"courses"> | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.DateTimeNullableWithAggregatesFilter<"courses"> | Date | string | null
+  cancel_reason?: Prisma.EnumCancellationReasonNullableWithAggregatesFilter<"courses"> | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"courses"> | Date | string
 }
@@ -342,10 +457,22 @@ export type coursesCreateInput = {
   thumbnail: string
   difficulty: $Enums.Difficulty
   slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
   created_at?: Date | string
-  updated_at: Date | string
+  updated_at?: Date | string
   category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
   chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
 }
 
 export type coursesUncheckedCreateInput = {
@@ -357,9 +484,21 @@ export type coursesUncheckedCreateInput = {
   difficulty: $Enums.Difficulty
   category_id: number
   slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
   created_at?: Date | string
-  updated_at: Date | string
+  updated_at?: Date | string
   chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
 }
 
 export type coursesUpdateInput = {
@@ -369,10 +508,22 @@ export type coursesUpdateInput = {
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
   chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
 }
 
 export type coursesUncheckedUpdateInput = {
@@ -384,9 +535,21 @@ export type coursesUncheckedUpdateInput = {
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   category_id?: Prisma.IntFieldUpdateOperationsInput | number
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
 }
 
 export type coursesCreateManyInput = {
@@ -398,8 +561,15 @@ export type coursesCreateManyInput = {
   difficulty: $Enums.Difficulty
   category_id: number
   slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
   created_at?: Date | string
-  updated_at: Date | string
+  updated_at?: Date | string
 }
 
 export type coursesUpdateManyMutationInput = {
@@ -409,6 +579,13 @@ export type coursesUpdateManyMutationInput = {
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -422,13 +599,25 @@ export type coursesUncheckedUpdateManyInput = {
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   category_id?: Prisma.IntFieldUpdateOperationsInput | number
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CoursesScalarRelationFilter = {
-  is?: Prisma.coursesWhereInput
-  isNot?: Prisma.coursesWhereInput
+export type CoursesListRelationFilter = {
+  every?: Prisma.coursesWhereInput
+  some?: Prisma.coursesWhereInput
+  none?: Prisma.coursesWhereInput
+}
+
+export type coursesOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type coursesCountOrderByAggregateInput = {
@@ -440,6 +629,13 @@ export type coursesCountOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  canceled_at?: Prisma.SortOrder
+  cancel_reason?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -448,6 +644,10 @@ export type coursesAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   instructor_id?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
 }
 
 export type coursesMaxOrderByAggregateInput = {
@@ -459,6 +659,13 @@ export type coursesMaxOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  canceled_at?: Prisma.SortOrder
+  cancel_reason?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -472,6 +679,13 @@ export type coursesMinOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  canceled_at?: Prisma.SortOrder
+  cancel_reason?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -480,34 +694,15 @@ export type coursesSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   instructor_id?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  rating?: Prisma.SortOrder
+  max_capacity?: Prisma.SortOrder
+  min_enrollment?: Prisma.SortOrder
 }
 
-export type CoursesListRelationFilter = {
-  every?: Prisma.coursesWhereInput
-  some?: Prisma.coursesWhereInput
-  none?: Prisma.coursesWhereInput
-}
-
-export type coursesOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
-export type coursesCreateNestedOneWithoutChaptersInput = {
-  create?: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
-  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutChaptersInput
-  connect?: Prisma.coursesWhereUniqueInput
-}
-
-export type coursesUpdateOneRequiredWithoutChaptersNestedInput = {
-  create?: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
-  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutChaptersInput
-  upsert?: Prisma.coursesUpsertWithoutChaptersInput
-  connect?: Prisma.coursesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutChaptersInput, Prisma.coursesUpdateWithoutChaptersInput>, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
-}
-
-export type EnumDifficultyFieldUpdateOperationsInput = {
-  set?: $Enums.Difficulty
+export type CoursesScalarRelationFilter = {
+  is?: Prisma.coursesWhereInput
+  isNot?: Prisma.coursesWhereInput
 }
 
 export type coursesCreateNestedManyWithoutCategoryInput = {
@@ -552,70 +747,112 @@ export type coursesUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.coursesScalarWhereInput | Prisma.coursesScalarWhereInput[]
 }
 
-export type coursesCreateWithoutChaptersInput = {
-  title: string
-  description: string
-  instructor_id: number
-  thumbnail: string
-  difficulty: $Enums.Difficulty
-  slug: string
-  created_at?: Date | string
-  updated_at: Date | string
-  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+export type EnumDifficultyFieldUpdateOperationsInput = {
+  set?: $Enums.Difficulty
 }
 
-export type coursesUncheckedCreateWithoutChaptersInput = {
-  id?: number
-  title: string
-  description: string
-  instructor_id: number
-  thumbnail: string
-  difficulty: $Enums.Difficulty
-  category_id: number
-  slug: string
-  created_at?: Date | string
-  updated_at: Date | string
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
-export type coursesCreateOrConnectWithoutChaptersInput = {
-  where: Prisma.coursesWhereUniqueInput
-  create: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
+export type EnumCourseLifecycleStatusFieldUpdateOperationsInput = {
+  set?: $Enums.CourseLifecycleStatus
 }
 
-export type coursesUpsertWithoutChaptersInput = {
-  update: Prisma.XOR<Prisma.coursesUpdateWithoutChaptersInput, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
-  create: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
-  where?: Prisma.coursesWhereInput
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
-export type coursesUpdateToOneWithWhereWithoutChaptersInput = {
-  where?: Prisma.coursesWhereInput
-  data: Prisma.XOR<Prisma.coursesUpdateWithoutChaptersInput, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
+export type NullableEnumCancellationReasonFieldUpdateOperationsInput = {
+  set?: $Enums.CancellationReason | null
 }
 
-export type coursesUpdateWithoutChaptersInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+export type coursesCreateNestedOneWithoutChaptersInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutChaptersInput
+  connect?: Prisma.coursesWhereUniqueInput
 }
 
-export type coursesUncheckedUpdateWithoutChaptersInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
-  category_id?: Prisma.IntFieldUpdateOperationsInput | number
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type coursesUpdateOneRequiredWithoutChaptersNestedInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutChaptersInput
+  upsert?: Prisma.coursesUpsertWithoutChaptersInput
+  connect?: Prisma.coursesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutChaptersInput, Prisma.coursesUpdateWithoutChaptersInput>, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
+}
+
+export type coursesCreateNestedOneWithoutCart_itemsInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutCart_itemsInput, Prisma.coursesUncheckedCreateWithoutCart_itemsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutCart_itemsInput
+  connect?: Prisma.coursesWhereUniqueInput
+}
+
+export type coursesUpdateOneRequiredWithoutCart_itemsNestedInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutCart_itemsInput, Prisma.coursesUncheckedCreateWithoutCart_itemsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutCart_itemsInput
+  upsert?: Prisma.coursesUpsertWithoutCart_itemsInput
+  connect?: Prisma.coursesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutCart_itemsInput, Prisma.coursesUpdateWithoutCart_itemsInput>, Prisma.coursesUncheckedUpdateWithoutCart_itemsInput>
+}
+
+export type coursesCreateNestedOneWithoutOrder_itemsInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutOrder_itemsInput, Prisma.coursesUncheckedCreateWithoutOrder_itemsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutOrder_itemsInput
+  connect?: Prisma.coursesWhereUniqueInput
+}
+
+export type coursesUpdateOneRequiredWithoutOrder_itemsNestedInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutOrder_itemsInput, Prisma.coursesUncheckedCreateWithoutOrder_itemsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutOrder_itemsInput
+  upsert?: Prisma.coursesUpsertWithoutOrder_itemsInput
+  connect?: Prisma.coursesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutOrder_itemsInput, Prisma.coursesUpdateWithoutOrder_itemsInput>, Prisma.coursesUncheckedUpdateWithoutOrder_itemsInput>
+}
+
+export type coursesCreateNestedOneWithoutEnrollmentsInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutEnrollmentsInput, Prisma.coursesUncheckedCreateWithoutEnrollmentsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutEnrollmentsInput
+  connect?: Prisma.coursesWhereUniqueInput
+}
+
+export type coursesUpdateOneRequiredWithoutEnrollmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutEnrollmentsInput, Prisma.coursesUncheckedCreateWithoutEnrollmentsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutEnrollmentsInput
+  upsert?: Prisma.coursesUpsertWithoutEnrollmentsInput
+  connect?: Prisma.coursesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutEnrollmentsInput, Prisma.coursesUpdateWithoutEnrollmentsInput>, Prisma.coursesUncheckedUpdateWithoutEnrollmentsInput>
+}
+
+export type coursesCreateNestedOneWithoutEnrollment_historiesInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutEnrollment_historiesInput, Prisma.coursesUncheckedCreateWithoutEnrollment_historiesInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutEnrollment_historiesInput
+  connect?: Prisma.coursesWhereUniqueInput
+}
+
+export type coursesUpdateOneRequiredWithoutEnrollment_historiesNestedInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutEnrollment_historiesInput, Prisma.coursesUncheckedCreateWithoutEnrollment_historiesInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutEnrollment_historiesInput
+  upsert?: Prisma.coursesUpsertWithoutEnrollment_historiesInput
+  connect?: Prisma.coursesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutEnrollment_historiesInput, Prisma.coursesUpdateWithoutEnrollment_historiesInput>, Prisma.coursesUncheckedUpdateWithoutEnrollment_historiesInput>
+}
+
+export type coursesCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutCommentsInput, Prisma.coursesUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.coursesWhereUniqueInput
+}
+
+export type coursesUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.coursesCreateWithoutCommentsInput, Prisma.coursesUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.coursesCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.coursesUpsertWithoutCommentsInput
+  connect?: Prisma.coursesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.coursesUpdateToOneWithWhereWithoutCommentsInput, Prisma.coursesUpdateWithoutCommentsInput>, Prisma.coursesUncheckedUpdateWithoutCommentsInput>
 }
 
 export type coursesCreateWithoutCategoryInput = {
@@ -625,9 +862,21 @@ export type coursesCreateWithoutCategoryInput = {
   thumbnail: string
   difficulty: $Enums.Difficulty
   slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
   created_at?: Date | string
-  updated_at: Date | string
+  updated_at?: Date | string
   chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
 }
 
 export type coursesUncheckedCreateWithoutCategoryInput = {
@@ -638,9 +887,21 @@ export type coursesUncheckedCreateWithoutCategoryInput = {
   thumbnail: string
   difficulty: $Enums.Difficulty
   slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
   created_at?: Date | string
-  updated_at: Date | string
+  updated_at?: Date | string
   chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
 }
 
 export type coursesCreateOrConnectWithoutCategoryInput = {
@@ -681,8 +942,699 @@ export type coursesScalarWhereInput = {
   difficulty?: Prisma.EnumDifficultyFilter<"courses"> | $Enums.Difficulty
   category_id?: Prisma.IntFilter<"courses"> | number
   slug?: Prisma.StringFilter<"courses"> | string
+  price?: Prisma.IntFilter<"courses"> | number
+  rating?: Prisma.FloatFilter<"courses"> | number
+  max_capacity?: Prisma.IntFilter<"courses"> | number
+  min_enrollment?: Prisma.IntFilter<"courses"> | number
+  status?: Prisma.EnumCourseLifecycleStatusFilter<"courses"> | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.DateTimeNullableFilter<"courses"> | Date | string | null
+  cancel_reason?: Prisma.EnumCancellationReasonNullableFilter<"courses"> | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFilter<"courses"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"courses"> | Date | string
+}
+
+export type coursesCreateWithoutChaptersInput = {
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesUncheckedCreateWithoutChaptersInput = {
+  id?: number
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  category_id: number
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesCreateOrConnectWithoutChaptersInput = {
+  where: Prisma.coursesWhereUniqueInput
+  create: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
+}
+
+export type coursesUpsertWithoutChaptersInput = {
+  update: Prisma.XOR<Prisma.coursesUpdateWithoutChaptersInput, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
+  create: Prisma.XOR<Prisma.coursesCreateWithoutChaptersInput, Prisma.coursesUncheckedCreateWithoutChaptersInput>
+  where?: Prisma.coursesWhereInput
+}
+
+export type coursesUpdateToOneWithWhereWithoutChaptersInput = {
+  where?: Prisma.coursesWhereInput
+  data: Prisma.XOR<Prisma.coursesUpdateWithoutChaptersInput, Prisma.coursesUncheckedUpdateWithoutChaptersInput>
+}
+
+export type coursesUpdateWithoutChaptersInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesUncheckedUpdateWithoutChaptersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesCreateWithoutCart_itemsInput = {
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+  chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesUncheckedCreateWithoutCart_itemsInput = {
+  id?: number
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  category_id: number
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesCreateOrConnectWithoutCart_itemsInput = {
+  where: Prisma.coursesWhereUniqueInput
+  create: Prisma.XOR<Prisma.coursesCreateWithoutCart_itemsInput, Prisma.coursesUncheckedCreateWithoutCart_itemsInput>
+}
+
+export type coursesUpsertWithoutCart_itemsInput = {
+  update: Prisma.XOR<Prisma.coursesUpdateWithoutCart_itemsInput, Prisma.coursesUncheckedUpdateWithoutCart_itemsInput>
+  create: Prisma.XOR<Prisma.coursesCreateWithoutCart_itemsInput, Prisma.coursesUncheckedCreateWithoutCart_itemsInput>
+  where?: Prisma.coursesWhereInput
+}
+
+export type coursesUpdateToOneWithWhereWithoutCart_itemsInput = {
+  where?: Prisma.coursesWhereInput
+  data: Prisma.XOR<Prisma.coursesUpdateWithoutCart_itemsInput, Prisma.coursesUncheckedUpdateWithoutCart_itemsInput>
+}
+
+export type coursesUpdateWithoutCart_itemsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+  chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesUncheckedUpdateWithoutCart_itemsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesCreateWithoutOrder_itemsInput = {
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+  chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesUncheckedCreateWithoutOrder_itemsInput = {
+  id?: number
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  category_id: number
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesCreateOrConnectWithoutOrder_itemsInput = {
+  where: Prisma.coursesWhereUniqueInput
+  create: Prisma.XOR<Prisma.coursesCreateWithoutOrder_itemsInput, Prisma.coursesUncheckedCreateWithoutOrder_itemsInput>
+}
+
+export type coursesUpsertWithoutOrder_itemsInput = {
+  update: Prisma.XOR<Prisma.coursesUpdateWithoutOrder_itemsInput, Prisma.coursesUncheckedUpdateWithoutOrder_itemsInput>
+  create: Prisma.XOR<Prisma.coursesCreateWithoutOrder_itemsInput, Prisma.coursesUncheckedCreateWithoutOrder_itemsInput>
+  where?: Prisma.coursesWhereInput
+}
+
+export type coursesUpdateToOneWithWhereWithoutOrder_itemsInput = {
+  where?: Prisma.coursesWhereInput
+  data: Prisma.XOR<Prisma.coursesUpdateWithoutOrder_itemsInput, Prisma.coursesUncheckedUpdateWithoutOrder_itemsInput>
+}
+
+export type coursesUpdateWithoutOrder_itemsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+  chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesUncheckedUpdateWithoutOrder_itemsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesCreateWithoutEnrollmentsInput = {
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+  chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesUncheckedCreateWithoutEnrollmentsInput = {
+  id?: number
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  category_id: number
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesCreateOrConnectWithoutEnrollmentsInput = {
+  where: Prisma.coursesWhereUniqueInput
+  create: Prisma.XOR<Prisma.coursesCreateWithoutEnrollmentsInput, Prisma.coursesUncheckedCreateWithoutEnrollmentsInput>
+}
+
+export type coursesUpsertWithoutEnrollmentsInput = {
+  update: Prisma.XOR<Prisma.coursesUpdateWithoutEnrollmentsInput, Prisma.coursesUncheckedUpdateWithoutEnrollmentsInput>
+  create: Prisma.XOR<Prisma.coursesCreateWithoutEnrollmentsInput, Prisma.coursesUncheckedCreateWithoutEnrollmentsInput>
+  where?: Prisma.coursesWhereInput
+}
+
+export type coursesUpdateToOneWithWhereWithoutEnrollmentsInput = {
+  where?: Prisma.coursesWhereInput
+  data: Prisma.XOR<Prisma.coursesUpdateWithoutEnrollmentsInput, Prisma.coursesUncheckedUpdateWithoutEnrollmentsInput>
+}
+
+export type coursesUpdateWithoutEnrollmentsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+  chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesUncheckedUpdateWithoutEnrollmentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesCreateWithoutEnrollment_historiesInput = {
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+  chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesUncheckedCreateWithoutEnrollment_historiesInput = {
+  id?: number
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  category_id: number
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesCreateOrConnectWithoutEnrollment_historiesInput = {
+  where: Prisma.coursesWhereUniqueInput
+  create: Prisma.XOR<Prisma.coursesCreateWithoutEnrollment_historiesInput, Prisma.coursesUncheckedCreateWithoutEnrollment_historiesInput>
+}
+
+export type coursesUpsertWithoutEnrollment_historiesInput = {
+  update: Prisma.XOR<Prisma.coursesUpdateWithoutEnrollment_historiesInput, Prisma.coursesUncheckedUpdateWithoutEnrollment_historiesInput>
+  create: Prisma.XOR<Prisma.coursesCreateWithoutEnrollment_historiesInput, Prisma.coursesUncheckedCreateWithoutEnrollment_historiesInput>
+  where?: Prisma.coursesWhereInput
+}
+
+export type coursesUpdateToOneWithWhereWithoutEnrollment_historiesInput = {
+  where?: Prisma.coursesWhereInput
+  data: Prisma.XOR<Prisma.coursesUpdateWithoutEnrollment_historiesInput, Prisma.coursesUncheckedUpdateWithoutEnrollment_historiesInput>
+}
+
+export type coursesUpdateWithoutEnrollment_historiesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+  chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesUncheckedUpdateWithoutEnrollment_historiesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesCreateWithoutCommentsInput = {
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  category: Prisma.categoriesCreateNestedOneWithoutCoursesInput
+  chapters?: Prisma.chapterCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesUncheckedCreateWithoutCommentsInput = {
+  id?: number
+  title: string
+  description: string
+  instructor_id: number
+  thumbnail: string
+  difficulty: $Enums.Difficulty
+  category_id: number
+  slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  chapters?: Prisma.chapterUncheckedCreateNestedManyWithoutCoursesInput
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutCoursesInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutCoursesInput
+}
+
+export type coursesCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.coursesWhereUniqueInput
+  create: Prisma.XOR<Prisma.coursesCreateWithoutCommentsInput, Prisma.coursesUncheckedCreateWithoutCommentsInput>
+}
+
+export type coursesUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.coursesUpdateWithoutCommentsInput, Prisma.coursesUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.coursesCreateWithoutCommentsInput, Prisma.coursesUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.coursesWhereInput
+}
+
+export type coursesUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.coursesWhereInput
+  data: Prisma.XOR<Prisma.coursesUpdateWithoutCommentsInput, Prisma.coursesUncheckedUpdateWithoutCommentsInput>
+}
+
+export type coursesUpdateWithoutCommentsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.categoriesUpdateOneRequiredWithoutCoursesNestedInput
+  chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+}
+
+export type coursesUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  instructor_id?: Prisma.IntFieldUpdateOperationsInput | number
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  category_id?: Prisma.IntFieldUpdateOperationsInput | number
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
 }
 
 export type coursesCreateManyCategoryInput = {
@@ -693,8 +1645,15 @@ export type coursesCreateManyCategoryInput = {
   thumbnail: string
   difficulty: $Enums.Difficulty
   slug: string
+  price: number
+  rating?: number
+  max_capacity?: number
+  min_enrollment?: number
+  status?: $Enums.CourseLifecycleStatus
+  canceled_at?: Date | string | null
+  cancel_reason?: $Enums.CancellationReason | null
   created_at?: Date | string
-  updated_at: Date | string
+  updated_at?: Date | string
 }
 
 export type coursesUpdateWithoutCategoryInput = {
@@ -704,9 +1663,21 @@ export type coursesUpdateWithoutCategoryInput = {
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUpdateManyWithoutCoursesNestedInput
 }
 
 export type coursesUncheckedUpdateWithoutCategoryInput = {
@@ -717,9 +1688,21 @@ export type coursesUncheckedUpdateWithoutCategoryInput = {
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUncheckedUpdateManyWithoutCoursesNestedInput
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutCoursesNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutCoursesNestedInput
+  comments?: Prisma.course_commentUncheckedUpdateManyWithoutCoursesNestedInput
 }
 
 export type coursesUncheckedUpdateManyWithoutCategoryInput = {
@@ -730,6 +1713,13 @@ export type coursesUncheckedUpdateManyWithoutCategoryInput = {
   thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  rating?: Prisma.FloatFieldUpdateOperationsInput | number
+  max_capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  min_enrollment?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumCourseLifecycleStatusFieldUpdateOperationsInput | $Enums.CourseLifecycleStatus
+  canceled_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancel_reason?: Prisma.NullableEnumCancellationReasonFieldUpdateOperationsInput | $Enums.CancellationReason | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -741,10 +1731,20 @@ export type coursesUncheckedUpdateManyWithoutCategoryInput = {
 
 export type CoursesCountOutputType = {
   chapters: number
+  cart_items: number
+  order_items: number
+  enrollments: number
+  enrollment_histories: number
+  comments: number
 }
 
 export type CoursesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapters?: boolean | CoursesCountOutputTypeCountChaptersArgs
+  cart_items?: boolean | CoursesCountOutputTypeCountCart_itemsArgs
+  order_items?: boolean | CoursesCountOutputTypeCountOrder_itemsArgs
+  enrollments?: boolean | CoursesCountOutputTypeCountEnrollmentsArgs
+  enrollment_histories?: boolean | CoursesCountOutputTypeCountEnrollment_historiesArgs
+  comments?: boolean | CoursesCountOutputTypeCountCommentsArgs
 }
 
 /**
@@ -764,6 +1764,41 @@ export type CoursesCountOutputTypeCountChaptersArgs<ExtArgs extends runtime.Type
   where?: Prisma.chapterWhereInput
 }
 
+/**
+ * CoursesCountOutputType without action
+ */
+export type CoursesCountOutputTypeCountCart_itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.cart_itemsWhereInput
+}
+
+/**
+ * CoursesCountOutputType without action
+ */
+export type CoursesCountOutputTypeCountOrder_itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.order_itemsWhereInput
+}
+
+/**
+ * CoursesCountOutputType without action
+ */
+export type CoursesCountOutputTypeCountEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.enrollmentsWhereInput
+}
+
+/**
+ * CoursesCountOutputType without action
+ */
+export type CoursesCountOutputTypeCountEnrollment_historiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.enrollment_historyWhereInput
+}
+
+/**
+ * CoursesCountOutputType without action
+ */
+export type CoursesCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.course_commentWhereInput
+}
+
 
 export type coursesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -774,10 +1809,22 @@ export type coursesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   difficulty?: boolean
   category_id?: boolean
   slug?: boolean
+  price?: boolean
+  rating?: boolean
+  max_capacity?: boolean
+  min_enrollment?: boolean
+  status?: boolean
+  canceled_at?: boolean
+  cancel_reason?: boolean
   created_at?: boolean
   updated_at?: boolean
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   chapters?: boolean | Prisma.courses$chaptersArgs<ExtArgs>
+  cart_items?: boolean | Prisma.courses$cart_itemsArgs<ExtArgs>
+  order_items?: boolean | Prisma.courses$order_itemsArgs<ExtArgs>
+  enrollments?: boolean | Prisma.courses$enrollmentsArgs<ExtArgs>
+  enrollment_histories?: boolean | Prisma.courses$enrollment_historiesArgs<ExtArgs>
+  comments?: boolean | Prisma.courses$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.CoursesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["courses"]>
 
@@ -790,6 +1837,13 @@ export type coursesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   difficulty?: boolean
   category_id?: boolean
   slug?: boolean
+  price?: boolean
+  rating?: boolean
+  max_capacity?: boolean
+  min_enrollment?: boolean
+  status?: boolean
+  canceled_at?: boolean
+  cancel_reason?: boolean
   created_at?: boolean
   updated_at?: boolean
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
@@ -804,6 +1858,13 @@ export type coursesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   difficulty?: boolean
   category_id?: boolean
   slug?: boolean
+  price?: boolean
+  rating?: boolean
+  max_capacity?: boolean
+  min_enrollment?: boolean
+  status?: boolean
+  canceled_at?: boolean
+  cancel_reason?: boolean
   created_at?: boolean
   updated_at?: boolean
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
@@ -818,14 +1879,26 @@ export type coursesSelectScalar = {
   difficulty?: boolean
   category_id?: boolean
   slug?: boolean
+  price?: boolean
+  rating?: boolean
+  max_capacity?: boolean
+  min_enrollment?: boolean
+  status?: boolean
+  canceled_at?: boolean
+  cancel_reason?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type coursesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "instructor_id" | "thumbnail" | "difficulty" | "category_id" | "slug" | "created_at" | "updated_at", ExtArgs["result"]["courses"]>
+export type coursesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "instructor_id" | "thumbnail" | "difficulty" | "category_id" | "slug" | "price" | "rating" | "max_capacity" | "min_enrollment" | "status" | "canceled_at" | "cancel_reason" | "created_at" | "updated_at", ExtArgs["result"]["courses"]>
 export type coursesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.categoriesDefaultArgs<ExtArgs>
   chapters?: boolean | Prisma.courses$chaptersArgs<ExtArgs>
+  cart_items?: boolean | Prisma.courses$cart_itemsArgs<ExtArgs>
+  order_items?: boolean | Prisma.courses$order_itemsArgs<ExtArgs>
+  enrollments?: boolean | Prisma.courses$enrollmentsArgs<ExtArgs>
+  enrollment_histories?: boolean | Prisma.courses$enrollment_historiesArgs<ExtArgs>
+  comments?: boolean | Prisma.courses$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.CoursesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type coursesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -840,6 +1913,11 @@ export type $coursesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     category: Prisma.$categoriesPayload<ExtArgs>
     chapters: Prisma.$chapterPayload<ExtArgs>[]
+    cart_items: Prisma.$cart_itemsPayload<ExtArgs>[]
+    order_items: Prisma.$order_itemsPayload<ExtArgs>[]
+    enrollments: Prisma.$enrollmentsPayload<ExtArgs>[]
+    enrollment_histories: Prisma.$enrollment_historyPayload<ExtArgs>[]
+    comments: Prisma.$course_commentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -850,6 +1928,13 @@ export type $coursesPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     difficulty: $Enums.Difficulty
     category_id: number
     slug: string
+    price: number
+    rating: number
+    max_capacity: number
+    min_enrollment: number
+    status: $Enums.CourseLifecycleStatus
+    canceled_at: Date | null
+    cancel_reason: $Enums.CancellationReason | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["courses"]>
@@ -1248,6 +2333,11 @@ export interface Prisma__coursesClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   category<T extends Prisma.categoriesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.categoriesDefaultArgs<ExtArgs>>): Prisma.Prisma__categoriesClient<runtime.Types.Result.GetResult<Prisma.$categoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   chapters<T extends Prisma.courses$chaptersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.courses$chaptersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$chapterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cart_items<T extends Prisma.courses$cart_itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.courses$cart_itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$cart_itemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  order_items<T extends Prisma.courses$order_itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.courses$order_itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$order_itemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  enrollments<T extends Prisma.courses$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.courses$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$enrollmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  enrollment_histories<T extends Prisma.courses$enrollment_historiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.courses$enrollment_historiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$enrollment_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.courses$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.courses$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$course_commentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1285,6 +2375,13 @@ export interface coursesFieldRefs {
   readonly difficulty: Prisma.FieldRef<"courses", 'Difficulty'>
   readonly category_id: Prisma.FieldRef<"courses", 'Int'>
   readonly slug: Prisma.FieldRef<"courses", 'String'>
+  readonly price: Prisma.FieldRef<"courses", 'Int'>
+  readonly rating: Prisma.FieldRef<"courses", 'Float'>
+  readonly max_capacity: Prisma.FieldRef<"courses", 'Int'>
+  readonly min_enrollment: Prisma.FieldRef<"courses", 'Int'>
+  readonly status: Prisma.FieldRef<"courses", 'CourseLifecycleStatus'>
+  readonly canceled_at: Prisma.FieldRef<"courses", 'DateTime'>
+  readonly cancel_reason: Prisma.FieldRef<"courses", 'CancellationReason'>
   readonly created_at: Prisma.FieldRef<"courses", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"courses", 'DateTime'>
 }
@@ -1709,6 +2806,126 @@ export type courses$chaptersArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ChapterScalarFieldEnum | Prisma.ChapterScalarFieldEnum[]
+}
+
+/**
+ * courses.cart_items
+ */
+export type courses$cart_itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the cart_items
+   */
+  select?: Prisma.cart_itemsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the cart_items
+   */
+  omit?: Prisma.cart_itemsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.cart_itemsInclude<ExtArgs> | null
+  where?: Prisma.cart_itemsWhereInput
+  orderBy?: Prisma.cart_itemsOrderByWithRelationInput | Prisma.cart_itemsOrderByWithRelationInput[]
+  cursor?: Prisma.cart_itemsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Cart_itemsScalarFieldEnum | Prisma.Cart_itemsScalarFieldEnum[]
+}
+
+/**
+ * courses.order_items
+ */
+export type courses$order_itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the order_items
+   */
+  select?: Prisma.order_itemsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the order_items
+   */
+  omit?: Prisma.order_itemsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.order_itemsInclude<ExtArgs> | null
+  where?: Prisma.order_itemsWhereInput
+  orderBy?: Prisma.order_itemsOrderByWithRelationInput | Prisma.order_itemsOrderByWithRelationInput[]
+  cursor?: Prisma.order_itemsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Order_itemsScalarFieldEnum | Prisma.Order_itemsScalarFieldEnum[]
+}
+
+/**
+ * courses.enrollments
+ */
+export type courses$enrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the enrollments
+   */
+  select?: Prisma.enrollmentsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the enrollments
+   */
+  omit?: Prisma.enrollmentsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.enrollmentsInclude<ExtArgs> | null
+  where?: Prisma.enrollmentsWhereInput
+  orderBy?: Prisma.enrollmentsOrderByWithRelationInput | Prisma.enrollmentsOrderByWithRelationInput[]
+  cursor?: Prisma.enrollmentsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EnrollmentsScalarFieldEnum | Prisma.EnrollmentsScalarFieldEnum[]
+}
+
+/**
+ * courses.enrollment_histories
+ */
+export type courses$enrollment_historiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the enrollment_history
+   */
+  select?: Prisma.enrollment_historySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the enrollment_history
+   */
+  omit?: Prisma.enrollment_historyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.enrollment_historyInclude<ExtArgs> | null
+  where?: Prisma.enrollment_historyWhereInput
+  orderBy?: Prisma.enrollment_historyOrderByWithRelationInput | Prisma.enrollment_historyOrderByWithRelationInput[]
+  cursor?: Prisma.enrollment_historyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Enrollment_historyScalarFieldEnum | Prisma.Enrollment_historyScalarFieldEnum[]
+}
+
+/**
+ * courses.comments
+ */
+export type courses$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the course_comment
+   */
+  select?: Prisma.course_commentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the course_comment
+   */
+  omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
+  where?: Prisma.course_commentWhereInput
+  orderBy?: Prisma.course_commentOrderByWithRelationInput | Prisma.course_commentOrderByWithRelationInput[]
+  cursor?: Prisma.course_commentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Course_commentScalarFieldEnum | Prisma.Course_commentScalarFieldEnum[]
 }
 
 /**

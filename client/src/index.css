@@ -921,17 +921,633 @@ img {
   }
 }
 
+/* ─── Auth Pages ──────────────────────────────────────────── */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 36px;
+  border: 1px solid rgba(112, 132, 155, 0.22);
+  border-radius: 28px;
+  background: rgba(7, 17, 27, 0.88);
+}
+
+.auth-card__logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.auth-card__title {
+  margin: 0 0 24px;
+  font-family: "Syne", "Noto Sans KR", sans-serif;
+  font-size: 1.9rem;
+  text-align: center;
+}
+
+.auth-card__footer {
+  margin: 20px 0 0;
+  color: #90a7bf;
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+.auth-card__link {
+  color: #00ff88;
+  font-weight: 700;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form__field {
+  display: grid;
+  gap: 6px;
+}
+
+.auth-form__label {
+  color: #d7e4f5;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.auth-form__input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(112, 132, 155, 0.28);
+  border-radius: 14px;
+  background: rgba(4, 10, 18, 0.8);
+  color: #ffffff;
+  font: inherit;
+  transition: border-color 0.2s;
+}
+
+.auth-form__input:focus {
+  outline: none;
+  border-color: rgba(0, 255, 136, 0.5);
+}
+
+.auth-form__textarea {
+  min-height: unset;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.auth-form__role-group {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-form__role-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  border: 1px solid rgba(112, 132, 155, 0.28);
+  border-radius: 14px;
+  background: rgba(4, 10, 18, 0.6);
+  color: #d7e4f5;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.auth-form__role-option input {
+  display: none;
+}
+
+.auth-form__role-option.is-active {
+  border-color: rgba(0, 255, 136, 0.5);
+  background: rgba(0, 255, 136, 0.08);
+  color: #00ff88;
+  font-weight: 700;
+}
+
+.auth-form__error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  color: #ff9a9a;
+  font-size: 0.9rem;
+}
+
+.auth-form__submit {
+  width: 100%;
+  min-height: 48px;
+  font-size: 1rem;
+  border-radius: 14px;
+}
+
+/* ─── Site Header: cart & user ────────────────────────────── */
+
+.site-header__cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(112, 132, 155, 0.28);
+  background: rgba(7, 17, 27, 0.55);
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+
+.site-header__cart:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.site-header__cart-icon {
+  line-height: 1;
+}
+
+.site-header__cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #00ff88;
+  color: #03110b;
+  font-size: 0.7rem;
+  font-weight: 900;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.site-header__username {
+  color: #d7e4f5;
+  font-size: 0.9rem;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── My Learning Page ────────────────────────────────────── */
+
+.my-learning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.learning-card {
+  border: 1px solid rgba(112, 132, 155, 0.18);
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(10, 23, 37, 0.92), rgba(7, 14, 24, 0.78));
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.learning-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 136, 0.28);
+}
+
+.learning-card--skeleton {
+  min-height: 280px;
+}
+
+.learning-card__media {
+  position: relative;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 136, 0.18), transparent 48%),
+    linear-gradient(135deg, rgba(77, 171, 255, 0.2), rgba(7, 17, 27, 0.2));
+}
+
+.learning-card__image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.learning-card__placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.07);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1rem;
+}
+
+.learning-card__progress-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #00ff88;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+}
+
+.learning-card__body {
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.learning-card__title {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.learning-card__meta {
+  margin: 0;
+  color: #90a7bf;
+  font-size: 0.88rem;
+}
+
+/* ─── Progress Bar ────────────────────────────────────────── */
+
+.progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #00ff88, #4dabff);
+  transition: width 0.4s ease;
+}
+
+/* ─── Cart Page ───────────────────────────────────────────── */
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+.cart-items {
+  display: grid;
+  gap: 14px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(112, 132, 155, 0.18);
+  border-radius: 20px;
+  background: rgba(7, 17, 27, 0.72);
+  transition: border-color 0.2s;
+}
+
+.cart-item:hover {
+  border-color: rgba(112, 132, 155, 0.34);
+}
+
+.cart-item--skeleton {
+  min-height: 90px;
+}
+
+.cart-item__check {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cart-item__check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #00ff88;
+  cursor: pointer;
+}
+
+.cart-item__media {
+  flex-shrink: 0;
+  width: 100px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 136, 0.18), transparent 48%),
+    rgba(7, 17, 27, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-item__placeholder {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: #90a7bf;
+}
+
+.cart-item__info {
+  flex: 1;
+  display: grid;
+  gap: 6px;
+}
+
+.cart-item__title {
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: #f3f7ff;
+}
+
+.cart-item__price {
+  color: #00ff88;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1rem;
+}
+
+.cart-item__remove {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #90a7bf;
+  font-size: 0.8rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.cart-item__remove:hover {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff9a9a;
+}
+
+.cart-summary-panel {
+  padding: 24px;
+  border: 1px solid rgba(112, 132, 155, 0.18);
+  border-radius: 22px;
+  background: rgba(7, 17, 27, 0.72);
+  display: grid;
+  gap: 16px;
+  position: sticky;
+  top: 90px;
+}
+
+.cart-summary-panel__title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.cart-summary-panel__rows {
+  display: grid;
+  gap: 10px;
+}
+
+.cart-summary-panel__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #90a7bf;
+  font-size: 0.92rem;
+}
+
+.cart-summary-panel__row--total {
+  padding-top: 12px;
+  border-top: 1px solid rgba(112, 132, 155, 0.18);
+  color: #f3f7ff;
+  font-size: 1rem;
+}
+
+.cart-summary-panel__row--total strong {
+  color: #00ff88;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1.15rem;
+}
+
+.cart-summary-panel__notice {
+  margin: 0;
+  color: #90a7bf;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+/* ─── Reviews ─────────────────────────────────────────────── */
+
+.reviews-section {
+  margin-top: 32px;
+}
+
+.review-list {
+  display: grid;
+  gap: 14px;
+}
+
+.review-card {
+  padding: 20px;
+  border: 1px solid rgba(112, 132, 155, 0.16);
+  border-radius: 20px;
+  background: rgba(7, 17, 27, 0.62);
+  display: grid;
+  gap: 10px;
+}
+
+.review-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.review-card__name {
+  font-weight: 700;
+  color: #d7e4f5;
+}
+
+.review-stars {
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.review-card__date {
+  margin-left: auto;
+  color: #90a7bf;
+  font-size: 0.85rem;
+}
+
+.review-card__title {
+  display: block;
+  font-size: 1rem;
+}
+
+.review-card__content {
+  margin: 0;
+  color: #aec2d7;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.review-form {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid rgba(0, 255, 136, 0.18);
+  border-radius: 22px;
+  background: rgba(8, 33, 22, 0.6);
+  display: grid;
+  gap: 14px;
+}
+
+.review-form h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.review-form__star-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.review-form__star {
+  font-size: 1.6rem;
+  background: transparent;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+
+/* ─── Bookmarks ───────────────────────────────────────────── */
+
+.bookmark-panel {
+  padding: 20px;
+  border: 1px solid rgba(112, 132, 155, 0.18);
+  border-radius: 20px;
+  background: rgba(7, 17, 27, 0.72);
+}
+
+.bookmark-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.bookmark-panel__form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(112, 132, 155, 0.14);
+}
+
+.bookmark-panel__empty {
+  margin: 0;
+  color: #90a7bf;
+  font-size: 0.9rem;
+}
+
+.bookmark-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.bookmark-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.bookmark-item__time {
+  flex-shrink: 0;
+  color: #00ff88;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  min-width: 50px;
+}
+
+.bookmark-item__note {
+  flex: 1;
+  color: #aec2d7;
+  font-size: 0.88rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bookmark-item__remove {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: transparent;
+  color: #90a7bf;
+  font-size: 0.75rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.bookmark-item__remove:hover {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff9a9a;
+}
+
+.is-active-btn {
+  border-color: rgba(0, 255, 136, 0.4) !important;
+  color: #00ff88 !important;
+}
+
 @media (max-width: 1024px) {
   .hero-section__grid,
   .detail-hero,
   .detail-layout,
   .player-layout,
-  .roadmap-panel {
+  .roadmap-panel,
+  .cart-layout {
     grid-template-columns: 1fr;
   }
 
   .course-grid,
-  .stats-grid {
+  .stats-grid,
+  .my-learning-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -942,8 +1558,11 @@ img {
 
 @media (max-width: 760px) {
   .site-header__nav,
-  .site-header__actions .button--ghost,
   .site-footer__copy {
+    display: none;
+  }
+
+  .site-header__username {
     display: none;
   }
 
@@ -958,7 +1577,8 @@ img {
   .hero-grid,
   .stat-strip,
   .course-grid,
-  .stats-grid {
+  .stats-grid,
+  .my-learning-grid {
     grid-template-columns: 1fr;
   }
 
@@ -973,5 +1593,13 @@ img {
   .player-video,
   .player-video__element {
     min-height: 280px;
+  }
+
+  .auth-card {
+    padding: 24px;
+  }
+
+  .cart-summary-panel {
+    position: static;
   }
 }

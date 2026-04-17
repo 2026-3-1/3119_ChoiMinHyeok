@@ -14,12 +14,12 @@ import * as process from 'node:process'
 import * as path from 'node:path'
 
 import * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums.js"
-import * as $Class from "./internal/class.js"
-import * as Prisma from "./internal/prismaNamespace.js"
+import * as $Enums from "./enums"
+import * as $Class from "./internal/class"
+import * as Prisma from "./internal/prismaNamespace"
 
-export * as $Enums from './enums.js'
-export * from "./enums.js"
+export * as $Enums from './enums'
+export * from "./enums"
 /**
  * ## Prisma Client
  * 
@@ -29,8 +29,8 @@ export * from "./enums.js"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Lectures
- * const lectures = await prisma.lectures.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.users.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -40,25 +40,60 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model lectures
+ * Model users
  * 
  */
-export type lectures = Prisma.lecturesModel
+export type users = Prisma.usersModel
 /**
- * Model chapter
+ * Model categories
  * 
  */
-export type chapter = Prisma.chapterModel
+export type categories = Prisma.categoriesModel
 /**
  * Model courses
  * 
  */
 export type courses = Prisma.coursesModel
 /**
- * Model categories
+ * Model chapter
  * 
  */
-export type categories = Prisma.categoriesModel
+export type chapter = Prisma.chapterModel
+/**
+ * Model lectures
+ * 
+ */
+export type lectures = Prisma.lecturesModel
+/**
+ * Model cart_items
+ * 
+ */
+export type cart_items = Prisma.cart_itemsModel
+/**
+ * Model orders
+ * 
+ */
+export type orders = Prisma.ordersModel
+/**
+ * Model order_items
+ * 
+ */
+export type order_items = Prisma.order_itemsModel
+/**
+ * Model payment_transactions
+ * 
+ */
+export type payment_transactions = Prisma.payment_transactionsModel
+/**
+ * Model enrollments
+ * 
+ */
+export type enrollments = Prisma.enrollmentsModel
+/**
+ * Model enrollment_history
+ * 
+ */
+export type enrollment_history = Prisma.enrollment_historyModel
 /**
  * Model course_comment
  * 
@@ -69,3 +104,18 @@ export type course_comment = Prisma.course_commentModel
  * 
  */
 export type lecture_comment = Prisma.lecture_commentModel
+/**
+ * Model lectures_progress
+ * 
+ */
+export type lectures_progress = Prisma.lectures_progressModel
+/**
+ * Model lecture_playback_history
+ * 
+ */
+export type lecture_playback_history = Prisma.lecture_playback_historyModel
+/**
+ * Model lecture_bookmark
+ * 
+ */
+export type lecture_bookmark = Prisma.lecture_bookmarkModel

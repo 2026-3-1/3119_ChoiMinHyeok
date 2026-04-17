@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -51,12 +51,22 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  lectures: 'lectures',
-  chapter: 'chapter',
-  courses: 'courses',
+  users: 'users',
   categories: 'categories',
+  courses: 'courses',
+  chapter: 'chapter',
+  lectures: 'lectures',
+  cart_items: 'cart_items',
+  orders: 'orders',
+  order_items: 'order_items',
+  payment_transactions: 'payment_transactions',
+  enrollments: 'enrollments',
+  enrollment_history: 'enrollment_history',
   course_comment: 'course_comment',
-  lecture_comment: 'lecture_comment'
+  lecture_comment: 'lecture_comment',
+  lectures_progress: 'lectures_progress',
+  lecture_playback_history: 'lecture_playback_history',
+  lecture_bookmark: 'lecture_bookmark'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,6 +85,62 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const UsersScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  roles: 'roles',
+  description: 'description',
+  updated_at: 'updated_at',
+  created_at: 'created_at'
+} as const
+
+export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
+
+
+export const CategoriesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  created_at: 'created_at'
+} as const
+
+export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
+
+
+export const CoursesScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  instructor_id: 'instructor_id',
+  thumbnail: 'thumbnail',
+  difficulty: 'difficulty',
+  category_id: 'category_id',
+  slug: 'slug',
+  price: 'price',
+  rating: 'rating',
+  max_capacity: 'max_capacity',
+  min_enrollment: 'min_enrollment',
+  status: 'status',
+  canceled_at: 'canceled_at',
+  cancel_reason: 'cancel_reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CoursesScalarFieldEnum = (typeof CoursesScalarFieldEnum)[keyof typeof CoursesScalarFieldEnum]
+
+
+export const ChapterScalarFieldEnum = {
+  id: 'id',
+  course_id: 'course_id',
+  title: 'title',
+  position: 'position'
+} as const
+
+export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
+
+
 export const LecturesScalarFieldEnum = {
   id: 'id',
   chapter_id: 'chapter_id',
@@ -90,48 +156,113 @@ export const LecturesScalarFieldEnum = {
 export type LecturesScalarFieldEnum = (typeof LecturesScalarFieldEnum)[keyof typeof LecturesScalarFieldEnum]
 
 
-export const ChapterScalarFieldEnum = {
+export const Cart_itemsScalarFieldEnum = {
   id: 'id',
+  user_id: 'user_id',
   course_id: 'course_id',
-  title: 'title',
-  position: 'position'
+  status: 'status',
+  added_at: 'added_at',
+  updated_at: 'updated_at',
+  checked_out_at: 'checked_out_at'
 } as const
 
-export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
+export type Cart_itemsScalarFieldEnum = (typeof Cart_itemsScalarFieldEnum)[keyof typeof Cart_itemsScalarFieldEnum]
 
 
-export const CoursesScalarFieldEnum = {
+export const OrdersScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  description: 'description',
-  instructor_id: 'instructor_id',
-  thumbnail: 'thumbnail',
-  difficulty: 'difficulty',
-  category_id: 'category_id',
-  slug: 'slug',
+  user_id: 'user_id',
+  order_number: 'order_number',
+  provider: 'provider',
+  provider_order_id: 'provider_order_id',
+  status: 'status',
+  total_amount: 'total_amount',
+  paid_amount: 'paid_amount',
+  refunded_amount: 'refunded_amount',
+  created_at: 'created_at',
+  paid_at: 'paid_at',
+  canceled_at: 'canceled_at',
+  updated_at: 'updated_at'
+} as const
+
+export type OrdersScalarFieldEnum = (typeof OrdersScalarFieldEnum)[keyof typeof OrdersScalarFieldEnum]
+
+
+export const Order_itemsScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  user_id: 'user_id',
+  course_id: 'course_id',
+  price: 'price',
+  status: 'status',
+  enrolled_at: 'enrolled_at',
+  canceled_at: 'canceled_at',
+  refund_amount: 'refund_amount',
+  cancellation_reason: 'cancellation_reason',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
-export type CoursesScalarFieldEnum = (typeof CoursesScalarFieldEnum)[keyof typeof CoursesScalarFieldEnum]
+export type Order_itemsScalarFieldEnum = (typeof Order_itemsScalarFieldEnum)[keyof typeof Order_itemsScalarFieldEnum]
 
 
-export const CategoriesScalarFieldEnum = {
+export const Payment_transactionsScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  order_id: 'order_id',
+  user_id: 'user_id',
+  provider: 'provider',
+  transaction_type: 'transaction_type',
+  status: 'status',
+  amount: 'amount',
+  payment_key: 'payment_key',
+  transaction_key: 'transaction_key',
+  reason: 'reason',
+  metadata: 'metadata',
+  created_at: 'created_at',
+  approved_at: 'approved_at',
+  canceled_at: 'canceled_at'
+} as const
+
+export type Payment_transactionsScalarFieldEnum = (typeof Payment_transactionsScalarFieldEnum)[keyof typeof Payment_transactionsScalarFieldEnum]
+
+
+export const EnrollmentsScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  course_id: 'course_id',
+  order_item_id: 'order_item_id',
+  status: 'status',
+  is_canceled: 'is_canceled',
+  enrolled_at: 'enrolled_at',
+  canceled_at: 'canceled_at',
+  cancellation_reason: 'cancellation_reason'
+} as const
+
+export type EnrollmentsScalarFieldEnum = (typeof EnrollmentsScalarFieldEnum)[keyof typeof EnrollmentsScalarFieldEnum]
+
+
+export const Enrollment_historyScalarFieldEnum = {
+  id: 'id',
+  enrollment_id: 'enrollment_id',
+  user_id: 'user_id',
+  course_id: 'course_id',
+  event_type: 'event_type',
+  reason: 'reason',
   created_at: 'created_at'
 } as const
 
-export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
+export type Enrollment_historyScalarFieldEnum = (typeof Enrollment_historyScalarFieldEnum)[keyof typeof Enrollment_historyScalarFieldEnum]
 
 
 export const Course_commentScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  star: 'star',
   user_id: 'user_id',
   course_id: 'course_id',
-  create_at: 'create_at'
+  create_at: 'create_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Course_commentScalarFieldEnum = (typeof Course_commentScalarFieldEnum)[keyof typeof Course_commentScalarFieldEnum]
@@ -141,12 +272,54 @@ export const Lecture_commentScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  start: 'start',
   user_id: 'user_id',
   lecture_id: 'lecture_id',
   create_at: 'create_at'
 } as const
 
 export type Lecture_commentScalarFieldEnum = (typeof Lecture_commentScalarFieldEnum)[keyof typeof Lecture_commentScalarFieldEnum]
+
+
+export const Lectures_progressScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  lecture_id: 'lecture_id',
+  last_position: 'last_position',
+  watched_seconds: 'watched_seconds',
+  progress: 'progress',
+  is_completed: 'is_completed',
+  updated_at: 'updated_at'
+} as const
+
+export type Lectures_progressScalarFieldEnum = (typeof Lectures_progressScalarFieldEnum)[keyof typeof Lectures_progressScalarFieldEnum]
+
+
+export const Lecture_playback_historyScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  lecture_id: 'lecture_id',
+  event_type: 'event_type',
+  from_second: 'from_second',
+  to_second: 'to_second',
+  progress: 'progress',
+  created_at: 'created_at'
+} as const
+
+export type Lecture_playback_historyScalarFieldEnum = (typeof Lecture_playback_historyScalarFieldEnum)[keyof typeof Lecture_playback_historyScalarFieldEnum]
+
+
+export const Lecture_bookmarkScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  lecture_id: 'lecture_id',
+  note: 'note',
+  position: 'position',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Lecture_bookmarkScalarFieldEnum = (typeof Lecture_bookmarkScalarFieldEnum)[keyof typeof Lecture_bookmarkScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -157,10 +330,35 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

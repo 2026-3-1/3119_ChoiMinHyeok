@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model lectures
@@ -261,6 +261,10 @@ export type lecturesWhereInput = {
   is_published?: Prisma.BoolFilter<"lectures"> | boolean
   created_at?: Prisma.DateTimeFilter<"lectures"> | Date | string
   chapters?: Prisma.XOR<Prisma.ChapterScalarRelationFilter, Prisma.chapterWhereInput>
+  progresses?: Prisma.Lectures_progressListRelationFilter
+  playback_history?: Prisma.Lecture_playback_historyListRelationFilter
+  bookmarks?: Prisma.Lecture_bookmarkListRelationFilter
+  lecture_comments?: Prisma.Lecture_commentListRelationFilter
 }
 
 export type lecturesOrderByWithRelationInput = {
@@ -274,6 +278,10 @@ export type lecturesOrderByWithRelationInput = {
   is_published?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   chapters?: Prisma.chapterOrderByWithRelationInput
+  progresses?: Prisma.lectures_progressOrderByRelationAggregateInput
+  playback_history?: Prisma.lecture_playback_historyOrderByRelationAggregateInput
+  bookmarks?: Prisma.lecture_bookmarkOrderByRelationAggregateInput
+  lecture_comments?: Prisma.lecture_commentOrderByRelationAggregateInput
 }
 
 export type lecturesWhereUniqueInput = Prisma.AtLeast<{
@@ -291,6 +299,10 @@ export type lecturesWhereUniqueInput = Prisma.AtLeast<{
   is_published?: Prisma.BoolFilter<"lectures"> | boolean
   created_at?: Prisma.DateTimeFilter<"lectures"> | Date | string
   chapters?: Prisma.XOR<Prisma.ChapterScalarRelationFilter, Prisma.chapterWhereInput>
+  progresses?: Prisma.Lectures_progressListRelationFilter
+  playback_history?: Prisma.Lecture_playback_historyListRelationFilter
+  bookmarks?: Prisma.Lecture_bookmarkListRelationFilter
+  lecture_comments?: Prisma.Lecture_commentListRelationFilter
 }, "id" | "chapter_id_position">
 
 export type lecturesOrderByWithAggregationInput = {
@@ -334,6 +346,10 @@ export type lecturesCreateInput = {
   is_published?: boolean
   created_at?: Date | string
   chapters: Prisma.chapterCreateNestedOneWithoutLecturesInput
+  progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateInput = {
@@ -346,6 +362,10 @@ export type lecturesUncheckedCreateInput = {
   position: number
   is_published?: boolean
   created_at?: Date | string
+  progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUpdateInput = {
@@ -357,6 +377,10 @@ export type lecturesUpdateInput = {
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chapters?: Prisma.chapterUpdateOneRequiredWithoutLecturesNestedInput
+  progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateInput = {
@@ -369,6 +393,10 @@ export type lecturesUncheckedUpdateInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesCreateManyInput = {
@@ -403,6 +431,16 @@ export type lecturesUncheckedUpdateManyInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LecturesListRelationFilter = {
+  every?: Prisma.lecturesWhereInput
+  some?: Prisma.lecturesWhereInput
+  none?: Prisma.lecturesWhereInput
+}
+
+export type lecturesOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type lecturesChapter_idPositionCompoundUniqueInput = {
@@ -460,34 +498,9 @@ export type lecturesSumOrderByAggregateInput = {
   position?: Prisma.SortOrder
 }
 
-export type LecturesListRelationFilter = {
-  every?: Prisma.lecturesWhereInput
-  some?: Prisma.lecturesWhereInput
-  none?: Prisma.lecturesWhereInput
-}
-
-export type lecturesOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type LecturesScalarRelationFilter = {
+  is?: Prisma.lecturesWhereInput
+  isNot?: Prisma.lecturesWhereInput
 }
 
 export type lecturesCreateNestedManyWithoutChaptersInput = {
@@ -532,6 +545,66 @@ export type lecturesUncheckedUpdateManyWithoutChaptersNestedInput = {
   deleteMany?: Prisma.lecturesScalarWhereInput | Prisma.lecturesScalarWhereInput[]
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type lecturesCreateNestedOneWithoutLecture_commentsInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutLecture_commentsInput, Prisma.lecturesUncheckedCreateWithoutLecture_commentsInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutLecture_commentsInput
+  connect?: Prisma.lecturesWhereUniqueInput
+}
+
+export type lecturesUpdateOneRequiredWithoutLecture_commentsNestedInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutLecture_commentsInput, Prisma.lecturesUncheckedCreateWithoutLecture_commentsInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutLecture_commentsInput
+  upsert?: Prisma.lecturesUpsertWithoutLecture_commentsInput
+  connect?: Prisma.lecturesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lecturesUpdateToOneWithWhereWithoutLecture_commentsInput, Prisma.lecturesUpdateWithoutLecture_commentsInput>, Prisma.lecturesUncheckedUpdateWithoutLecture_commentsInput>
+}
+
+export type lecturesCreateNestedOneWithoutProgressesInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutProgressesInput, Prisma.lecturesUncheckedCreateWithoutProgressesInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutProgressesInput
+  connect?: Prisma.lecturesWhereUniqueInput
+}
+
+export type lecturesUpdateOneRequiredWithoutProgressesNestedInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutProgressesInput, Prisma.lecturesUncheckedCreateWithoutProgressesInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutProgressesInput
+  upsert?: Prisma.lecturesUpsertWithoutProgressesInput
+  connect?: Prisma.lecturesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lecturesUpdateToOneWithWhereWithoutProgressesInput, Prisma.lecturesUpdateWithoutProgressesInput>, Prisma.lecturesUncheckedUpdateWithoutProgressesInput>
+}
+
+export type lecturesCreateNestedOneWithoutPlayback_historyInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutPlayback_historyInput, Prisma.lecturesUncheckedCreateWithoutPlayback_historyInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutPlayback_historyInput
+  connect?: Prisma.lecturesWhereUniqueInput
+}
+
+export type lecturesUpdateOneRequiredWithoutPlayback_historyNestedInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutPlayback_historyInput, Prisma.lecturesUncheckedCreateWithoutPlayback_historyInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutPlayback_historyInput
+  upsert?: Prisma.lecturesUpsertWithoutPlayback_historyInput
+  connect?: Prisma.lecturesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lecturesUpdateToOneWithWhereWithoutPlayback_historyInput, Prisma.lecturesUpdateWithoutPlayback_historyInput>, Prisma.lecturesUncheckedUpdateWithoutPlayback_historyInput>
+}
+
+export type lecturesCreateNestedOneWithoutBookmarksInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutBookmarksInput, Prisma.lecturesUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutBookmarksInput
+  connect?: Prisma.lecturesWhereUniqueInput
+}
+
+export type lecturesUpdateOneRequiredWithoutBookmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutBookmarksInput, Prisma.lecturesUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutBookmarksInput
+  upsert?: Prisma.lecturesUpsertWithoutBookmarksInput
+  connect?: Prisma.lecturesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lecturesUpdateToOneWithWhereWithoutBookmarksInput, Prisma.lecturesUpdateWithoutBookmarksInput>, Prisma.lecturesUncheckedUpdateWithoutBookmarksInput>
+}
+
 export type lecturesCreateWithoutChaptersInput = {
   title: string
   video_url: string
@@ -540,6 +613,10 @@ export type lecturesCreateWithoutChaptersInput = {
   position: number
   is_published?: boolean
   created_at?: Date | string
+  progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateWithoutChaptersInput = {
@@ -551,6 +628,10 @@ export type lecturesUncheckedCreateWithoutChaptersInput = {
   position: number
   is_published?: boolean
   created_at?: Date | string
+  progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesCreateOrConnectWithoutChaptersInput = {
@@ -594,6 +675,302 @@ export type lecturesScalarWhereInput = {
   created_at?: Prisma.DateTimeFilter<"lectures"> | Date | string
 }
 
+export type lecturesCreateWithoutLecture_commentsInput = {
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  chapters: Prisma.chapterCreateNestedOneWithoutLecturesInput
+  progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesUncheckedCreateWithoutLecture_commentsInput = {
+  id?: number
+  chapter_id: number
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesCreateOrConnectWithoutLecture_commentsInput = {
+  where: Prisma.lecturesWhereUniqueInput
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutLecture_commentsInput, Prisma.lecturesUncheckedCreateWithoutLecture_commentsInput>
+}
+
+export type lecturesUpsertWithoutLecture_commentsInput = {
+  update: Prisma.XOR<Prisma.lecturesUpdateWithoutLecture_commentsInput, Prisma.lecturesUncheckedUpdateWithoutLecture_commentsInput>
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutLecture_commentsInput, Prisma.lecturesUncheckedCreateWithoutLecture_commentsInput>
+  where?: Prisma.lecturesWhereInput
+}
+
+export type lecturesUpdateToOneWithWhereWithoutLecture_commentsInput = {
+  where?: Prisma.lecturesWhereInput
+  data: Prisma.XOR<Prisma.lecturesUpdateWithoutLecture_commentsInput, Prisma.lecturesUncheckedUpdateWithoutLecture_commentsInput>
+}
+
+export type lecturesUpdateWithoutLecture_commentsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUpdateOneRequiredWithoutLecturesNestedInput
+  progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesUncheckedUpdateWithoutLecture_commentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesCreateWithoutProgressesInput = {
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  chapters: Prisma.chapterCreateNestedOneWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesUncheckedCreateWithoutProgressesInput = {
+  id?: number
+  chapter_id: number
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesCreateOrConnectWithoutProgressesInput = {
+  where: Prisma.lecturesWhereUniqueInput
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutProgressesInput, Prisma.lecturesUncheckedCreateWithoutProgressesInput>
+}
+
+export type lecturesUpsertWithoutProgressesInput = {
+  update: Prisma.XOR<Prisma.lecturesUpdateWithoutProgressesInput, Prisma.lecturesUncheckedUpdateWithoutProgressesInput>
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutProgressesInput, Prisma.lecturesUncheckedCreateWithoutProgressesInput>
+  where?: Prisma.lecturesWhereInput
+}
+
+export type lecturesUpdateToOneWithWhereWithoutProgressesInput = {
+  where?: Prisma.lecturesWhereInput
+  data: Prisma.XOR<Prisma.lecturesUpdateWithoutProgressesInput, Prisma.lecturesUncheckedUpdateWithoutProgressesInput>
+}
+
+export type lecturesUpdateWithoutProgressesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUpdateOneRequiredWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesUncheckedUpdateWithoutProgressesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesCreateWithoutPlayback_historyInput = {
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  chapters: Prisma.chapterCreateNestedOneWithoutLecturesInput
+  progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesUncheckedCreateWithoutPlayback_historyInput = {
+  id?: number
+  chapter_id: number
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesCreateOrConnectWithoutPlayback_historyInput = {
+  where: Prisma.lecturesWhereUniqueInput
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutPlayback_historyInput, Prisma.lecturesUncheckedCreateWithoutPlayback_historyInput>
+}
+
+export type lecturesUpsertWithoutPlayback_historyInput = {
+  update: Prisma.XOR<Prisma.lecturesUpdateWithoutPlayback_historyInput, Prisma.lecturesUncheckedUpdateWithoutPlayback_historyInput>
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutPlayback_historyInput, Prisma.lecturesUncheckedCreateWithoutPlayback_historyInput>
+  where?: Prisma.lecturesWhereInput
+}
+
+export type lecturesUpdateToOneWithWhereWithoutPlayback_historyInput = {
+  where?: Prisma.lecturesWhereInput
+  data: Prisma.XOR<Prisma.lecturesUpdateWithoutPlayback_historyInput, Prisma.lecturesUncheckedUpdateWithoutPlayback_historyInput>
+}
+
+export type lecturesUpdateWithoutPlayback_historyInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUpdateOneRequiredWithoutLecturesNestedInput
+  progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesUncheckedUpdateWithoutPlayback_historyInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesCreateWithoutBookmarksInput = {
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  chapters: Prisma.chapterCreateNestedOneWithoutLecturesInput
+  progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesUncheckedCreateWithoutBookmarksInput = {
+  id?: number
+  chapter_id: number
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesCreateOrConnectWithoutBookmarksInput = {
+  where: Prisma.lecturesWhereUniqueInput
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutBookmarksInput, Prisma.lecturesUncheckedCreateWithoutBookmarksInput>
+}
+
+export type lecturesUpsertWithoutBookmarksInput = {
+  update: Prisma.XOR<Prisma.lecturesUpdateWithoutBookmarksInput, Prisma.lecturesUncheckedUpdateWithoutBookmarksInput>
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutBookmarksInput, Prisma.lecturesUncheckedCreateWithoutBookmarksInput>
+  where?: Prisma.lecturesWhereInput
+}
+
+export type lecturesUpdateToOneWithWhereWithoutBookmarksInput = {
+  where?: Prisma.lecturesWhereInput
+  data: Prisma.XOR<Prisma.lecturesUpdateWithoutBookmarksInput, Prisma.lecturesUncheckedUpdateWithoutBookmarksInput>
+}
+
+export type lecturesUpdateWithoutBookmarksInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUpdateOneRequiredWithoutLecturesNestedInput
+  progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesUncheckedUpdateWithoutBookmarksInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+}
+
 export type lecturesCreateManyChaptersInput = {
   id?: number
   title: string
@@ -613,6 +990,10 @@ export type lecturesUpdateWithoutChaptersInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateWithoutChaptersInput = {
@@ -624,6 +1005,10 @@ export type lecturesUncheckedUpdateWithoutChaptersInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateManyWithoutChaptersInput = {
@@ -638,6 +1023,62 @@ export type lecturesUncheckedUpdateManyWithoutChaptersInput = {
 }
 
 
+/**
+ * Count Type LecturesCountOutputType
+ */
+
+export type LecturesCountOutputType = {
+  progresses: number
+  playback_history: number
+  bookmarks: number
+  lecture_comments: number
+}
+
+export type LecturesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  progresses?: boolean | LecturesCountOutputTypeCountProgressesArgs
+  playback_history?: boolean | LecturesCountOutputTypeCountPlayback_historyArgs
+  bookmarks?: boolean | LecturesCountOutputTypeCountBookmarksArgs
+  lecture_comments?: boolean | LecturesCountOutputTypeCountLecture_commentsArgs
+}
+
+/**
+ * LecturesCountOutputType without action
+ */
+export type LecturesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LecturesCountOutputType
+   */
+  select?: Prisma.LecturesCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LecturesCountOutputType without action
+ */
+export type LecturesCountOutputTypeCountProgressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lectures_progressWhereInput
+}
+
+/**
+ * LecturesCountOutputType without action
+ */
+export type LecturesCountOutputTypeCountPlayback_historyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lecture_playback_historyWhereInput
+}
+
+/**
+ * LecturesCountOutputType without action
+ */
+export type LecturesCountOutputTypeCountBookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lecture_bookmarkWhereInput
+}
+
+/**
+ * LecturesCountOutputType without action
+ */
+export type LecturesCountOutputTypeCountLecture_commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lecture_commentWhereInput
+}
+
 
 export type lecturesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -650,6 +1091,11 @@ export type lecturesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   is_published?: boolean
   created_at?: boolean
   chapters?: boolean | Prisma.chapterDefaultArgs<ExtArgs>
+  progresses?: boolean | Prisma.lectures$progressesArgs<ExtArgs>
+  playback_history?: boolean | Prisma.lectures$playback_historyArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.lectures$bookmarksArgs<ExtArgs>
+  lecture_comments?: boolean | Prisma.lectures$lecture_commentsArgs<ExtArgs>
+  _count?: boolean | Prisma.LecturesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lectures"]>
 
 export type lecturesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -693,6 +1139,11 @@ export type lecturesSelectScalar = {
 export type lecturesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chapter_id" | "title" | "video_url" | "thumbnail_url" | "duration" | "position" | "is_published" | "created_at", ExtArgs["result"]["lectures"]>
 export type lecturesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapters?: boolean | Prisma.chapterDefaultArgs<ExtArgs>
+  progresses?: boolean | Prisma.lectures$progressesArgs<ExtArgs>
+  playback_history?: boolean | Prisma.lectures$playback_historyArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.lectures$bookmarksArgs<ExtArgs>
+  lecture_comments?: boolean | Prisma.lectures$lecture_commentsArgs<ExtArgs>
+  _count?: boolean | Prisma.LecturesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type lecturesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chapters?: boolean | Prisma.chapterDefaultArgs<ExtArgs>
@@ -705,6 +1156,10 @@ export type $lecturesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "lectures"
   objects: {
     chapters: Prisma.$chapterPayload<ExtArgs>
+    progresses: Prisma.$lectures_progressPayload<ExtArgs>[]
+    playback_history: Prisma.$lecture_playback_historyPayload<ExtArgs>[]
+    bookmarks: Prisma.$lecture_bookmarkPayload<ExtArgs>[]
+    lecture_comments: Prisma.$lecture_commentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1111,6 +1566,10 @@ readonly fields: lecturesFieldRefs;
 export interface Prisma__lecturesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   chapters<T extends Prisma.chapterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.chapterDefaultArgs<ExtArgs>>): Prisma.Prisma__chapterClient<runtime.Types.Result.GetResult<Prisma.$chapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  progresses<T extends Prisma.lectures$progressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lectures_progressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  playback_history<T extends Prisma.lectures$playback_historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$playback_historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_playback_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bookmarks<T extends Prisma.lectures$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_bookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lecture_comments<T extends Prisma.lectures$lecture_commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$lecture_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_commentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1547,6 +2006,102 @@ export type lecturesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many lectures to delete.
    */
   limit?: number
+}
+
+/**
+ * lectures.progresses
+ */
+export type lectures$progressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the lectures_progress
+   */
+  select?: Prisma.lectures_progressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the lectures_progress
+   */
+  omit?: Prisma.lectures_progressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.lectures_progressInclude<ExtArgs> | null
+  where?: Prisma.lectures_progressWhereInput
+  orderBy?: Prisma.lectures_progressOrderByWithRelationInput | Prisma.lectures_progressOrderByWithRelationInput[]
+  cursor?: Prisma.lectures_progressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Lectures_progressScalarFieldEnum | Prisma.Lectures_progressScalarFieldEnum[]
+}
+
+/**
+ * lectures.playback_history
+ */
+export type lectures$playback_historyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the lecture_playback_history
+   */
+  select?: Prisma.lecture_playback_historySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the lecture_playback_history
+   */
+  omit?: Prisma.lecture_playback_historyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.lecture_playback_historyInclude<ExtArgs> | null
+  where?: Prisma.lecture_playback_historyWhereInput
+  orderBy?: Prisma.lecture_playback_historyOrderByWithRelationInput | Prisma.lecture_playback_historyOrderByWithRelationInput[]
+  cursor?: Prisma.lecture_playback_historyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Lecture_playback_historyScalarFieldEnum | Prisma.Lecture_playback_historyScalarFieldEnum[]
+}
+
+/**
+ * lectures.bookmarks
+ */
+export type lectures$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the lecture_bookmark
+   */
+  select?: Prisma.lecture_bookmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the lecture_bookmark
+   */
+  omit?: Prisma.lecture_bookmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.lecture_bookmarkInclude<ExtArgs> | null
+  where?: Prisma.lecture_bookmarkWhereInput
+  orderBy?: Prisma.lecture_bookmarkOrderByWithRelationInput | Prisma.lecture_bookmarkOrderByWithRelationInput[]
+  cursor?: Prisma.lecture_bookmarkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Lecture_bookmarkScalarFieldEnum | Prisma.Lecture_bookmarkScalarFieldEnum[]
+}
+
+/**
+ * lectures.lecture_comments
+ */
+export type lectures$lecture_commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the lecture_comment
+   */
+  select?: Prisma.lecture_commentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the lecture_comment
+   */
+  omit?: Prisma.lecture_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.lecture_commentInclude<ExtArgs> | null
+  where?: Prisma.lecture_commentWhereInput
+  orderBy?: Prisma.lecture_commentOrderByWithRelationInput | Prisma.lecture_commentOrderByWithRelationInput[]
+  cursor?: Prisma.lecture_commentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Lecture_commentScalarFieldEnum | Prisma.Lecture_commentScalarFieldEnum[]
 }
 
 /**

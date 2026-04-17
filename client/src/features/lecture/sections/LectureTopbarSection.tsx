@@ -1,4 +1,5 @@
-﻿import { Link } from "react-router-dom";
+﻿import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 type LectureTopbarSectionProps = {
   courseId?: string;
@@ -9,6 +10,7 @@ type LectureTopbarSectionProps = {
   canMoveNext: boolean;
   onPrevLecture: () => void;
   onNextLecture: () => void;
+  extraActions?: ReactNode;
 };
 
 export function LectureTopbarSection({
@@ -20,6 +22,7 @@ export function LectureTopbarSection({
   canMoveNext,
   onPrevLecture,
   onNextLecture,
+  extraActions,
 }: LectureTopbarSectionProps) {
   return (
     <header className="player-topbar">
@@ -34,6 +37,7 @@ export function LectureTopbarSection({
       </div>
 
       <div className="player-topbar__actions">
+        {extraActions}
         <button
           type="button"
           className="button button--ghost"

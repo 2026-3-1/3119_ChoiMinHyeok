@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model chapter
@@ -313,9 +313,14 @@ export type chapterUncheckedUpdateManyInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type ChapterScalarRelationFilter = {
-  is?: Prisma.chapterWhereInput
-  isNot?: Prisma.chapterWhereInput
+export type ChapterListRelationFilter = {
+  every?: Prisma.chapterWhereInput
+  some?: Prisma.chapterWhereInput
+  none?: Prisma.chapterWhereInput
+}
+
+export type chapterOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type chapterCourse_idPositionCompoundUniqueInput = {
@@ -356,28 +361,9 @@ export type chapterSumOrderByAggregateInput = {
   position?: Prisma.SortOrder
 }
 
-export type ChapterListRelationFilter = {
-  every?: Prisma.chapterWhereInput
-  some?: Prisma.chapterWhereInput
-  none?: Prisma.chapterWhereInput
-}
-
-export type chapterOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
-export type chapterCreateNestedOneWithoutLecturesInput = {
-  create?: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
-  connectOrCreate?: Prisma.chapterCreateOrConnectWithoutLecturesInput
-  connect?: Prisma.chapterWhereUniqueInput
-}
-
-export type chapterUpdateOneRequiredWithoutLecturesNestedInput = {
-  create?: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
-  connectOrCreate?: Prisma.chapterCreateOrConnectWithoutLecturesInput
-  upsert?: Prisma.chapterUpsertWithoutLecturesInput
-  connect?: Prisma.chapterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.chapterUpdateToOneWithWhereWithoutLecturesInput, Prisma.chapterUpdateWithoutLecturesInput>, Prisma.chapterUncheckedUpdateWithoutLecturesInput>
+export type ChapterScalarRelationFilter = {
+  is?: Prisma.chapterWhereInput
+  isNot?: Prisma.chapterWhereInput
 }
 
 export type chapterCreateNestedManyWithoutCoursesInput = {
@@ -422,46 +408,18 @@ export type chapterUncheckedUpdateManyWithoutCoursesNestedInput = {
   deleteMany?: Prisma.chapterScalarWhereInput | Prisma.chapterScalarWhereInput[]
 }
 
-export type chapterCreateWithoutLecturesInput = {
-  title: string
-  position: number
-  courses: Prisma.coursesCreateNestedOneWithoutChaptersInput
+export type chapterCreateNestedOneWithoutLecturesInput = {
+  create?: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
+  connectOrCreate?: Prisma.chapterCreateOrConnectWithoutLecturesInput
+  connect?: Prisma.chapterWhereUniqueInput
 }
 
-export type chapterUncheckedCreateWithoutLecturesInput = {
-  id?: number
-  course_id: number
-  title: string
-  position: number
-}
-
-export type chapterCreateOrConnectWithoutLecturesInput = {
-  where: Prisma.chapterWhereUniqueInput
-  create: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
-}
-
-export type chapterUpsertWithoutLecturesInput = {
-  update: Prisma.XOR<Prisma.chapterUpdateWithoutLecturesInput, Prisma.chapterUncheckedUpdateWithoutLecturesInput>
-  create: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
-  where?: Prisma.chapterWhereInput
-}
-
-export type chapterUpdateToOneWithWhereWithoutLecturesInput = {
-  where?: Prisma.chapterWhereInput
-  data: Prisma.XOR<Prisma.chapterUpdateWithoutLecturesInput, Prisma.chapterUncheckedUpdateWithoutLecturesInput>
-}
-
-export type chapterUpdateWithoutLecturesInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
-  courses?: Prisma.coursesUpdateOneRequiredWithoutChaptersNestedInput
-}
-
-export type chapterUncheckedUpdateWithoutLecturesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  course_id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  position?: Prisma.IntFieldUpdateOperationsInput | number
+export type chapterUpdateOneRequiredWithoutLecturesNestedInput = {
+  create?: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
+  connectOrCreate?: Prisma.chapterCreateOrConnectWithoutLecturesInput
+  upsert?: Prisma.chapterUpsertWithoutLecturesInput
+  connect?: Prisma.chapterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.chapterUpdateToOneWithWhereWithoutLecturesInput, Prisma.chapterUpdateWithoutLecturesInput>, Prisma.chapterUncheckedUpdateWithoutLecturesInput>
 }
 
 export type chapterCreateWithoutCoursesInput = {
@@ -511,6 +469,48 @@ export type chapterScalarWhereInput = {
   course_id?: Prisma.IntFilter<"chapter"> | number
   title?: Prisma.StringFilter<"chapter"> | string
   position?: Prisma.IntFilter<"chapter"> | number
+}
+
+export type chapterCreateWithoutLecturesInput = {
+  title: string
+  position: number
+  courses: Prisma.coursesCreateNestedOneWithoutChaptersInput
+}
+
+export type chapterUncheckedCreateWithoutLecturesInput = {
+  id?: number
+  course_id: number
+  title: string
+  position: number
+}
+
+export type chapterCreateOrConnectWithoutLecturesInput = {
+  where: Prisma.chapterWhereUniqueInput
+  create: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
+}
+
+export type chapterUpsertWithoutLecturesInput = {
+  update: Prisma.XOR<Prisma.chapterUpdateWithoutLecturesInput, Prisma.chapterUncheckedUpdateWithoutLecturesInput>
+  create: Prisma.XOR<Prisma.chapterCreateWithoutLecturesInput, Prisma.chapterUncheckedCreateWithoutLecturesInput>
+  where?: Prisma.chapterWhereInput
+}
+
+export type chapterUpdateToOneWithWhereWithoutLecturesInput = {
+  where?: Prisma.chapterWhereInput
+  data: Prisma.XOR<Prisma.chapterUpdateWithoutLecturesInput, Prisma.chapterUncheckedUpdateWithoutLecturesInput>
+}
+
+export type chapterUpdateWithoutLecturesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  courses?: Prisma.coursesUpdateOneRequiredWithoutChaptersNestedInput
+}
+
+export type chapterUncheckedUpdateWithoutLecturesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  course_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type chapterCreateManyCoursesInput = {

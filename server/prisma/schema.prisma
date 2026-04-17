@@ -1,12 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "./generated/prisma"
+  provider     = "prisma-client"
+  output       = "./generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -20,82 +14,367 @@ enum Difficulty {
   HARD
 }
 
-model lectures {
-  id                Int @id @default(autoincrement())
-  chapter_id        Int
-  title             String
-  video_url         String
-  thumbnail_url     String
-  duration          Int
-  position          Int
-  is_published      Boolean  @default(false)
-  created_at        DateTime @default(now())
-
-  chapters          chapter @relation(fields: [chapter_id], references: [id])
-
-  @@unique([chapter_id, position])
+enum Roles {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
 }
 
-model chapter {
-  id            Int @id @default(autoincrement())
-  course_id     Int
-  title         String
-  position      Int
+enum CourseLifecycleStatus {
+  OPEN
+  CANCELED
+}
 
-  courses       courses @relation(fields: [course_id], references: [id])
+enum CartItemStatus {
+  ACTIVE
+  CHECKED_OUT
+  REMOVED
+}
 
-  lectures      lectures[]
+enum EnrollmentStatus {
+  ACTIVE
+  CANCELED
+  REFUNDED
+}
 
-  @@unique([course_id, position])
+enum OrderStatus {
+  PENDING
+  PAID
+  PARTIALLY_REFUNDED
+  REFUNDED
+  CANCELED
+}
+
+enum OrderItemStatus {
+  PENDING
+  ENROLLED
+  CANCELED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  TOSS
+  DEMO
+}
+
+enum PaymentTransactionType {
+  PAYMENT
+  REFUND
+  CANCEL
+}
+
+enum PaymentTransactionStatus {
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum CancellationReason {
+  USER_REQUEST
+  COURSE_CANCELED
+  CAPACITY_EXCEEDED
+  UNDER_ENROLLED
+  OTHER
+}
+
+enum EnrollmentHistoryType {
+  ENROLLED
+  CANCELED
+  REFUNDED
+}
+
+enum LecturePlaybackEventType {
+  STARTED
+  PROGRESS
+  RESUMED
+  COMPLETED
+}
+
+enum ReportType {
+  COPYRIGHT
+  WRONG_INFO
+  OTHER
+}
+
+model users {
+  id                       Int                      @id @default(autoincrement())
+  name                     String
+  email                    String                   @unique
+  password                 String
+  roles                    Roles[]
+  description              String?                  @default("")
+  updated_at               DateTime                 @updatedAt
+  created_at               DateTime                 @default(now())
+  cart_items               cart_items[]
+  orders                   orders[]
+  order_items              order_items[]
+  enrollments              enrollments[]
+  enrollment_histories     enrollment_history[]
+  course_comments          course_comment[]
+  lecture_comments         lecture_comment[]
+  lecture_progress         lectures_progress[]
+  lecture_playback_history lecture_playback_history[]
+  lecture_bookmarks        lecture_bookmark[]
+  payment_transactions     payment_transactions[]
+}
+
+model categories {
+  id         Int       @id @default(autoincrement())
+  name       String
+  created_at DateTime  @default(now())
+  courses    courses[]
 }
 
 model courses {
-  id            Int @id @default(autoincrement())
+  id            Int                   @id @default(autoincrement())
   title         String
   description   String
   instructor_id Int
   thumbnail     String
   difficulty    Difficulty
   category_id   Int
-  slug          String @unique
-  created_at    DateTime @default(now())
-  updated_at    DateTime
-
-  category      categories @relation(fields: [category_id], references: [id])
-
+  slug          String                @unique
+  price         Int
+  rating        Float                 @default(0)
+  max_capacity  Int                   @default(30)
+  min_enrollment Int                  @default(1)
+  status        CourseLifecycleStatus @default(OPEN)
+  canceled_at   DateTime?
+  cancel_reason CancellationReason?
+  created_at    DateTime              @default(now())
+  updated_at    DateTime              @updatedAt
+  category      categories            @relation(fields: [category_id], references: [id])
   chapters      chapter[]
+  cart_items    cart_items[]
+  order_items   order_items[]
+  enrollments   enrollments[]
+  enrollment_histories enrollment_history[]
+  comments      course_comment[]
 }
 
-model categories {
-  id            Int @id @default(autoincrement())
-  name          String
-  created_at    DateTime @default(now())
+model chapter {
+  id       Int      @id @default(autoincrement())
+  course_id Int
+  title    String
+  position Int
+  courses  courses  @relation(fields: [course_id], references: [id])
+  lectures lectures[]
 
-  courses       courses[]
+  @@unique([course_id, position])
+}
+
+model lectures {
+  id                Int                      @id @default(autoincrement())
+  chapter_id        Int
+  title             String
+  video_url         String
+  thumbnail_url     String
+  duration          Int
+  position          Int
+  is_published      Boolean                  @default(false)
+  created_at        DateTime                 @default(now())
+  chapters          chapter                  @relation(fields: [chapter_id], references: [id])
+  progresses        lectures_progress[]
+  playback_history  lecture_playback_history[]
+  bookmarks         lecture_bookmark[]
+  lecture_comments  lecture_comment[]
+
+  @@unique([chapter_id, position])
+}
+
+model cart_items {
+  id             Int            @id @default(autoincrement())
+  user_id        Int
+  course_id      Int
+  status         CartItemStatus @default(ACTIVE)
+  added_at       DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  checked_out_at DateTime?
+  users          users          @relation(fields: [user_id], references: [id])
+  courses        courses        @relation(fields: [course_id], references: [id])
+
+  @@index([user_id, status])
+  @@index([course_id, status])
+}
+
+model orders {
+  id                   Int                    @id @default(autoincrement())
+  user_id              Int
+  order_number         String                 @unique
+  provider             PaymentProvider        @default(TOSS)
+  provider_order_id    String?
+  status               OrderStatus            @default(PENDING)
+  total_amount         Int
+  paid_amount          Int                    @default(0)
+  refunded_amount      Int                    @default(0)
+  created_at           DateTime               @default(now())
+  paid_at              DateTime?
+  canceled_at          DateTime?
+  updated_at           DateTime               @updatedAt
+  users                users                  @relation(fields: [user_id], references: [id])
+  items                order_items[]
+  payment_transactions payment_transactions[]
+
+  @@index([user_id, created_at])
+}
+
+model order_items {
+  id                  Int             @id @default(autoincrement())
+  order_id            Int
+  user_id             Int
+  course_id           Int
+  price               Int
+  status              OrderItemStatus @default(PENDING)
+  enrolled_at         DateTime?
+  canceled_at         DateTime?
+  refund_amount       Int             @default(0)
+  cancellation_reason CancellationReason?
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  orders              orders          @relation(fields: [order_id], references: [id])
+  users               users           @relation(fields: [user_id], references: [id])
+  courses             courses         @relation(fields: [course_id], references: [id])
+  enrollment          enrollments?
+
+  @@index([order_id, status])
+  @@index([user_id, course_id])
+}
+
+model payment_transactions {
+  id               Int                      @id @default(autoincrement())
+  order_id         Int
+  user_id          Int
+  provider         PaymentProvider         @default(TOSS)
+  transaction_type PaymentTransactionType
+  status           PaymentTransactionStatus @default(COMPLETED)
+  amount           Int
+  payment_key      String?
+  transaction_key  String?
+  reason           String?
+  metadata         Json?
+  created_at       DateTime                 @default(now())
+  approved_at      DateTime?
+  canceled_at      DateTime?
+  orders           orders                   @relation(fields: [order_id], references: [id])
+  users            users                    @relation(fields: [user_id], references: [id])
+
+  @@index([order_id, created_at])
+  @@index([user_id, transaction_type])
+}
+
+model enrollments {
+  id                  Int              @id @default(autoincrement())
+  user_id             Int
+  course_id           Int
+  order_item_id       Int?             @unique
+  status              EnrollmentStatus @default(ACTIVE)
+  is_canceled         Boolean          @default(false)
+  enrolled_at         DateTime         @default(now())
+  canceled_at         DateTime?
+  cancellation_reason CancellationReason?
+  users               users            @relation(fields: [user_id], references: [id])
+  courses             courses          @relation(fields: [course_id], references: [id])
+  order_item          order_items?     @relation(fields: [order_item_id], references: [id])
+  histories           enrollment_history[]
+
+  @@index([user_id, course_id, status])
+}
+
+model enrollment_history {
+  id            Int                   @id @default(autoincrement())
+  enrollment_id Int
+  user_id       Int
+  course_id     Int
+  event_type    EnrollmentHistoryType
+  reason        String?
+  created_at    DateTime              @default(now())
+  enrollment    enrollments           @relation(fields: [enrollment_id], references: [id])
+  users         users                 @relation(fields: [user_id], references: [id])
+  courses       courses               @relation(fields: [course_id], references: [id])
+
+  @@index([enrollment_id, created_at])
+  @@index([user_id, course_id, created_at])
 }
 
 model course_comment {
-  id            Int @id @default(autoincrement())
-  title         String
-  content       String
-  user_id       Int
-  course_id     Int
-  create_at     DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String
+  star       Int       @default(0)
+  user_id    Int
+  course_id  Int
+  create_at  DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  users      users     @relation(fields: [user_id], references: [id])
+  courses    courses   @relation(fields: [course_id], references: [id])
+
+  @@unique([user_id, course_id])
+  @@index([course_id, create_at])
 }
 
 model lecture_comment {
-  id            Int @id @default(autoincrement())
-  title         String
-  content       String
-  user_id       Int
-  lecture_id     Int
-  create_at     DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String
+  star       Int       @default(0)
+  user_id    Int
+  lecture_id Int
+  create_at  DateTime  @default(now())
+  users      users     @relation(fields: [user_id], references: [id])
+  lectures   lectures  @relation(fields: [lecture_id], references: [id])
 }
 
-// model lectures_progress {
-//   id         Int      @id @default(autoincrement())
-//   user_id    Int
-//   lecture_id Int
-//   progress   Int
-//   updated_at DateTime @updatedAt
-// }
+model lectures_progress {
+  id             Int      @id @default(autoincrement())
+  user_id        Int
+  lecture_id     Int
+  last_position  Int      @default(0)
+  watched_seconds Int     @default(0)
+  progress       Int      @default(0)
+  is_completed   Boolean  @default(false)
+  updated_at     DateTime @updatedAt
+  users          users    @relation(fields: [user_id], references: [id])
+  lectures       lectures @relation(fields: [lecture_id], references: [id])
+
+  @@unique([user_id, lecture_id])
+  @@index([lecture_id, progress])
+}
+
+model lecture_playback_history {
+  id          Int                      @id @default(autoincrement())
+  user_id     Int
+  lecture_id  Int
+  event_type  LecturePlaybackEventType
+  from_second Int                      @default(0)
+  to_second   Int                      @default(0)
+  progress    Int                      @default(0)
+  created_at  DateTime                 @default(now())
+  users       users                    @relation(fields: [user_id], references: [id])
+  lectures    lectures                 @relation(fields: [lecture_id], references: [id])
+
+  @@index([user_id, lecture_id, created_at])
+}
+
+model lecture_bookmark {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  lecture_id Int
+  note       String?
+  position   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  users      users    @relation(fields: [user_id], references: [id])
+  lectures   lectures @relation(fields: [lecture_id], references: [id])
+
+  @@index([user_id, lecture_id, created_at])
+}
+
+model course_report {
+  id         Int        @id @default(autoincrement())
+  course_id  Int
+  user_id    Int
+  type       ReportType
+  content    String
+  is_resolved Boolean   @default(false)
+  created_at DateTime   @default(now())
+}

@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model course_comment
@@ -28,12 +28,14 @@ export type AggregateCourse_comment = {
 
 export type Course_commentAvgAggregateOutputType = {
   id: number | null
+  star: number | null
   user_id: number | null
   course_id: number | null
 }
 
 export type Course_commentSumAggregateOutputType = {
   id: number | null
+  star: number | null
   user_id: number | null
   course_id: number | null
 }
@@ -42,39 +44,47 @@ export type Course_commentMinAggregateOutputType = {
   id: number | null
   title: string | null
   content: string | null
+  star: number | null
   user_id: number | null
   course_id: number | null
   create_at: Date | null
+  updated_at: Date | null
 }
 
 export type Course_commentMaxAggregateOutputType = {
   id: number | null
   title: string | null
   content: string | null
+  star: number | null
   user_id: number | null
   course_id: number | null
   create_at: Date | null
+  updated_at: Date | null
 }
 
 export type Course_commentCountAggregateOutputType = {
   id: number
   title: number
   content: number
+  star: number
   user_id: number
   course_id: number
   create_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type Course_commentAvgAggregateInputType = {
   id?: true
+  star?: true
   user_id?: true
   course_id?: true
 }
 
 export type Course_commentSumAggregateInputType = {
   id?: true
+  star?: true
   user_id?: true
   course_id?: true
 }
@@ -83,27 +93,33 @@ export type Course_commentMinAggregateInputType = {
   id?: true
   title?: true
   content?: true
+  star?: true
   user_id?: true
   course_id?: true
   create_at?: true
+  updated_at?: true
 }
 
 export type Course_commentMaxAggregateInputType = {
   id?: true
   title?: true
   content?: true
+  star?: true
   user_id?: true
   course_id?: true
   create_at?: true
+  updated_at?: true
 }
 
 export type Course_commentCountAggregateInputType = {
   id?: true
   title?: true
   content?: true
+  star?: true
   user_id?: true
   course_id?: true
   create_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -197,9 +213,11 @@ export type Course_commentGroupByOutputType = {
   id: number
   title: string
   content: string
+  star: number
   user_id: number
   course_id: number
   create_at: Date
+  updated_at: Date
   _count: Course_commentCountAggregateOutputType | null
   _avg: Course_commentAvgAggregateOutputType | null
   _sum: Course_commentSumAggregateOutputType | null
@@ -229,39 +247,54 @@ export type course_commentWhereInput = {
   id?: Prisma.IntFilter<"course_comment"> | number
   title?: Prisma.StringFilter<"course_comment"> | string
   content?: Prisma.StringFilter<"course_comment"> | string
+  star?: Prisma.IntFilter<"course_comment"> | number
   user_id?: Prisma.IntFilter<"course_comment"> | number
   course_id?: Prisma.IntFilter<"course_comment"> | number
   create_at?: Prisma.DateTimeFilter<"course_comment"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"course_comment"> | Date | string
+  users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  courses?: Prisma.XOR<Prisma.CoursesScalarRelationFilter, Prisma.coursesWhereInput>
 }
 
 export type course_commentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  users?: Prisma.usersOrderByWithRelationInput
+  courses?: Prisma.coursesOrderByWithRelationInput
 }
 
 export type course_commentWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  user_id_course_id?: Prisma.course_commentUser_idCourse_idCompoundUniqueInput
   AND?: Prisma.course_commentWhereInput | Prisma.course_commentWhereInput[]
   OR?: Prisma.course_commentWhereInput[]
   NOT?: Prisma.course_commentWhereInput | Prisma.course_commentWhereInput[]
   title?: Prisma.StringFilter<"course_comment"> | string
   content?: Prisma.StringFilter<"course_comment"> | string
+  star?: Prisma.IntFilter<"course_comment"> | number
   user_id?: Prisma.IntFilter<"course_comment"> | number
   course_id?: Prisma.IntFilter<"course_comment"> | number
   create_at?: Prisma.DateTimeFilter<"course_comment"> | Date | string
-}, "id">
+  updated_at?: Prisma.DateTimeFilter<"course_comment"> | Date | string
+  users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  courses?: Prisma.XOR<Prisma.CoursesScalarRelationFilter, Prisma.coursesWhereInput>
+}, "id" | "user_id_course_id">
 
 export type course_commentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.course_commentCountOrderByAggregateInput
   _avg?: Prisma.course_commentAvgOrderByAggregateInput
   _max?: Prisma.course_commentMaxOrderByAggregateInput
@@ -276,82 +309,114 @@ export type course_commentScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"course_comment"> | number
   title?: Prisma.StringWithAggregatesFilter<"course_comment"> | string
   content?: Prisma.StringWithAggregatesFilter<"course_comment"> | string
+  star?: Prisma.IntWithAggregatesFilter<"course_comment"> | number
   user_id?: Prisma.IntWithAggregatesFilter<"course_comment"> | number
   course_id?: Prisma.IntWithAggregatesFilter<"course_comment"> | number
   create_at?: Prisma.DateTimeWithAggregatesFilter<"course_comment"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"course_comment"> | Date | string
 }
 
 export type course_commentCreateInput = {
   title: string
   content: string
-  user_id: number
-  course_id: number
+  star?: number
   create_at?: Date | string
+  updated_at?: Date | string
+  users: Prisma.usersCreateNestedOneWithoutCourse_commentsInput
+  courses: Prisma.coursesCreateNestedOneWithoutCommentsInput
 }
 
 export type course_commentUncheckedCreateInput = {
   id?: number
   title: string
   content: string
+  star?: number
   user_id: number
   course_id: number
   create_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type course_commentUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.IntFieldUpdateOperationsInput | number
-  course_id?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.usersUpdateOneRequiredWithoutCourse_commentsNestedInput
+  courses?: Prisma.coursesUpdateOneRequiredWithoutCommentsNestedInput
 }
 
 export type course_commentUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   course_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type course_commentCreateManyInput = {
   id?: number
   title: string
   content: string
+  star?: number
   user_id: number
   course_id: number
   create_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type course_commentUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.IntFieldUpdateOperationsInput | number
-  course_id?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type course_commentUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   course_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type Course_commentListRelationFilter = {
+  every?: Prisma.course_commentWhereInput
+  some?: Prisma.course_commentWhereInput
+  none?: Prisma.course_commentWhereInput
+}
+
+export type course_commentOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type course_commentUser_idCourse_idCompoundUniqueInput = {
+  user_id: number
+  course_id: number
 }
 
 export type course_commentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type course_commentAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
 }
@@ -360,24 +425,295 @@ export type course_commentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type course_commentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type course_commentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   course_id?: Prisma.SortOrder
+}
+
+export type course_commentCreateNestedManyWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutUsersInput, Prisma.course_commentUncheckedCreateWithoutUsersInput> | Prisma.course_commentCreateWithoutUsersInput[] | Prisma.course_commentUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutUsersInput | Prisma.course_commentCreateOrConnectWithoutUsersInput[]
+  createMany?: Prisma.course_commentCreateManyUsersInputEnvelope
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+}
+
+export type course_commentUncheckedCreateNestedManyWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutUsersInput, Prisma.course_commentUncheckedCreateWithoutUsersInput> | Prisma.course_commentCreateWithoutUsersInput[] | Prisma.course_commentUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutUsersInput | Prisma.course_commentCreateOrConnectWithoutUsersInput[]
+  createMany?: Prisma.course_commentCreateManyUsersInputEnvelope
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+}
+
+export type course_commentUpdateManyWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutUsersInput, Prisma.course_commentUncheckedCreateWithoutUsersInput> | Prisma.course_commentCreateWithoutUsersInput[] | Prisma.course_commentUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutUsersInput | Prisma.course_commentCreateOrConnectWithoutUsersInput[]
+  upsert?: Prisma.course_commentUpsertWithWhereUniqueWithoutUsersInput | Prisma.course_commentUpsertWithWhereUniqueWithoutUsersInput[]
+  createMany?: Prisma.course_commentCreateManyUsersInputEnvelope
+  set?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  disconnect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  delete?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  update?: Prisma.course_commentUpdateWithWhereUniqueWithoutUsersInput | Prisma.course_commentUpdateWithWhereUniqueWithoutUsersInput[]
+  updateMany?: Prisma.course_commentUpdateManyWithWhereWithoutUsersInput | Prisma.course_commentUpdateManyWithWhereWithoutUsersInput[]
+  deleteMany?: Prisma.course_commentScalarWhereInput | Prisma.course_commentScalarWhereInput[]
+}
+
+export type course_commentUncheckedUpdateManyWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutUsersInput, Prisma.course_commentUncheckedCreateWithoutUsersInput> | Prisma.course_commentCreateWithoutUsersInput[] | Prisma.course_commentUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutUsersInput | Prisma.course_commentCreateOrConnectWithoutUsersInput[]
+  upsert?: Prisma.course_commentUpsertWithWhereUniqueWithoutUsersInput | Prisma.course_commentUpsertWithWhereUniqueWithoutUsersInput[]
+  createMany?: Prisma.course_commentCreateManyUsersInputEnvelope
+  set?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  disconnect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  delete?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  update?: Prisma.course_commentUpdateWithWhereUniqueWithoutUsersInput | Prisma.course_commentUpdateWithWhereUniqueWithoutUsersInput[]
+  updateMany?: Prisma.course_commentUpdateManyWithWhereWithoutUsersInput | Prisma.course_commentUpdateManyWithWhereWithoutUsersInput[]
+  deleteMany?: Prisma.course_commentScalarWhereInput | Prisma.course_commentScalarWhereInput[]
+}
+
+export type course_commentCreateNestedManyWithoutCoursesInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutCoursesInput, Prisma.course_commentUncheckedCreateWithoutCoursesInput> | Prisma.course_commentCreateWithoutCoursesInput[] | Prisma.course_commentUncheckedCreateWithoutCoursesInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutCoursesInput | Prisma.course_commentCreateOrConnectWithoutCoursesInput[]
+  createMany?: Prisma.course_commentCreateManyCoursesInputEnvelope
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+}
+
+export type course_commentUncheckedCreateNestedManyWithoutCoursesInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutCoursesInput, Prisma.course_commentUncheckedCreateWithoutCoursesInput> | Prisma.course_commentCreateWithoutCoursesInput[] | Prisma.course_commentUncheckedCreateWithoutCoursesInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutCoursesInput | Prisma.course_commentCreateOrConnectWithoutCoursesInput[]
+  createMany?: Prisma.course_commentCreateManyCoursesInputEnvelope
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+}
+
+export type course_commentUpdateManyWithoutCoursesNestedInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutCoursesInput, Prisma.course_commentUncheckedCreateWithoutCoursesInput> | Prisma.course_commentCreateWithoutCoursesInput[] | Prisma.course_commentUncheckedCreateWithoutCoursesInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutCoursesInput | Prisma.course_commentCreateOrConnectWithoutCoursesInput[]
+  upsert?: Prisma.course_commentUpsertWithWhereUniqueWithoutCoursesInput | Prisma.course_commentUpsertWithWhereUniqueWithoutCoursesInput[]
+  createMany?: Prisma.course_commentCreateManyCoursesInputEnvelope
+  set?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  disconnect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  delete?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  update?: Prisma.course_commentUpdateWithWhereUniqueWithoutCoursesInput | Prisma.course_commentUpdateWithWhereUniqueWithoutCoursesInput[]
+  updateMany?: Prisma.course_commentUpdateManyWithWhereWithoutCoursesInput | Prisma.course_commentUpdateManyWithWhereWithoutCoursesInput[]
+  deleteMany?: Prisma.course_commentScalarWhereInput | Prisma.course_commentScalarWhereInput[]
+}
+
+export type course_commentUncheckedUpdateManyWithoutCoursesNestedInput = {
+  create?: Prisma.XOR<Prisma.course_commentCreateWithoutCoursesInput, Prisma.course_commentUncheckedCreateWithoutCoursesInput> | Prisma.course_commentCreateWithoutCoursesInput[] | Prisma.course_commentUncheckedCreateWithoutCoursesInput[]
+  connectOrCreate?: Prisma.course_commentCreateOrConnectWithoutCoursesInput | Prisma.course_commentCreateOrConnectWithoutCoursesInput[]
+  upsert?: Prisma.course_commentUpsertWithWhereUniqueWithoutCoursesInput | Prisma.course_commentUpsertWithWhereUniqueWithoutCoursesInput[]
+  createMany?: Prisma.course_commentCreateManyCoursesInputEnvelope
+  set?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  disconnect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  delete?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  connect?: Prisma.course_commentWhereUniqueInput | Prisma.course_commentWhereUniqueInput[]
+  update?: Prisma.course_commentUpdateWithWhereUniqueWithoutCoursesInput | Prisma.course_commentUpdateWithWhereUniqueWithoutCoursesInput[]
+  updateMany?: Prisma.course_commentUpdateManyWithWhereWithoutCoursesInput | Prisma.course_commentUpdateManyWithWhereWithoutCoursesInput[]
+  deleteMany?: Prisma.course_commentScalarWhereInput | Prisma.course_commentScalarWhereInput[]
+}
+
+export type course_commentCreateWithoutUsersInput = {
+  title: string
+  content: string
+  star?: number
+  create_at?: Date | string
+  updated_at?: Date | string
+  courses: Prisma.coursesCreateNestedOneWithoutCommentsInput
+}
+
+export type course_commentUncheckedCreateWithoutUsersInput = {
+  id?: number
+  title: string
+  content: string
+  star?: number
+  course_id: number
+  create_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type course_commentCreateOrConnectWithoutUsersInput = {
+  where: Prisma.course_commentWhereUniqueInput
+  create: Prisma.XOR<Prisma.course_commentCreateWithoutUsersInput, Prisma.course_commentUncheckedCreateWithoutUsersInput>
+}
+
+export type course_commentCreateManyUsersInputEnvelope = {
+  data: Prisma.course_commentCreateManyUsersInput | Prisma.course_commentCreateManyUsersInput[]
+  skipDuplicates?: boolean
+}
+
+export type course_commentUpsertWithWhereUniqueWithoutUsersInput = {
+  where: Prisma.course_commentWhereUniqueInput
+  update: Prisma.XOR<Prisma.course_commentUpdateWithoutUsersInput, Prisma.course_commentUncheckedUpdateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.course_commentCreateWithoutUsersInput, Prisma.course_commentUncheckedCreateWithoutUsersInput>
+}
+
+export type course_commentUpdateWithWhereUniqueWithoutUsersInput = {
+  where: Prisma.course_commentWhereUniqueInput
+  data: Prisma.XOR<Prisma.course_commentUpdateWithoutUsersInput, Prisma.course_commentUncheckedUpdateWithoutUsersInput>
+}
+
+export type course_commentUpdateManyWithWhereWithoutUsersInput = {
+  where: Prisma.course_commentScalarWhereInput
+  data: Prisma.XOR<Prisma.course_commentUpdateManyMutationInput, Prisma.course_commentUncheckedUpdateManyWithoutUsersInput>
+}
+
+export type course_commentScalarWhereInput = {
+  AND?: Prisma.course_commentScalarWhereInput | Prisma.course_commentScalarWhereInput[]
+  OR?: Prisma.course_commentScalarWhereInput[]
+  NOT?: Prisma.course_commentScalarWhereInput | Prisma.course_commentScalarWhereInput[]
+  id?: Prisma.IntFilter<"course_comment"> | number
+  title?: Prisma.StringFilter<"course_comment"> | string
+  content?: Prisma.StringFilter<"course_comment"> | string
+  star?: Prisma.IntFilter<"course_comment"> | number
+  user_id?: Prisma.IntFilter<"course_comment"> | number
+  course_id?: Prisma.IntFilter<"course_comment"> | number
+  create_at?: Prisma.DateTimeFilter<"course_comment"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"course_comment"> | Date | string
+}
+
+export type course_commentCreateWithoutCoursesInput = {
+  title: string
+  content: string
+  star?: number
+  create_at?: Date | string
+  updated_at?: Date | string
+  users: Prisma.usersCreateNestedOneWithoutCourse_commentsInput
+}
+
+export type course_commentUncheckedCreateWithoutCoursesInput = {
+  id?: number
+  title: string
+  content: string
+  star?: number
+  user_id: number
+  create_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type course_commentCreateOrConnectWithoutCoursesInput = {
+  where: Prisma.course_commentWhereUniqueInput
+  create: Prisma.XOR<Prisma.course_commentCreateWithoutCoursesInput, Prisma.course_commentUncheckedCreateWithoutCoursesInput>
+}
+
+export type course_commentCreateManyCoursesInputEnvelope = {
+  data: Prisma.course_commentCreateManyCoursesInput | Prisma.course_commentCreateManyCoursesInput[]
+  skipDuplicates?: boolean
+}
+
+export type course_commentUpsertWithWhereUniqueWithoutCoursesInput = {
+  where: Prisma.course_commentWhereUniqueInput
+  update: Prisma.XOR<Prisma.course_commentUpdateWithoutCoursesInput, Prisma.course_commentUncheckedUpdateWithoutCoursesInput>
+  create: Prisma.XOR<Prisma.course_commentCreateWithoutCoursesInput, Prisma.course_commentUncheckedCreateWithoutCoursesInput>
+}
+
+export type course_commentUpdateWithWhereUniqueWithoutCoursesInput = {
+  where: Prisma.course_commentWhereUniqueInput
+  data: Prisma.XOR<Prisma.course_commentUpdateWithoutCoursesInput, Prisma.course_commentUncheckedUpdateWithoutCoursesInput>
+}
+
+export type course_commentUpdateManyWithWhereWithoutCoursesInput = {
+  where: Prisma.course_commentScalarWhereInput
+  data: Prisma.XOR<Prisma.course_commentUpdateManyMutationInput, Prisma.course_commentUncheckedUpdateManyWithoutCoursesInput>
+}
+
+export type course_commentCreateManyUsersInput = {
+  id?: number
+  title: string
+  content: string
+  star?: number
+  course_id: number
+  create_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type course_commentUpdateWithoutUsersInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
+  create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  courses?: Prisma.coursesUpdateOneRequiredWithoutCommentsNestedInput
+}
+
+export type course_commentUncheckedUpdateWithoutUsersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
+  course_id?: Prisma.IntFieldUpdateOperationsInput | number
+  create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type course_commentUncheckedUpdateManyWithoutUsersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
+  course_id?: Prisma.IntFieldUpdateOperationsInput | number
+  create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type course_commentCreateManyCoursesInput = {
+  id?: number
+  title: string
+  content: string
+  star?: number
+  user_id: number
+  create_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type course_commentUpdateWithoutCoursesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
+  create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.usersUpdateOneRequiredWithoutCourse_commentsNestedInput
+}
+
+export type course_commentUncheckedUpdateWithoutCoursesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type course_commentUncheckedUpdateManyWithoutCoursesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  star?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -386,50 +722,81 @@ export type course_commentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   title?: boolean
   content?: boolean
+  star?: boolean
   user_id?: boolean
   course_id?: boolean
   create_at?: boolean
+  updated_at?: boolean
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  courses?: boolean | Prisma.coursesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course_comment"]>
 
 export type course_commentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   content?: boolean
+  star?: boolean
   user_id?: boolean
   course_id?: boolean
   create_at?: boolean
+  updated_at?: boolean
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  courses?: boolean | Prisma.coursesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course_comment"]>
 
 export type course_commentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   content?: boolean
+  star?: boolean
   user_id?: boolean
   course_id?: boolean
   create_at?: boolean
+  updated_at?: boolean
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  courses?: boolean | Prisma.coursesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course_comment"]>
 
 export type course_commentSelectScalar = {
   id?: boolean
   title?: boolean
   content?: boolean
+  star?: boolean
   user_id?: boolean
   course_id?: boolean
   create_at?: boolean
+  updated_at?: boolean
 }
 
-export type course_commentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "user_id" | "course_id" | "create_at", ExtArgs["result"]["course_comment"]>
+export type course_commentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "star" | "user_id" | "course_id" | "create_at" | "updated_at", ExtArgs["result"]["course_comment"]>
+export type course_commentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  courses?: boolean | Prisma.coursesDefaultArgs<ExtArgs>
+}
+export type course_commentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  courses?: boolean | Prisma.coursesDefaultArgs<ExtArgs>
+}
+export type course_commentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  courses?: boolean | Prisma.coursesDefaultArgs<ExtArgs>
+}
 
 export type $course_commentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "course_comment"
-  objects: {}
+  objects: {
+    users: Prisma.$usersPayload<ExtArgs>
+    courses: Prisma.$coursesPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
     content: string
+    star: number
     user_id: number
     course_id: number
     create_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["course_comment"]>
   composites: {}
 }
@@ -824,6 +1191,8 @@ readonly fields: course_commentFieldRefs;
  */
 export interface Prisma__course_commentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  courses<T extends Prisma.coursesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.coursesDefaultArgs<ExtArgs>>): Prisma.Prisma__coursesClient<runtime.Types.Result.GetResult<Prisma.$coursesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -856,9 +1225,11 @@ export interface course_commentFieldRefs {
   readonly id: Prisma.FieldRef<"course_comment", 'Int'>
   readonly title: Prisma.FieldRef<"course_comment", 'String'>
   readonly content: Prisma.FieldRef<"course_comment", 'String'>
+  readonly star: Prisma.FieldRef<"course_comment", 'Int'>
   readonly user_id: Prisma.FieldRef<"course_comment", 'Int'>
   readonly course_id: Prisma.FieldRef<"course_comment", 'Int'>
   readonly create_at: Prisma.FieldRef<"course_comment", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"course_comment", 'DateTime'>
 }
     
 
@@ -875,6 +1246,10 @@ export type course_commentFindUniqueArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
   /**
    * Filter, which course_comment to fetch.
    */
@@ -894,6 +1269,10 @@ export type course_commentFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
+  /**
    * Filter, which course_comment to fetch.
    */
   where: Prisma.course_commentWhereUniqueInput
@@ -911,6 +1290,10 @@ export type course_commentFindFirstArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
   /**
    * Filter, which course_comment to fetch.
    */
@@ -960,6 +1343,10 @@ export type course_commentFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
+  /**
    * Filter, which course_comment to fetch.
    */
   where?: Prisma.course_commentWhereInput
@@ -1007,6 +1394,10 @@ export type course_commentFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
   /**
    * Filter, which course_comments to fetch.
    */
@@ -1056,6 +1447,10 @@ export type course_commentCreateArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
+  /**
    * The data needed to create a course_comment.
    */
   data: Prisma.XOR<Prisma.course_commentCreateInput, Prisma.course_commentUncheckedCreateInput>
@@ -1089,6 +1484,10 @@ export type course_commentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    */
   data: Prisma.course_commentCreateManyInput | Prisma.course_commentCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1103,6 +1502,10 @@ export type course_commentUpdateArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
   /**
    * The data needed to update a course_comment.
    */
@@ -1155,6 +1558,10 @@ export type course_commentUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * Limit how many course_comments to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1169,6 +1576,10 @@ export type course_commentUpsertArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
   /**
    * The filter to search for the course_comment to update in case it exists.
    */
@@ -1195,6 +1606,10 @@ export type course_commentDeleteArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
   /**
    * Filter which course_comment to delete.
    */
@@ -1227,4 +1642,8 @@ export type course_commentDefaultArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the course_comment
    */
   omit?: Prisma.course_commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.course_commentInclude<ExtArgs> | null
 }
