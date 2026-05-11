@@ -8,12 +8,12 @@ import { getCart } from "../api/api";
 export function SiteHeader() {
   const isScrolled = useScrolled();
   const navigate = useNavigate();
-  const { user, isLoggedIn, logout } = useAuth();
+  const { user, isLoggedIn, isInstructor, logout } = useAuth();
 
   const { data: cart } = useQuery({
     queryKey: ["cart", user?.id],
     queryFn: () => getCart(user!.id),
-    enabled: isLoggedIn && !!user,
+    enabled: isLoggedIn && !!user && !isInstructor,
     staleTime: 1000 * 30,
   });
 
@@ -35,18 +35,33 @@ export function SiteHeader() {
           {isLoggedIn && (
             <Link to="/my-learning" className="site-header__link">내 학습</Link>
           )}
+          {isLoggedIn && isInstructor && (
+            <Link to="/instructor/courses" className="site-header__link">강사 관리</Link>
+          )}
         </nav>
 
         <div className="site-header__actions">
           {isLoggedIn ? (
             <>
-              <Link to="/cart" className="site-header__cart" aria-label="장바구니">
-                <span className="site-header__cart-icon">🛒</span>
-                {cartCount > 0 && (
-                  <span className="site-header__cart-badge">{cartCount}</span>
-                )}
+              {isInstructor ? (
+                <span
+                  className="site-header__cart site-header__cart--disabled"
+                  aria-label="강사 계정은 장바구니를 이용할 수 없습니다"
+                  title="강사 계정은 장바구니를 이용할 수 없습니다"
+                >
+                  <span className="site-header__cart-icon">🛒</span>
+                </span>
+              ) : (
+                <Link to="/cart" className="site-header__cart" aria-label="장바구니">
+                  <span className="site-header__cart-icon">🛒</span>
+                  {cartCount > 0 && (
+                    <span className="site-header__cart-badge">{cartCount}</span>
+                  )}
+                </Link>
+              )}
+              <Link to="/my-page" className="site-header__link" style={{ fontWeight: 600 }}>
+                {user!.name}
               </Link>
-              <span className="site-header__username">{user!.name}</span>
               <button className="button button--ghost" onClick={handleLogout}>
                 로그아웃
               </button>

@@ -1,10 +1,11 @@
-﻿import type { CurriculumChapter } from "../../shared/types";
+import type { CurriculumChapter } from "../../shared/types";
 import { formatDuration } from "../../shared/utils";
 
 type LectureSidebarSectionProps = {
   curriculum: CurriculumChapter[];
   openChapterIds: number[];
   activeLectureId: number;
+  unlockedIds: Set<number>;
   onToggleChapter: (chapterId: number) => void;
   onMoveLecture: (lectureId: number) => void;
 };
@@ -13,6 +14,7 @@ export function LectureSidebarSection({
   curriculum,
   openChapterIds,
   activeLectureId,
+  unlockedIds,
   onToggleChapter,
   onMoveLecture,
 }: LectureSidebarSectionProps) {
@@ -44,24 +46,35 @@ export function LectureSidebarSection({
 
               {isOpen ? (
                 <div className="sidebar-chapter__list">
-                  {chapter.lectures.map((lecture) => (
-                    <button
-                      key={lecture.id}
-                      type="button"
-                      className={
-                        lecture.id === activeLectureId
-                          ? "sidebar-lecture is-active"
-                          : "sidebar-lecture"
-                      }
-                      onClick={() => onMoveLecture(lecture.id)}
-                    >
-                      <div>
-                        <strong>{lecture.title}</strong>
-                        <span>{formatDuration(lecture.duration)}</span>
-                      </div>
-                      <span>{lecture.position}</span>
-                    </button>
-                  ))}
+                  {chapter.lectures.map((lecture) => {
+                    const isUnlocked = unlockedIds.has(lecture.id);
+                    const isCurrentlyActive = lecture.id === activeLectureId;
+
+                    return (
+                      <button
+                        key={lecture.id}
+                        type="button"
+                        className={[
+                          "sidebar-lecture",
+                          isCurrentlyActive ? "is-active" : "",
+                          !isUnlocked ? "is-locked" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                        onClick={() => onMoveLecture(lecture.id)}
+                        disabled={!isUnlocked}
+                        title={!isUnlocked ? "이전 강의를 먼저 완료해야 합니다" : undefined}
+                      >
+                        <div>
+                          <strong>{lecture.title}</strong>
+                          <span>{formatDuration(lecture.duration)}</span>
+                        </div>
+                        <span className="sidebar-lecture__status">
+                          {!isUnlocked ? "🔒" : lecture.position}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               ) : null}
             </section>

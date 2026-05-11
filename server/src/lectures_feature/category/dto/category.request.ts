@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { normalizeText } from '../../../global/global.request-transform';
 
 export class createCategory {
@@ -10,4 +10,14 @@ export class createCategory {
   @MaxLength(50)
   @ApiProperty({ example: 'Backend' })
   name!: string;
+}
+
+export class updateCategory {
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(50)
+  @ApiPropertyOptional({ example: 'Security' })
+  name?: string;
 }

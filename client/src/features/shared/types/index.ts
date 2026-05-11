@@ -131,7 +131,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  roles: UserRole;
+  role: UserRole;
   description: string | null;
   created_at: string;
 }
@@ -140,16 +140,16 @@ export interface User {
 
 export type CartItemStatus = "ACTIVE" | "CHECKED_OUT" | "REMOVED";
 export type OrderStatus = "PENDING" | "PAID" | "PARTIALLY_REFUNDED" | "REFUNDED" | "CANCELED";
-export type OrderItemStatus = "ENROLLED" | "REFUNDED" | "CANCELED";
+export type OrderItemStatus = "PENDING" | "ENROLLED" | "REFUNDED" | "CANCELED";
 export type PaymentProvider = "TOSS" | "DEMO";
 export type PaymentTransactionType = "PAYMENT" | "REFUND" | "CANCEL";
-export type PaymentTransactionStatus = "PENDING" | "COMPLETED" | "FAILED";
+export type PaymentTransactionStatus = "COMPLETED" | "FAILED" | "CANCELED";
 export type CancellationReason =
   | "USER_REQUEST"
+  | "COURSE_CANCELED"
+  | "CAPACITY_EXCEEDED"
   | "UNDER_ENROLLED"
-  | "INSTRUCTOR_REQUEST"
-  | "ADMIN_DECISION"
-  | "SYSTEM";
+  | "OTHER";
 
 export interface CommerceCourse {
   id: number;
@@ -239,7 +239,7 @@ export interface LectureProgress {
   isCompleted: boolean;
 }
 
-export type LecturePlaybackEventType = "START" | "PROGRESS" | "PAUSE" | "SEEK" | "COMPLETE";
+export type LecturePlaybackEventType = "STARTED" | "PROGRESS" | "RESUMED" | "COMPLETED";
 
 export interface LectureBookmark {
   id: number;
@@ -248,10 +248,18 @@ export interface LectureBookmark {
   created_at: string;
 }
 
+export interface LectureAttachment {
+  id: number;
+  filename: string;
+  mimeType: string;
+  size: number;
+  createdAt: string;
+}
+
 export interface ReviewUser {
   id: number;
   name: string;
-  roles: UserRole;
+  role: UserRole;
 }
 
 export interface CourseReview {
@@ -261,4 +269,108 @@ export interface CourseReview {
   star: number;
   user: ReviewUser;
   created_at: string;
+}
+
+/* ─── Instructor ────────────────────────────────────────────────── */
+
+export type CourseStatus = "DRAFT" | "OPEN" | "CANCELED";
+
+export interface InstructorCourse {
+  id: number;
+  title: string;
+  slug: string;
+  difficulty: string;
+  price: number;
+  status: CourseStatus;
+  maxCapacity: number;
+  rating: number;
+  createdAt: string;
+}
+
+/* ─── Lecture Comment ───────────────────────────────────────────── */
+
+export interface LectureComment {
+  id: number;
+  content: string;
+  createdAt: string;
+  user: {
+    id: number;
+    name: string;
+    role: UserRole;
+  };
+}
+
+export interface InstructorChapter {
+  id: number;
+  title: string;
+  position: number;
+}
+
+export interface InstructorLecture {
+  id: number;
+  title: string;
+  videoUrl: string;
+  duration: number;
+  position: number;
+  isPublished: boolean;
+}
+
+/* ─── Admin ─────────────────────────────────────────────────────── */
+
+export interface AdminDashboard {
+  totalUsers: number;
+  totalCourses: number;
+  totalEnrollments: number;
+  pendingReports: number;
+  totalRevenue: number;
+  newUsersToday: number;
+  monthlyRevenue: number;
+}
+
+export interface AdminUser {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+}
+
+export interface AdminCourse {
+  id: number;
+  title: string;
+  slug: string;
+  difficulty: string;
+  price: number;
+  status: string;
+  createdAt: string;
+}
+
+export interface AdminReport {
+  id: number;
+  type: string;
+  content: string;
+  isResolved: boolean;
+  courseId: number;
+  userId: number;
+  createdAt: string;
+}
+
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface PaginatedData<T> {
+  data: T[];
+  pagination: PaginationMeta;
+}
+
+export interface InstructorStudent {
+  enrollmentId: number;
+  userId: number;
+  name: string;
+  email: string;
+  enrolledAt: string;
 }

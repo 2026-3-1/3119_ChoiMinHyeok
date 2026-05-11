@@ -28,7 +28,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       const status = exception.getStatus();
       const res = exception.getResponse();
 
-      this.log.error(exception.cause, exception.stack);
+      if (status >= 500) {
+        this.log.error(exception.message, exception.stack);
+      } else {
+        this.log.warn(`${status} ${request.method} ${request.url} — ${exception.message}`);
+      }
 
       return response.status(status).json({
         ...(typeof res === 'string' ? { message: res } : res),

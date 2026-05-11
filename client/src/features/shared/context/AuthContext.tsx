@@ -14,6 +14,7 @@ interface AuthContextValue {
   user: User | null;
   isLoggedIn: boolean;
   authReady: boolean;
+  isInstructor: boolean;
   setUser: (user: User) => void;
   logout: () => Promise<void>;
 }
@@ -33,8 +34,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
   const [authReady, setAuthReady] = useState(false);
 
-  // On mount: try to restore access token via refresh_token cookie.
-  // If refresh fails and we had a stored user, clear it — session is invalid.
   useEffect(() => {
     const storedRaw = localStorage.getItem(STORAGE_KEY);
     if (!storedRaw) {
@@ -63,7 +62,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ user, isLoggedIn: user !== null, authReady, setUser, logout }),
+    () => ({
+      user,
+      isLoggedIn: user !== null,
+      authReady,
+      isInstructor: user?.role === "INSTRUCTOR",
+      setUser,
+      logout,
+    }),
     [user, authReady, setUser, logout]
   );
 

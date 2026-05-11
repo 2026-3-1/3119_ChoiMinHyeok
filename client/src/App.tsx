@@ -14,7 +14,20 @@ const LecturePage = lazy(() => import("./page/LecturePage"));
 const LoginPage = lazy(() => import("./page/LoginPage"));
 const RegisterPage = lazy(() => import("./page/RegisterPage"));
 const MyLearningPage = lazy(() => import("./page/MyLearningPage"));
+const MyPage = lazy(() => import("./page/MyPage"));
 const CartPage = lazy(() => import("./page/CartPage"));
+
+const InstructorCoursesPage = lazy(() => import("./page/instructor/InstructorCoursesPage"));
+const InstructorCourseEditPage = lazy(() => import("./page/instructor/InstructorCourseEditPage"));
+const InstructorCreateCoursePage = lazy(() => import("./page/instructor/InstructorCreateCoursePage"));
+
+const AdminLoginPage = lazy(() => import("./page/admin/AdminLoginPage"));
+const AdminLayout = lazy(() => import("./page/admin/AdminLayout"));
+const AdminDashboardPage = lazy(() => import("./page/admin/AdminDashboardPage"));
+const AdminUsersPage = lazy(() => import("./page/admin/AdminUsersPage"));
+const AdminCoursesPage = lazy(() => import("./page/admin/AdminCoursesPage"));
+const AdminCategoriesPage = lazy(() => import("./page/admin/AdminCategoriesPage"));
+const AdminReportsPage = lazy(() => import("./page/admin/AdminReportsPage"));
 
 function RouterFallback() {
   return (
@@ -47,7 +60,31 @@ const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       { path: "my-learning", element: <MyLearningPage /> },
+      { path: "my-page", element: <MyPage /> },
       { path: "cart", element: <CartPage /> },
+
+      // Instructor
+      { path: "instructor/courses", element: <InstructorCoursesPage /> },
+      { path: "instructor/courses/new", element: <InstructorCreateCoursePage /> },
+      { path: "instructor/courses/:courseId/edit", element: <InstructorCourseEditPage /> },
+
+      // Admin login (standalone)
+      { path: "admin/login", element: <AdminLoginPage /> },
+
+      // Admin panel (with sidebar layout)
+      {
+        path: "admin",
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <Navigate to="/admin/dashboard" replace /> },
+          { path: "dashboard", element: <AdminDashboardPage /> },
+          { path: "users", element: <AdminUsersPage /> },
+          { path: "courses", element: <AdminCoursesPage /> },
+          { path: "categories", element: <AdminCategoriesPage /> },
+          { path: "reports", element: <AdminReportsPage /> },
+        ],
+      },
+
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },

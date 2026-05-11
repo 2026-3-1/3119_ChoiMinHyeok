@@ -25,25 +25,25 @@ export class createCourse {
   @MinLength(1)
   @MaxLength(120)
   @ApiProperty({ example: 'Node.js Basics' })
-  title: string;
+  title!: string;
 
   @Transform(normalizeText)
   @IsString()
   @MinLength(1)
   @MaxLength(2000)
   @ApiProperty({ example: 'Introductory backend course' })
-  description: string;
+  description!: string;
 
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @ApiProperty({ example: 1 })
-  instructorId: number;
+  instructorId!: number;
 
   @Transform(normalizeText)
   @IsUrl({ require_protocol: true }, { message: 'thumbnail must be a valid URL' })
   @ApiProperty({ example: 'https://cdn.example.com/course-thumbnail.png' })
-  thumbnail: string;
+  thumbnail!: string;
 
   @Transform(normalizeSlug)
   @IsString()
@@ -53,37 +53,96 @@ export class createCourse {
     message: 'slug must use lowercase letters, numbers, and hyphens only',
   })
   @ApiProperty({ example: 'nodejs-basics' })
-  slug: string;
+  slug!: string;
 
   @IsEnum(Difficulty)
   @ApiProperty({ enum: Difficulty, enumName: 'Difficulty', example: Difficulty.EASY })
-  difficulty: Difficulty;
+  difficulty!: Difficulty;
 
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @ApiProperty({ example: 1 })
-  categoryId: number;
+  categoryId!: number;
 
   @Type(() => Number)
   @IsInt()
   @Min(0)
   @ApiProperty({ example: 39000 })
-  price: number;
+  price!: number;
 
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(10000)
   @ApiProperty({ example: 30 })
-  maxCapacity: number;
+  maxCapacity!: number;
 
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(10000)
   @ApiProperty({ example: 5 })
-  minEnrollment: number;
+  minEnrollment!: number;
+}
+
+export class updateCourse {
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  @ApiPropertyOptional({ example: 'Node.js Advanced' })
+  title?: string;
+
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(2000)
+  @ApiPropertyOptional({ example: 'Updated description' })
+  description?: string;
+
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsUrl({ require_protocol: true }, { message: 'thumbnail must be a valid URL' })
+  @ApiPropertyOptional({ example: 'https://cdn.example.com/new-thumbnail.png' })
+  thumbnail?: string;
+
+  @IsOptional()
+  @IsEnum(Difficulty)
+  @ApiPropertyOptional({ enum: Difficulty, enumName: 'Difficulty' })
+  difficulty?: Difficulty;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @ApiPropertyOptional({ example: 2 })
+  categoryId?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @ApiPropertyOptional({ example: 49000 })
+  price?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(10000)
+  @ApiPropertyOptional({ example: 50 })
+  maxCapacity?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(10000)
+  @ApiPropertyOptional({ example: 3 })
+  minEnrollment?: number;
 }
 
 export class getCourse {

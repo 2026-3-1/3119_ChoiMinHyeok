@@ -5,8 +5,10 @@ import {
   HttpCode,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -17,8 +19,10 @@ import {
 import type { Response } from 'express';
 import { ResponseMessage } from '../global/global_decorator/decorator.message';
 import { SwaggerResponse } from '../global/global_decorator/decorator.swagger-response';
+import { JwtAuthGuard } from '../global/guards/jwt-auth.guard';
 import { LoginRequest } from './dto/login.request';
 import { RegisterRequest } from './dto/register.request';
+import { UpdateProfileRequest } from './dto/update-profile.request';
 import { UserProfileResponse } from './dto/user.response';
 import { UserService } from './user.service';
 
@@ -87,5 +91,19 @@ export class UserController {
   @SwaggerResponse(UserProfileResponse, false, 200, '사용자 프로필 조회에 성공했습니다.')
   getUserProfile(@Param('userId', ParseIntPipe) userId: number) {
     return this.userService.getUserProfile(userId);
+  }
+
+  @ResponseMessage('프로필이 수정되었습니다.')
+  @UseGuards(JwtAuthGuard)
+  @Patch('users/:userId')
+  @ApiOperation({ summary: '프로필(이름, 소개)을 수정합니다.' })
+  @ApiParam({ name: 'userId', type: Number })
+  @ApiBody({ type: UpdateProfileRequest })
+  @SwaggerResponse(UserProfileResponse, false, 200, '프로필이 수정되었습니다.')
+  updateUserProfile(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body() data: UpdateProfileRequest,
+  ) {
+    return this.userService.updateUserProfile(userId, data);
   }
 }

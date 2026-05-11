@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import {
   PaymentProvider,
   PaymentTransactionStatus,
   PaymentTransactionType,
+  Roles,
 } from '../../prisma/generated/prisma/enums';
 import type { Prisma } from '../../prisma/generated/prisma/client';
 import prisma from '../../prisma/prisma.client';
@@ -38,17 +40,12 @@ export type OrderWithRelations = Prisma.ordersGetPayload<{
 export class CommerceRepository {
   async assertUserExists(userId: number) {
     const user = await prisma.users.findUnique({
-      where: {
-        id: userId,
-      },
-      select: {
-        id: true,
-      },
+      where: { id: userId },
+      select: { id: true, role: true },
     });
 
-    if (!user) {
-      throw new NotFoundException('사용자를 찾을 수 없습니다.');
-    }
+    if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
+    if (user.role !== Roles.STUDENT) throw new ForbiddenException('학생 계정만 구매할 수 있습니다.');
   }
 
   findCourseById(courseId: number) {

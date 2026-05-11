@@ -265,6 +265,7 @@ export type lecturesWhereInput = {
   playback_history?: Prisma.Lecture_playback_historyListRelationFilter
   bookmarks?: Prisma.Lecture_bookmarkListRelationFilter
   lecture_comments?: Prisma.Lecture_commentListRelationFilter
+  attachments?: Prisma.Lecture_attachmentListRelationFilter
 }
 
 export type lecturesOrderByWithRelationInput = {
@@ -282,6 +283,7 @@ export type lecturesOrderByWithRelationInput = {
   playback_history?: Prisma.lecture_playback_historyOrderByRelationAggregateInput
   bookmarks?: Prisma.lecture_bookmarkOrderByRelationAggregateInput
   lecture_comments?: Prisma.lecture_commentOrderByRelationAggregateInput
+  attachments?: Prisma.lecture_attachmentOrderByRelationAggregateInput
 }
 
 export type lecturesWhereUniqueInput = Prisma.AtLeast<{
@@ -303,6 +305,7 @@ export type lecturesWhereUniqueInput = Prisma.AtLeast<{
   playback_history?: Prisma.Lecture_playback_historyListRelationFilter
   bookmarks?: Prisma.Lecture_bookmarkListRelationFilter
   lecture_comments?: Prisma.Lecture_commentListRelationFilter
+  attachments?: Prisma.Lecture_attachmentListRelationFilter
 }, "id" | "chapter_id_position">
 
 export type lecturesOrderByWithAggregationInput = {
@@ -350,6 +353,7 @@ export type lecturesCreateInput = {
   playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateInput = {
@@ -366,6 +370,7 @@ export type lecturesUncheckedCreateInput = {
   playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUpdateInput = {
@@ -381,6 +386,7 @@ export type lecturesUpdateInput = {
   playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateInput = {
@@ -397,6 +403,7 @@ export type lecturesUncheckedUpdateInput = {
   playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesCreateManyInput = {
@@ -549,6 +556,20 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type lecturesCreateNestedOneWithoutAttachmentsInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutAttachmentsInput, Prisma.lecturesUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutAttachmentsInput
+  connect?: Prisma.lecturesWhereUniqueInput
+}
+
+export type lecturesUpdateOneRequiredWithoutAttachmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.lecturesCreateWithoutAttachmentsInput, Prisma.lecturesUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutAttachmentsInput
+  upsert?: Prisma.lecturesUpsertWithoutAttachmentsInput
+  connect?: Prisma.lecturesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lecturesUpdateToOneWithWhereWithoutAttachmentsInput, Prisma.lecturesUpdateWithoutAttachmentsInput>, Prisma.lecturesUncheckedUpdateWithoutAttachmentsInput>
+}
+
 export type lecturesCreateNestedOneWithoutLecture_commentsInput = {
   create?: Prisma.XOR<Prisma.lecturesCreateWithoutLecture_commentsInput, Prisma.lecturesUncheckedCreateWithoutLecture_commentsInput>
   connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutLecture_commentsInput
@@ -617,6 +638,7 @@ export type lecturesCreateWithoutChaptersInput = {
   playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateWithoutChaptersInput = {
@@ -632,6 +654,7 @@ export type lecturesUncheckedCreateWithoutChaptersInput = {
   playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesCreateOrConnectWithoutChaptersInput = {
@@ -675,6 +698,84 @@ export type lecturesScalarWhereInput = {
   created_at?: Prisma.DateTimeFilter<"lectures"> | Date | string
 }
 
+export type lecturesCreateWithoutAttachmentsInput = {
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  chapters: Prisma.chapterCreateNestedOneWithoutLecturesInput
+  progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesUncheckedCreateWithoutAttachmentsInput = {
+  id?: number
+  chapter_id: number
+  title: string
+  video_url: string
+  thumbnail_url: string
+  duration: number
+  position: number
+  is_published?: boolean
+  created_at?: Date | string
+  progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+}
+
+export type lecturesCreateOrConnectWithoutAttachmentsInput = {
+  where: Prisma.lecturesWhereUniqueInput
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutAttachmentsInput, Prisma.lecturesUncheckedCreateWithoutAttachmentsInput>
+}
+
+export type lecturesUpsertWithoutAttachmentsInput = {
+  update: Prisma.XOR<Prisma.lecturesUpdateWithoutAttachmentsInput, Prisma.lecturesUncheckedUpdateWithoutAttachmentsInput>
+  create: Prisma.XOR<Prisma.lecturesCreateWithoutAttachmentsInput, Prisma.lecturesUncheckedCreateWithoutAttachmentsInput>
+  where?: Prisma.lecturesWhereInput
+}
+
+export type lecturesUpdateToOneWithWhereWithoutAttachmentsInput = {
+  where?: Prisma.lecturesWhereInput
+  data: Prisma.XOR<Prisma.lecturesUpdateWithoutAttachmentsInput, Prisma.lecturesUncheckedUpdateWithoutAttachmentsInput>
+}
+
+export type lecturesUpdateWithoutAttachmentsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  chapters?: Prisma.chapterUpdateOneRequiredWithoutLecturesNestedInput
+  progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+}
+
+export type lecturesUncheckedUpdateWithoutAttachmentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  chapter_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  thumbnail_url?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  is_published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
+  playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
+  bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+}
+
 export type lecturesCreateWithoutLecture_commentsInput = {
   title: string
   video_url: string
@@ -687,6 +788,7 @@ export type lecturesCreateWithoutLecture_commentsInput = {
   progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
   playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateWithoutLecture_commentsInput = {
@@ -702,6 +804,7 @@ export type lecturesUncheckedCreateWithoutLecture_commentsInput = {
   progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
   playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesCreateOrConnectWithoutLecture_commentsInput = {
@@ -732,6 +835,7 @@ export type lecturesUpdateWithoutLecture_commentsInput = {
   progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
   playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateWithoutLecture_commentsInput = {
@@ -747,6 +851,7 @@ export type lecturesUncheckedUpdateWithoutLecture_commentsInput = {
   progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
   playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesCreateWithoutProgressesInput = {
@@ -761,6 +866,7 @@ export type lecturesCreateWithoutProgressesInput = {
   playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateWithoutProgressesInput = {
@@ -776,6 +882,7 @@ export type lecturesUncheckedCreateWithoutProgressesInput = {
   playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesCreateOrConnectWithoutProgressesInput = {
@@ -806,6 +913,7 @@ export type lecturesUpdateWithoutProgressesInput = {
   playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateWithoutProgressesInput = {
@@ -821,6 +929,7 @@ export type lecturesUncheckedUpdateWithoutProgressesInput = {
   playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesCreateWithoutPlayback_historyInput = {
@@ -835,6 +944,7 @@ export type lecturesCreateWithoutPlayback_historyInput = {
   progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateWithoutPlayback_historyInput = {
@@ -850,6 +960,7 @@ export type lecturesUncheckedCreateWithoutPlayback_historyInput = {
   progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesCreateOrConnectWithoutPlayback_historyInput = {
@@ -880,6 +991,7 @@ export type lecturesUpdateWithoutPlayback_historyInput = {
   progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateWithoutPlayback_historyInput = {
@@ -895,6 +1007,7 @@ export type lecturesUncheckedUpdateWithoutPlayback_historyInput = {
   progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesCreateWithoutBookmarksInput = {
@@ -909,6 +1022,7 @@ export type lecturesCreateWithoutBookmarksInput = {
   progresses?: Prisma.lectures_progressCreateNestedManyWithoutLecturesInput
   playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesUncheckedCreateWithoutBookmarksInput = {
@@ -924,6 +1038,7 @@ export type lecturesUncheckedCreateWithoutBookmarksInput = {
   progresses?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutLecturesInput
   playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutLecturesInput
   lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutLecturesInput
+  attachments?: Prisma.lecture_attachmentUncheckedCreateNestedManyWithoutLecturesInput
 }
 
 export type lecturesCreateOrConnectWithoutBookmarksInput = {
@@ -954,6 +1069,7 @@ export type lecturesUpdateWithoutBookmarksInput = {
   progresses?: Prisma.lectures_progressUpdateManyWithoutLecturesNestedInput
   playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateWithoutBookmarksInput = {
@@ -969,6 +1085,7 @@ export type lecturesUncheckedUpdateWithoutBookmarksInput = {
   progresses?: Prisma.lectures_progressUncheckedUpdateManyWithoutLecturesNestedInput
   playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesCreateManyChaptersInput = {
@@ -994,6 +1111,7 @@ export type lecturesUpdateWithoutChaptersInput = {
   playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateWithoutChaptersInput = {
@@ -1009,6 +1127,7 @@ export type lecturesUncheckedUpdateWithoutChaptersInput = {
   playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutLecturesNestedInput
   bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutLecturesNestedInput
   lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput
+  attachments?: Prisma.lecture_attachmentUncheckedUpdateManyWithoutLecturesNestedInput
 }
 
 export type lecturesUncheckedUpdateManyWithoutChaptersInput = {
@@ -1032,6 +1151,7 @@ export type LecturesCountOutputType = {
   playback_history: number
   bookmarks: number
   lecture_comments: number
+  attachments: number
 }
 
 export type LecturesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1039,6 +1159,7 @@ export type LecturesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   playback_history?: boolean | LecturesCountOutputTypeCountPlayback_historyArgs
   bookmarks?: boolean | LecturesCountOutputTypeCountBookmarksArgs
   lecture_comments?: boolean | LecturesCountOutputTypeCountLecture_commentsArgs
+  attachments?: boolean | LecturesCountOutputTypeCountAttachmentsArgs
 }
 
 /**
@@ -1079,6 +1200,13 @@ export type LecturesCountOutputTypeCountLecture_commentsArgs<ExtArgs extends run
   where?: Prisma.lecture_commentWhereInput
 }
 
+/**
+ * LecturesCountOutputType without action
+ */
+export type LecturesCountOutputTypeCountAttachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lecture_attachmentWhereInput
+}
+
 
 export type lecturesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1095,6 +1223,7 @@ export type lecturesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   playback_history?: boolean | Prisma.lectures$playback_historyArgs<ExtArgs>
   bookmarks?: boolean | Prisma.lectures$bookmarksArgs<ExtArgs>
   lecture_comments?: boolean | Prisma.lectures$lecture_commentsArgs<ExtArgs>
+  attachments?: boolean | Prisma.lectures$attachmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LecturesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lectures"]>
 
@@ -1143,6 +1272,7 @@ export type lecturesInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   playback_history?: boolean | Prisma.lectures$playback_historyArgs<ExtArgs>
   bookmarks?: boolean | Prisma.lectures$bookmarksArgs<ExtArgs>
   lecture_comments?: boolean | Prisma.lectures$lecture_commentsArgs<ExtArgs>
+  attachments?: boolean | Prisma.lectures$attachmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LecturesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type lecturesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1160,6 +1290,7 @@ export type $lecturesPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     playback_history: Prisma.$lecture_playback_historyPayload<ExtArgs>[]
     bookmarks: Prisma.$lecture_bookmarkPayload<ExtArgs>[]
     lecture_comments: Prisma.$lecture_commentPayload<ExtArgs>[]
+    attachments: Prisma.$lecture_attachmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1570,6 +1701,7 @@ export interface Prisma__lecturesClient<T, Null = never, ExtArgs extends runtime
   playback_history<T extends Prisma.lectures$playback_historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$playback_historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_playback_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bookmarks<T extends Prisma.lectures$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_bookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lecture_comments<T extends Prisma.lectures$lecture_commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$lecture_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_commentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attachments<T extends Prisma.lectures$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lectures$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_attachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2102,6 +2234,30 @@ export type lectures$lecture_commentsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.Lecture_commentScalarFieldEnum | Prisma.Lecture_commentScalarFieldEnum[]
+}
+
+/**
+ * lectures.attachments
+ */
+export type lectures$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the lecture_attachment
+   */
+  select?: Prisma.lecture_attachmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the lecture_attachment
+   */
+  omit?: Prisma.lecture_attachmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.lecture_attachmentInclude<ExtArgs> | null
+  where?: Prisma.lecture_attachmentWhereInput
+  orderBy?: Prisma.lecture_attachmentOrderByWithRelationInput | Prisma.lecture_attachmentOrderByWithRelationInput[]
+  cursor?: Prisma.lecture_attachmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Lecture_attachmentScalarFieldEnum | Prisma.Lecture_attachmentScalarFieldEnum[]
 }
 
 /**

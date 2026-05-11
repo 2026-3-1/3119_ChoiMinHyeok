@@ -1,26 +1,34 @@
-import { Injectable } from '@nestjs/common';
-import prisma from '../../../prisma/prisma.client';
-import { createCategory } from './dto/category.request';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CategoryRepository } from './category.repository';
+import { createCategory, updateCategory } from './dto/category.request';
 
 @Injectable()
 export class CategoryService {
+  constructor(private readonly categoryRepository: CategoryRepository) {}
+
   async getCategories() {
-    return await prisma.categories.findMany();
+    return this.categoryRepository.findAll();
   }
 
   async getCourseByCategories(categoryId: number) {
-    return await prisma.courses.findMany({
-      where: {
-        category_id: categoryId,
-      },
-    });
+    return this.categoryRepository.findCoursesByCategory(categoryId);
   }
 
   async createCategory(data: createCategory) {
-    await prisma.categories.create({
-      data: {
-        name: data.name,
-      },
-    });
+    return this.categoryRepository.create(data.name);
+  }
+
+  async updateCategory(categoryId: number, data: updateCategory) {
+    const category = await this.categoryRepository.findById(categoryId);
+    if (!category) throw new NotFoundException('카테고리를 찾을 수 없습니다.');
+
+    return this.categoryRepository.update(categoryId, data.name!);
+  }
+
+  async deleteCategory(categoryId: number) {
+    const category = await this.categoryRepository.findById(categoryId);
+    if (!category) throw new NotFoundException('카테고리를 찾을 수 없습니다.');
+
+    await this.categoryRepository.delete(categoryId);
   }
 }

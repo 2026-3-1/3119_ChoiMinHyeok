@@ -1,0 +1,140 @@
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteAdminCourse, getAdminCourses } from "../../features/shared/api/api";
+
+const difficultyLabel: Record<string, string> = { EASY: "입문", MEDIUM: "중급", HARD: "고급" };
+const statusLabel: Record<string, string> = { OPEN: "공개", CLOSED: "비공개", DRAFT: "초안" };
+
+function formatPrice(n: number) {
+  return n === 0 ? "무료" : `₩${n.toLocaleString("ko-KR")}`;
+}
+
+export default function AdminCoursesPage() {
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("");
+  const [page, setPage] = useState(1);
+  const limit = 20;
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["admin-courses", search, status, page],
+    queryFn: () => getAdminCourses({ search: search || undefined, status: status || undefined, page, limit }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (courseId: number) => deleteAdminCourse(courseId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-courses"] }),
+  });
+
+  const totalPages = data?.pagination.totalPages ?? 1;
+
+  return (
+    <div>
+      <div style={{ marginBottom: 32 }}>
+        <p style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 4 }}>Admin</p>
+        <h2 style={{ fontSize: 28, fontWeight: 700 }}>강의 관리</h2>
+      </div>
+
+      <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
+        <input
+          className="auth-form__input"
+          style={{ maxWidth: 280 }}
+          placeholder="강의명 검색"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+        />
+        <select
+          className="auth-form__input"
+          style={{ maxWidth: 160 }}
+          value={status}
+          onChange={(e) => { setStatus(e.target.value); setPage(1); }}
+        >
+          <option value="">전체 상태</option>
+          <option value="OPEN">공개</option>
+          <option value="CLOSED">비공개</option>
+          <option value="DRAFT">초안</option>
+        </select>
+      </div>
+
+      {isLoading ? (
+        <div style={{ color: "var(--text-muted)" }}>로딩 중...</div>
+      ) : !data || data.data.length === 0 ? (
+        <div className="empty-state">
+          <strong>강의가 없습니다</strong>
+        </div>
+      ) : (
+        <>
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>강의명</th>
+                  <th>난이도</th>
+                  <th>가격</th>
+                  <th>상태</th>
+                  <th>생성일</th>
+                  <th>관리</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.data.map((c) => (
+                  <tr key={c.id}>
+                    <td style={{ color: "var(--text-muted)", fontSize: 13 }}>{c.id}</td>
+                    <td>{c.title}</td>
+                    <td>{difficultyLabel[c.difficulty] ?? c.difficulty}</td>
+                    <td>{formatPrice(c.price)}</td>
+                    <td>
+                      <span className={`badge badge--${c.status === "OPEN" ? "success" : "neutral"}`}>
+                        {statusLabel[c.status] ?? c.status}
+                      </span>
+                    </td>
+                    <td style={{ fontSize: 13, color: "var(--text-muted)" }}>
+                      {new Date(c.createdAt).toLocaleDateString("ko-KR")}
+                    </td>
+                    <td>
+                      <button
+                        className="button button--ghost"
+                        style={{ fontSize: 12, padding: "3px 10px", color: "var(--error)" }}
+                        disabled={deleteMutation.isPending}
+                        onClick={() => {
+                          if (window.confirm(`"${c.title}" 강의를 삭제하시겠습니까?`)) {
+                            deleteMutation.mutate(c.id);
+                          }
+                        }}
+                      >
+                        삭제
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 24 }}>
+            <button
+              className="button button--ghost"
+              style={{ fontSize: 13, padding: "6px 16px" }}
+              disabled={page === 1}
+              onClick={() => setPage((p) => p - 1)}
+            >
+              이전
+            </button>
+            <span style={{ lineHeight: "36px", fontSize: 13, color: "var(--text-muted)" }}>
+              {page} / {totalPages}
+            </span>
+            <button
+              className="button button--ghost"
+              style={{ fontSize: 13, padding: "6px 16px" }}
+              disabled={page >= totalPages}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              다음
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}

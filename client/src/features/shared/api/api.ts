@@ -1,5 +1,9 @@
 import axios from "axios";
 import type {
+  AdminCourse,
+  AdminDashboard,
+  AdminReport,
+  AdminUser,
   ApiResponse,
   CartSummary,
   Category,
@@ -9,15 +13,24 @@ import type {
   CourseListData,
   CourseReview,
   Course,
+  CourseStatus,
   Difficulty,
+  InstructorChapter,
+  InstructorCourse,
+  InstructorLecture,
+  InstructorStudent,
   Lecture,
+  LectureAttachment,
   LectureBookmark,
+  LectureComment,
   LectureDetail,
   LecturePlaybackEventType,
   LectureProgress,
   LearningCourseCard,
   Order,
+  PaginatedData,
   User,
+  UserRole,
 } from "../types";
 import { normalizeSearchInput } from "../utils";
 
@@ -139,13 +152,19 @@ export interface CreateCategoryPayload {
 
 export const createCategory = async (
   payload: CreateCategoryPayload
-): Promise<void> =>
-  unwrapResponse(api.post<ApiResponse<void>>("/api/v1/categories", payload));
+): Promise<Category> =>
+  unwrapResponse(api.post<ApiResponse<Category>>("/api/v1/categories", payload));
 
 export const getCourseByCategory = async (categoryId: number): Promise<Course[]> =>
   unwrapResponse(
     api.get<ApiResponse<Course[]>>(`/api/v1/categories/${categoryId}/courses`)
   );
+
+export const updateCategory = async (categoryId: number, name: string): Promise<Category> =>
+  unwrapResponse(api.patch<ApiResponse<Category>>(`/api/v1/categories/${categoryId}`, { name }));
+
+export const deleteCategory = async (categoryId: number): Promise<void> =>
+  unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/categories/${categoryId}`));
 
 /* ─── Courses ────────────────────────────────────────────────────── */
 
@@ -261,7 +280,7 @@ export interface RegisterPayload {
   name: string;
   email: string;
   password: string;
-  roles: "STUDENT" | "INSTRUCTOR";
+  role: "STUDENT" | "INSTRUCTOR";
   description?: string;
 }
 
@@ -296,6 +315,17 @@ export const logoutApi = async (): Promise<void> => {
 
 export const getUserProfile = async (userId: number): Promise<User> =>
   unwrapResponse(api.get<ApiResponse<User>>(`/api/v1/users/${userId}`));
+
+export interface UpdateProfilePayload {
+  name?: string;
+  description?: string;
+}
+
+export const updateUserProfile = async (
+  userId: number,
+  payload: UpdateProfilePayload
+): Promise<User> =>
+  unwrapResponse(api.patch<ApiResponse<User>>(`/api/v1/users/${userId}`, payload));
 
 /* ─── Commerce ───────────────────────────────────────────────────── */
 
@@ -430,4 +460,313 @@ export const createCourseReview = async (
 ): Promise<CourseReview[]> =>
   unwrapResponse(
     api.post<ApiResponse<CourseReview[]>>(`/api/v1/courses/${courseId}/reviews`, payload)
+  );
+
+/* ─── Lecture Comments ───────────────────────────────────────────── */
+
+export const getLectureComments = async (lectureId: number): Promise<LectureComment[]> =>
+  unwrapResponse(api.get<ApiResponse<LectureComment[]>>(`/api/v1/lectures/${lectureId}/comments`));
+
+export const createLectureComment = async (
+  lectureId: number,
+  content: string
+): Promise<LectureComment> =>
+  unwrapResponse(
+    api.post<ApiResponse<LectureComment>>(`/api/v1/lectures/${lectureId}/comments`, { content })
+  );
+
+export const deleteLectureComment = async (
+  lectureId: number,
+  commentId: number
+): Promise<void> =>
+  unwrapResponse(
+    api.delete<ApiResponse<void>>(`/api/v1/lectures/${lectureId}/comments/${commentId}`)
+  );
+
+/* ─── Report ─────────────────────────────────────────────────────── */
+
+export interface CreateReportPayload {
+  userId: number;
+  type: string;
+  content: string;
+}
+
+export const createReport = async (
+  courseId: number,
+  payload: CreateReportPayload
+): Promise<void> =>
+  unwrapResponse(
+    api.post<ApiResponse<void>>(`/api/v1/courses/${courseId}/reports`, payload)
+  );
+
+/* ─── Attachments ────────────────────────────────────────────────── */
+
+export const getLectureAttachments = async (
+  lectureId: number
+): Promise<LectureAttachment[]> =>
+  unwrapResponse(
+    api.get<ApiResponse<LectureAttachment[]>>(
+      `/api/v1/lectures/${lectureId}/attachments`
+    )
+  );
+
+export const uploadLectureAttachment = async (
+  lectureId: number,
+  file: File
+): Promise<LectureAttachment> => {
+  const form = new FormData();
+  form.append("file", file);
+  return unwrapResponse(
+    api.post<ApiResponse<LectureAttachment>>(
+      `/api/v1/instructor/lectures/${lectureId}/attachments`,
+      form,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    )
+  );
+};
+
+export const deleteAttachment = async (attachmentId: number): Promise<void> =>
+  unwrapResponse(
+    api.delete<ApiResponse<void>>(
+      `/api/v1/instructor/attachments/${attachmentId}`
+    )
+  );
+
+export const downloadAttachment = async (
+  attachmentId: number,
+  filename: string
+): Promise<void> => {
+  const response = await api.get(
+    `/api/v1/attachments/${attachmentId}/download`,
+    { responseType: "blob" }
+  );
+  const url = URL.createObjectURL(response.data as Blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+/* ─── Instructor ─────────────────────────────────────────────────── */
+
+export const getInstructorCourses = async (): Promise<InstructorCourse[]> =>
+  unwrapResponse(api.get<ApiResponse<InstructorCourse[]>>("/api/v1/instructor/courses"));
+
+export interface CreateInstructorCoursePayload {
+  title: string;
+  description: string;
+  difficulty: Difficulty;
+  price: number;
+  categoryId: number;
+  maxCapacity: number;
+  thumbnail?: string;
+}
+
+export const createInstructorCourse = async (
+  payload: CreateInstructorCoursePayload
+): Promise<InstructorCourse> =>
+  unwrapResponse(
+    api.post<ApiResponse<InstructorCourse>>("/api/v1/instructor/courses", payload)
+  );
+
+export interface UpdateInstructorCoursePayload {
+  title?: string;
+  description?: string;
+  difficulty?: Difficulty;
+  price?: number;
+  maxCapacity?: number;
+  thumbnail?: string;
+  categoryId?: number;
+}
+
+export const updateInstructorCourse = async (
+  courseId: number,
+  payload: UpdateInstructorCoursePayload
+): Promise<InstructorCourse> =>
+  unwrapResponse(
+    api.patch<ApiResponse<InstructorCourse>>(`/api/v1/instructor/courses/${courseId}`, payload)
+  );
+
+export const deleteInstructorCourse = async (courseId: number): Promise<void> =>
+  unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/instructor/courses/${courseId}`));
+
+export const setInstructorCourseStatus = async (
+  courseId: number,
+  status: 'DRAFT' | 'OPEN'
+): Promise<InstructorCourse> =>
+  unwrapResponse(
+    api.patch<ApiResponse<InstructorCourse>>(
+      `/api/v1/instructor/courses/${courseId}/status`,
+      { status }
+    )
+  );
+
+export interface CreateInstructorChapterPayload {
+  title: string;
+  position: number;
+}
+
+export const addInstructorChapter = async (
+  courseId: number,
+  payload: CreateInstructorChapterPayload
+): Promise<InstructorChapter> =>
+  unwrapResponse(
+    api.post<ApiResponse<InstructorChapter>>(
+      `/api/v1/instructor/courses/${courseId}/chapters`,
+      payload
+    )
+  );
+
+export interface UpdateInstructorChapterPayload {
+  title?: string;
+  position?: number;
+}
+
+export const updateInstructorChapter = async (
+  courseId: number,
+  chapterId: number,
+  payload: UpdateInstructorChapterPayload
+): Promise<InstructorChapter> =>
+  unwrapResponse(
+    api.patch<ApiResponse<InstructorChapter>>(
+      `/api/v1/instructor/courses/${courseId}/chapters/${chapterId}`,
+      payload
+    )
+  );
+
+export const deleteInstructorChapter = async (
+  courseId: number,
+  chapterId: number
+): Promise<void> =>
+  unwrapResponse(
+    api.delete<ApiResponse<void>>(
+      `/api/v1/instructor/courses/${courseId}/chapters/${chapterId}`
+    )
+  );
+
+export interface CreateInstructorLecturePayload {
+  title: string;
+  videoUrl: string;
+  thumbnailUrl?: string;
+  duration: number;
+  position: number;
+  isPublished?: boolean;
+}
+
+export const addInstructorLecture = async (
+  chapterId: number,
+  payload: CreateInstructorLecturePayload
+): Promise<InstructorLecture> =>
+  unwrapResponse(
+    api.post<ApiResponse<InstructorLecture>>(
+      `/api/v1/instructor/chapters/${chapterId}/lectures`,
+      payload
+    )
+  );
+
+export interface UpdateInstructorLecturePayload {
+  title?: string;
+  videoUrl?: string;
+  thumbnailUrl?: string;
+  duration?: number;
+  position?: number;
+  isPublished?: boolean;
+}
+
+export const updateInstructorLecture = async (
+  lectureId: number,
+  payload: UpdateInstructorLecturePayload
+): Promise<InstructorLecture> =>
+  unwrapResponse(
+    api.patch<ApiResponse<InstructorLecture>>(
+      `/api/v1/instructor/lectures/${lectureId}`,
+      payload
+    )
+  );
+
+export const deleteInstructorLecture = async (lectureId: number): Promise<void> =>
+  unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/instructor/lectures/${lectureId}`));
+
+export const getInstructorStudents = async (courseId: number): Promise<InstructorStudent[]> =>
+  unwrapResponse(
+    api.get<ApiResponse<InstructorStudent[]>>(
+      `/api/v1/instructor/courses/${courseId}/students`
+    )
+  );
+
+export const kickInstructorStudent = async (
+  courseId: number,
+  userId: number
+): Promise<void> =>
+  unwrapResponse(
+    api.delete<ApiResponse<void>>(
+      `/api/v1/instructor/courses/${courseId}/students/${userId}`
+    )
+  );
+
+/* ─── Admin ──────────────────────────────────────────────────────── */
+
+export const getAdminDashboard = async (): Promise<AdminDashboard> =>
+  unwrapResponse(api.get<ApiResponse<AdminDashboard>>("/api/v1/admin/dashboard"));
+
+export interface AdminUsersParams {
+  search?: string;
+  role?: string;
+  page?: number;
+  limit?: number;
+}
+
+export const getAdminUsers = async (params?: AdminUsersParams): Promise<PaginatedData<AdminUser>> =>
+  unwrapResponse(api.get<ApiResponse<PaginatedData<AdminUser>>>("/api/v1/admin/users", { params }));
+
+export const deleteAdminUser = async (userId: number): Promise<void> =>
+  unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/admin/users/${userId}`));
+
+export const banAdminUser = async (userId: number): Promise<void> =>
+  unwrapResponse(api.post<ApiResponse<void>>(`/api/v1/admin/users/${userId}/ban`));
+
+export const changeAdminUserRole = async (userId: number, role: UserRole): Promise<void> =>
+  unwrapResponse(api.patch<ApiResponse<void>>(`/api/v1/admin/users/${userId}/role`, { role }));
+
+export interface AdminCoursesParams {
+  search?: string;
+  categoryId?: number;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+export const getAdminCourses = async (
+  params?: AdminCoursesParams
+): Promise<PaginatedData<AdminCourse>> =>
+  unwrapResponse(
+    api.get<ApiResponse<PaginatedData<AdminCourse>>>("/api/v1/admin/courses", { params })
+  );
+
+export const deleteAdminCourse = async (courseId: number): Promise<void> =>
+  unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/admin/courses/${courseId}`));
+
+export interface AdminReportsParams {
+  isResolved?: boolean;
+  type?: string;
+  page?: number;
+  limit?: number;
+}
+
+export const getAdminReports = async (
+  params?: AdminReportsParams
+): Promise<PaginatedData<AdminReport>> =>
+  unwrapResponse(
+    api.get<ApiResponse<PaginatedData<AdminReport>>>("/api/v1/admin/reports", { params })
+  );
+
+export const resolveAdminReport = async (
+  reportId: number,
+  isResolved: boolean
+): Promise<void> =>
+  unwrapResponse(
+    api.patch<ApiResponse<void>>(`/api/v1/admin/reports/${reportId}`, { isResolved })
   );

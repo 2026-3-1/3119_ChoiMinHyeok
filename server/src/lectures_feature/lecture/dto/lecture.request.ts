@@ -1,8 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsInt,
+  IsOptional,
   IsString,
   IsUrl,
   Max,
@@ -59,4 +60,47 @@ export class createLecture {
   @IsBoolean()
   @ApiProperty({ example: true })
   isPublished: boolean;
+}
+
+export class updateLecture {
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  @ApiPropertyOptional({ example: 'Updated title' })
+  title?: string;
+
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsUrl({ require_protocol: true }, { message: 'videoUrl must be a valid URL' })
+  @ApiPropertyOptional({ example: 'https://cdn.example.com/lecture.mp4' })
+  videoUrl?: string;
+
+  @IsOptional()
+  @Transform(normalizeText)
+  @IsUrl({ require_protocol: true }, { message: 'thumbnailUrl must be a valid URL' })
+  @ApiPropertyOptional({ example: 'https://cdn.example.com/lecture-thumbnail.png' })
+  thumbnailUrl?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @ApiPropertyOptional({ example: 2 })
+  position?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(86400)
+  @ApiPropertyOptional({ example: 600 })
+  duration?: number;
+
+  @IsOptional()
+  @Transform(toBooleanValue)
+  @IsBoolean()
+  @ApiPropertyOptional({ example: false })
+  isPublished?: boolean;
 }

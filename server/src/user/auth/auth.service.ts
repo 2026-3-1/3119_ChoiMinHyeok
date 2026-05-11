@@ -6,20 +6,20 @@ import { RedisService } from './redis.service';
 export interface AccessTokenPayload {
   sub: number;
   email: string;
-  roles: string;
+  role: string;
   type: 'access';
 }
 
 export interface RefreshTokenPayload {
   sub: number;
   email: string;
-  roles: string;
+  role: string;
   jti: string;
   type: 'refresh';
 }
 
-const ACCESS_TTL_SECONDS = 60 * 15; // 15 minutes
-const REFRESH_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
+const ACCESS_TTL_SECONDS = 60 * 15;
+const REFRESH_TTL_SECONDS = 60 * 60 * 24 * 7;
 
 @Injectable()
 export class AuthService {
@@ -28,16 +28,16 @@ export class AuthService {
     private readonly redisService: RedisService,
   ) {}
 
-  async generateTokens(userId: number, email: string, roles: string) {
+  async generateTokens(userId: number, email: string, role: string) {
     const jti = randomUUID();
 
     const accessToken = this.jwtService.sign(
-      { sub: userId, email, roles, type: 'access' } satisfies AccessTokenPayload,
+      { sub: userId, email, role, type: 'access' } satisfies AccessTokenPayload,
       { secret: process.env.JWT_ACCESS_SECRET, expiresIn: ACCESS_TTL_SECONDS },
     );
 
     const refreshToken = this.jwtService.sign(
-      { sub: userId, email, roles, jti, type: 'refresh' } satisfies RefreshTokenPayload,
+      { sub: userId, email, role, jti, type: 'refresh' } satisfies RefreshTokenPayload,
       { secret: process.env.JWT_REFRESH_SECRET, expiresIn: REFRESH_TTL_SECONDS },
     );
 
@@ -71,10 +71,9 @@ export class AuthService {
       throw new UnauthorizedException('만료되었거나 이미 사용된 리프레시 토큰입니다.');
     }
 
-    // Revoke the old token (rotation)
     await this.redisService.del(`refresh:${payload.jti}`);
 
-    return this.generateTokens(payload.sub, payload.email, payload.roles);
+    return this.generateTokens(payload.sub, payload.email, payload.role);
   }
 
   async revokeRefreshToken(incomingRefreshToken: string): Promise<void> {

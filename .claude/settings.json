@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx prisma *)",
+      "Bash(npm run *)",
+      "PowerShell(Stop-Process -Id 2664 -Force)"
+    ]
+  }
+}

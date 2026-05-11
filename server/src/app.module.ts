@@ -11,6 +11,12 @@ import { ResponseInterCeptor } from './global/global.response-interceptor';
 import { UserModule } from './user/user.module';
 import { CommerceModule } from './commerce/commerce.module';
 import { LearningModule } from './learning/learning.module';
+import { EnrollmentModule } from './enrollment/enrollment.module';
+import { InstructorModule } from './instructor/instructor.module';
+import { AdminModule } from './admin/admin.module';
+import { ReportModule } from './report/report.module';
+import { AttachmentModule } from './attachment/attachment.module';
+import { LectureCommentModule } from './lectures_feature/lecture-comment/lecture-comment.module';
 
 
 @Module({
@@ -22,6 +28,12 @@ import { LearningModule } from './learning/learning.module';
     UserModule,
     CommerceModule,
     LearningModule,
+    EnrollmentModule,
+    InstructorModule,
+    AdminModule,
+    ReportModule,
+    AttachmentModule,
+    LectureCommentModule,
   ],
   controllers: [AppController],
   providers: [

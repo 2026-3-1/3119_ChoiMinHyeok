@@ -100,7 +100,7 @@ export function CourseHeroSection({
               <button
                 type="button"
                 className="button button--primary"
-                disabled={cartButtonLabel === "불러오는 중..."}
+                disabled={cartButtonLabel === "불러오는 중..." || cartButtonLabel === "강사 계정은 구매할 수 없습니다"}
                 onClick={onCartAction}
               >
                 {cartButtonLabel}

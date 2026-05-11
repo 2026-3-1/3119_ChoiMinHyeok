@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import prisma from '../../prisma/prisma.client';
 import { Roles } from '../../prisma/generated/prisma/enums';
+import prisma from '../../prisma/prisma.client';
 
 type CreateUserInput = {
   name: string;
   email: string;
   password: string;
-  roles: Roles;
+  role: Roles;
   description?: string;
 };
 
@@ -18,33 +18,25 @@ export class UserRepository {
         name: data.name,
         email: data.email,
         password: data.password,
-        roles: data.roles,
+        role: data.role,
         description: data.description ?? '',
       },
     });
   }
 
   async findUserByEmail(email: string) {
-    return prisma.users.findUnique({
-      where: {
-        email,
-      },
-    });
+    return prisma.users.findUnique({ where: { email } });
   }
 
   async findUserById(id: number) {
-    return prisma.users.findUnique({
-      where: {
-        id,
-      },
-    });
+    return prisma.users.findUnique({ where: { id } });
   }
 
   async getUsers() {
-    return prisma.users.findMany({
-      orderBy: {
-        created_at: 'asc',
-      },
-    });
+    return prisma.users.findMany({ orderBy: { created_at: 'asc' } });
+  }
+
+  async updateUser(id: number, data: { name?: string; description?: string }) {
+    return prisma.users.update({ where: { id }, data });
   }
 }

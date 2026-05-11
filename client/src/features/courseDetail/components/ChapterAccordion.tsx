@@ -1,12 +1,15 @@
 ﻿import { useState } from "react";
+import { Link } from "react-router-dom";
 import type { CurriculumChapter } from "../../shared/types";
 import { formatDuration } from "../../shared/utils";
 
 type ChapterAccordionProps = {
   chapter: CurriculumChapter;
+  canWatch?: boolean;
+  courseId?: number;
 };
 
-export function ChapterAccordion({ chapter }: ChapterAccordionProps) {
+export function ChapterAccordion({ chapter, canWatch, courseId }: ChapterAccordionProps) {
   const [open, setOpen] = useState(true);
 
   return (
@@ -30,15 +33,29 @@ export function ChapterAccordion({ chapter }: ChapterAccordionProps) {
       {open ? (
         <div className="chapter-card__body">
           {chapter.lectures.length > 0 ? (
-            chapter.lectures.map((lecture) => (
-              <div key={lecture.id} className="lecture-row">
-                <div>
-                  <strong>{lecture.title}</strong>
-                  <span>{formatDuration(lecture.duration)}</span>
+            chapter.lectures.map((lecture) =>
+              canWatch && courseId ? (
+                <Link
+                  key={lecture.id}
+                  to={`/courses/${courseId}/learn/${lecture.id}`}
+                  className="lecture-row lecture-row--link"
+                >
+                  <div>
+                    <strong>{lecture.title}</strong>
+                    <span>{formatDuration(lecture.duration)}</span>
+                  </div>
+                  <span>{lecture.is_published ? "공개" : "비공개"}</span>
+                </Link>
+              ) : (
+                <div key={lecture.id} className="lecture-row">
+                  <div>
+                    <strong>{lecture.title}</strong>
+                    <span>{formatDuration(lecture.duration)}</span>
+                  </div>
+                  <span>{lecture.is_published ? "공개" : "비공개"}</span>
                 </div>
-                <span>{lecture.is_published ? "공개" : "비공개"}</span>
-              </div>
-            ))
+              )
+            )
           ) : (
             <div className="lecture-row lecture-row--empty">
               <span>아직 등록된 강의가 없습니다.</span>

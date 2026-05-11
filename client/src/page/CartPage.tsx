@@ -1,18 +1,12 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  checkoutCart,
-  getCart,
-  removeCartItem,
-} from "../features/shared/api/api";
+import { checkoutCart, getCart, removeCartItem } from "../features/shared/api/api";
 import { useAuth } from "../features/shared/context/AuthContext";
 import { SiteHeader } from "../features/shared/layout/SiteHeader";
 import { SiteFooter } from "../features/shared/layout/SiteFooter";
-
-function formatPrice(amount: number) {
-  return `₩${amount.toLocaleString("ko-KR")}`;
-}
+import { CartItemsSection } from "../features/cart/sections/CartItemsSection";
+import { CartSummarySection } from "../features/cart/sections/CartSummarySection";
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -20,20 +14,24 @@ export default function CartPage() {
   const queryClient = useQueryClient();
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
+  const initializedRef = useRef(false);
 
   const { data: cart, isLoading } = useQuery({
     queryKey: ["cart", user?.id],
     queryFn: () => getCart(user!.id),
     enabled: isLoggedIn && !!user,
     staleTime: 0,
-    onSuccess: (data) => {
-      setCheckedItems(data.items.map((item) => item.id));
-    },
   });
 
+  useEffect(() => {
+    if (cart && !initializedRef.current) {
+      initializedRef.current = true;
+      setCheckedItems(cart.items.map((item) => item.id));
+    }
+  }, [cart]);
+
   const removeMutation = useMutation({
-    mutationFn: ({ cartItemId }: { cartItemId: number }) =>
-      removeCartItem(user!.id, cartItemId),
+    mutationFn: ({ cartItemId }: { cartItemId: number }) => removeCartItem(user!.id, cartItemId),
     onSuccess: (updatedCart) => {
       queryClient.setQueryData(["cart", user?.id], updatedCart);
       setCheckedItems((prev) => prev.filter((id) => id !== removeMutation.variables?.cartItemId));
@@ -41,20 +39,15 @@ export default function CartPage() {
   });
 
   const checkoutMutation = useMutation({
-    mutationFn: () =>
-      checkoutCart({
-        userId: user!.id,
-        cartItemIds: checkedItems,
-        provider: "DEMO",
-      }),
+    mutationFn: () => checkoutCart({ userId: user!.id, cartItemIds: checkedItems, provider: "DEMO" }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart", user?.id] });
       queryClient.invalidateQueries({ queryKey: ["my-learning", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["learning-status", user?.id] });
       navigate("/my-learning");
     },
     onError: (err: unknown) => {
-      const msg =
-        (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
       setCheckoutError(msg ?? "결제 중 오류가 발생했습니다.");
     },
   });
@@ -100,9 +93,7 @@ export default function CartPage() {
                 <p className="eyebrow">Cart</p>
                 <h2>장바구니</h2>
               </div>
-              {cart && (
-                <span className="section-copy">총 {cart.totalCount}개 강의</span>
-              )}
+              {cart && <span className="section-copy">총 {cart.totalCount}개 강의</span>}
             </div>
 
             {isLoading ? (
@@ -129,90 +120,20 @@ export default function CartPage() {
               </div>
             ) : (
               <div className="cart-layout">
-                <div className="cart-items">
-                  {cart.items.map((item) => (
-                    <div key={item.id} className="cart-item">
-                      <label className="cart-item__check">
-                        <input
-                          type="checkbox"
-                          checked={checkedItems.includes(item.id)}
-                          onChange={() => toggleItem(item.id)}
-                        />
-                      </label>
-
-                      <div className="cart-item__media">
-                        {item.course.thumbnail ? (
-                          <img
-                            src={item.course.thumbnail}
-                            alt={item.course.title}
-                            className="cart-item__image"
-                          />
-                        ) : (
-                          <div className="cart-item__placeholder">SEC</div>
-                        )}
-                      </div>
-
-                      <div className="cart-item__info">
-                        <strong
-                          className="cart-item__title"
-                          onClick={() => navigate(`/courses/${item.course.id}`)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          {item.course.title}
-                        </strong>
-                        <span className="cart-item__price">{formatPrice(item.course.price)}</span>
-                      </div>
-
-                      <button
-                        className="cart-item__remove"
-                        onClick={() => removeMutation.mutate({ cartItemId: item.id })}
-                        disabled={removeMutation.isPending}
-                        aria-label="장바구니에서 제거"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="cart-summary-panel">
-                  <h3 className="cart-summary-panel__title">결제 요약</h3>
-
-                  <div className="cart-summary-panel__rows">
-                    <div className="cart-summary-panel__row">
-                      <span>선택 강의</span>
-                      <span>{selectedItems.length}개</span>
-                    </div>
-                    <div className="cart-summary-panel__row cart-summary-panel__row--total">
-                      <span>결제 금액</span>
-                      <strong>{formatPrice(selectedTotal)}</strong>
-                    </div>
-                  </div>
-
-                  {checkoutError && (
-                    <p className="auth-form__error" style={{ marginBottom: 10 }}>
-                      {checkoutError}
-                    </p>
-                  )}
-
-                  <button
-                    className="button button--primary"
-                    style={{ width: "100%" }}
-                    disabled={checkedItems.length === 0 || checkoutMutation.isPending}
-                    onClick={() => {
-                      setCheckoutError(null);
-                      checkoutMutation.mutate();
-                    }}
-                  >
-                    {checkoutMutation.isPending
-                      ? "결제 처리 중..."
-                      : `${formatPrice(selectedTotal)} 결제하기`}
-                  </button>
-
-                  <p className="cart-summary-panel__notice">
-                    데모 결제 방식으로 실제 과금 없이 수강 등록됩니다.
-                  </p>
-                </div>
+                <CartItemsSection
+                  items={cart.items}
+                  checkedItems={checkedItems}
+                  isRemoving={removeMutation.isPending}
+                  onToggle={toggleItem}
+                  onRemove={(cartItemId) => removeMutation.mutate({ cartItemId })}
+                />
+                <CartSummarySection
+                  selectedCount={selectedItems.length}
+                  selectedTotal={selectedTotal}
+                  checkoutError={checkoutError}
+                  isCheckingOut={checkoutMutation.isPending}
+                  onCheckout={() => { setCheckoutError(null); checkoutMutation.mutate(); }}
+                />
               </div>
             )}
           </section>

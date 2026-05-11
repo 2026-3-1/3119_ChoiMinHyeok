@@ -2,14 +2,16 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
-  IsEnum,
+  IsIn,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Roles } from '../../../prisma/generated/prisma/enums';
 import { normalizeText } from '../../global/global.request-transform';
+
+const VALID_ROLES = ['STUDENT', 'INSTRUCTOR'] as const;
+type RegisterRole = (typeof VALID_ROLES)[number];
 
 export class RegisterRequest {
   @Transform(normalizeText)
@@ -31,9 +33,9 @@ export class RegisterRequest {
   @ApiProperty({ example: 'password123!' })
   password!: string;
 
-  @IsEnum(Roles)
-  @ApiProperty({ enum: Roles, enumName: 'Roles', example: Roles.STUDENT })
-  roles!: Roles;
+  @IsIn(VALID_ROLES)
+  @ApiProperty({ enum: VALID_ROLES, example: 'STUDENT' })
+  role!: RegisterRole;
 
   @IsOptional()
   @Transform(normalizeText)

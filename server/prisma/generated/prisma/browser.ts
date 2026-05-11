@@ -43,6 +43,11 @@ export type chapter = Prisma.chapterModel
  */
 export type lectures = Prisma.lecturesModel
 /**
+ * Model lecture_attachment
+ * 
+ */
+export type lecture_attachment = Prisma.lecture_attachmentModel
+/**
  * Model cart_items
  * 
  */
@@ -97,3 +102,8 @@ export type lecture_playback_history = Prisma.lecture_playback_historyModel
  * 
  */
 export type lecture_bookmark = Prisma.lecture_bookmarkModel
+/**
+ * Model course_report
+ * 
+ */
+export type course_report = Prisma.course_reportModel

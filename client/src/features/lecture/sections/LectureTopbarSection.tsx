@@ -1,5 +1,5 @@
 ﻿import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type LectureTopbarSectionProps = {
   courseId?: string;
@@ -24,12 +24,18 @@ export function LectureTopbarSection({
   onNextLecture,
   extraActions,
 }: LectureTopbarSectionProps) {
+  const navigate = useNavigate();
+
   return (
     <header className="player-topbar">
       <div>
-        <Link to={courseId ? `/courses/${courseId}` : "/courses"} className="player-topbar__back">
-          강의 상세로 돌아가기
-        </Link>
+        <button
+          type="button"
+          className="player-topbar__back"
+          onClick={() => navigate(courseId ? `/courses/${courseId}` : "/courses")}
+        >
+          ← 강의 상세로 돌아가기
+        </button>
         <strong>{courseTitle ?? "강의 재생"}</strong>
         <span>
           {categoryName} · {lectureTitle}

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { EnrollmentStatus } from '../../prisma/generated/prisma/enums';
 import type {
   CourseReviewWithUser,
@@ -40,6 +40,12 @@ export class LearningManager {
   assertEnrollmentExists(enrollment: { id: number; status?: EnrollmentStatus } | null) {
     if (!enrollment) {
       throw new BadRequestException('구매한 강의만 학습 기록을 남길 수 있습니다.');
+    }
+  }
+
+  assertNotCourseInstructor(course: { instructor_id: number }, userId: number) {
+    if (course.instructor_id === userId) {
+      throw new ForbiddenException('자신의 강의에는 리뷰를 작성할 수 없습니다.');
     }
   }
 
@@ -195,7 +201,7 @@ export class LearningManager {
       user: {
         id: review.users.id,
         name: review.users.name,
-        roles: review.users.roles,
+        role: review.users.role,
       },
       created_at: review.create_at,
     }));

@@ -4,14 +4,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '../../../prisma/generated/prisma/client';
-import prisma from '../../../prisma/prisma.client';
-import { createCourse, getCourse } from './dto/courses.request';
+import { CourseLifecycleStatus } from '../../../prisma/generated/prisma/enums';
+import { CourseRepository } from './course.repository';
+import { createCourse, getCourse, updateCourse } from './dto/courses.request';
 
 @Injectable()
 export class CourseService {
   private readonly defaultPage = 1;
   private readonly defaultLimit = 12;
   private readonly maxLimit = 100;
+
+  constructor(private readonly courseRepository: CourseRepository) {}
 
   async addCourses(data: createCourse) {
     if (data.minEnrollment > data.maxCapacity) {
@@ -21,16 +24,8 @@ export class CourseService {
     }
 
     const [category, existingCourse] = await Promise.all([
-      prisma.categories.findUnique({
-        where: {
-          id: data.categoryId,
-        },
-      }),
-      prisma.courses.findUnique({
-        where: {
-          slug: data.slug,
-        },
-      }),
+      this.courseRepository.findCategoryById(data.categoryId),
+      this.courseRepository.findBySlug(data.slug),
     ]);
 
     if (!category) {
@@ -41,29 +36,23 @@ export class CourseService {
       throw new BadRequestException('이미 사용 중인 슬러그입니다.');
     }
 
-    await prisma.courses.create({
-      data: {
-        title: data.title,
-        description: data.description,
-        instructor_id: data.instructorId,
-        thumbnail: data.thumbnail,
-        slug: data.slug,
-        difficulty: data.difficulty,
-        category_id: data.categoryId,
-        price: data.price,
-        rating: 0,
-        max_capacity: data.maxCapacity,
-        min_enrollment: data.minEnrollment,
-      },
+    await this.courseRepository.create({
+      title: data.title,
+      description: data.description,
+      instructor_id: data.instructorId,
+      thumbnail: data.thumbnail,
+      slug: data.slug,
+      difficulty: data.difficulty,
+      category_id: data.categoryId,
+      price: data.price,
+      rating: 0,
+      max_capacity: data.maxCapacity,
+      min_enrollment: data.minEnrollment,
     });
   }
 
   async getCourseDetail(courseId: number) {
-    const course = await prisma.courses.findUnique({
-      where: {
-        id: courseId,
-      },
-    });
+    const course = await this.courseRepository.findById(courseId);
 
     if (!course) {
       throw new NotFoundException('강의를 찾을 수 없습니다.');
@@ -90,44 +79,54 @@ export class CourseService {
         : undefined;
 
     const where: Prisma.coursesWhereInput = {
-      ...(categoryId !== undefined && {
-        category_id: categoryId,
-      }),
+      status: CourseLifecycleStatus.OPEN,
+      ...(categoryId !== undefined && { category_id: categoryId }),
       ...(search && {
         OR: [
-          {
-            title: {
-              contains: search,
-              mode: Prisma.QueryMode.insensitive,
-            },
-          },
-          {
-            description: {
-              contains: search,
-              mode: Prisma.QueryMode.insensitive,
-            },
-          },
+          { title: { contains: search, mode: Prisma.QueryMode.insensitive } },
+          { description: { contains: search, mode: Prisma.QueryMode.insensitive } },
         ],
       }),
     };
 
     const [data, count] = await Promise.all([
-      prisma.courses.findMany({
-        where,
-        skip,
-        take: limit,
-        orderBy: {
-          created_at: 'desc',
-        },
-      }),
-      prisma.courses.count({ where }),
+      this.courseRepository.findMany(where, skip, limit),
+      this.courseRepository.count(where),
     ]);
 
-    return {
-      data,
-      count,
-      page,
-      limit,
-    };
+    return { data, count, page, limit };
+  }
+
+  async updateCourse(courseId: number, data: updateCourse) {
+    const course = await this.courseRepository.findById(courseId);
+    if (!course) throw new NotFoundException('강의를 찾을 수 없습니다.');
+
+    if (
+      data.minEnrollment !== undefined &&
+      data.maxCapacity !== undefined &&
+      data.minEnrollment > data.maxCapacity
+    ) {
+      throw new BadRequestException(
+        '최소 개설 인원은 최대 수강 인원보다 클 수 없습니다.',
+      );
+    }
+
+    return this.courseRepository.update(courseId, {
+      ...(data.title !== undefined && { title: data.title }),
+      ...(data.description !== undefined && { description: data.description }),
+      ...(data.thumbnail !== undefined && { thumbnail: data.thumbnail }),
+      ...(data.difficulty !== undefined && { difficulty: data.difficulty }),
+      ...(data.categoryId !== undefined && { category_id: data.categoryId }),
+      ...(data.price !== undefined && { price: data.price }),
+      ...(data.maxCapacity !== undefined && { max_capacity: data.maxCapacity }),
+      ...(data.minEnrollment !== undefined && { min_enrollment: data.minEnrollment }),
+    });
+  }
+
+  async deleteCourse(courseId: number) {
+    const course = await this.courseRepository.findById(courseId);
+    if (!course) throw new NotFoundException('강의를 찾을 수 없습니다.');
+
+    await this.courseRepository.delete(courseId);
   }
 }

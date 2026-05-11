@@ -8,6 +8,7 @@ import { RegisterRequest } from './dto/register.request';
 import { UserRepository } from './user.repository';
 import { UserManager } from './user.manager';
 import { AuthService } from './auth/auth.service';
+import { Roles } from '../../prisma/generated/prisma/enums';
 
 @Injectable()
 export class UserService {
@@ -29,7 +30,7 @@ export class UserService {
       email: data.email,
       name: data.name,
       password: passwordHash,
-      roles: data.roles,
+      role: data.role as Roles,
       description: data.description,
     });
 
@@ -37,7 +38,7 @@ export class UserService {
     const tokens = await this.authService.generateTokens(
       user.id,
       user.email,
-      user.roles,
+      user.role,
     );
 
     return { user: profile, ...tokens };
@@ -49,7 +50,7 @@ export class UserService {
     const tokens = await this.authService.generateTokens(
       user.id,
       user.email,
-      user.roles,
+      user.role,
     );
 
     return { user: profile, ...tokens };
@@ -70,11 +71,18 @@ export class UserService {
     return this.toProfile(user);
   }
 
+  async updateUserProfile(userId: number, data: { name?: string; description?: string }) {
+    const user = await this.userRepository.findUserById(userId);
+    if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
+    const updated = await this.userRepository.updateUser(userId, data);
+    return this.toProfile(updated);
+  }
+
   private toProfile(user: {
     id: number;
     name: string;
     email: string;
-    roles: any;
+    role: Roles;
     description: string | null;
     created_at: Date;
   }) {
@@ -82,7 +90,7 @@ export class UserService {
       id: user.id,
       name: user.name,
       email: user.email,
-      roles: user.roles,
+      role: user.role,
       description: user.description,
       created_at: user.created_at,
     };

@@ -4,11 +4,15 @@ import type { CurriculumChapter } from "../../shared/types";
 type CourseCurriculumSectionProps = {
   curriculum: CurriculumChapter[];
   lectureCount: number;
+  canWatch?: boolean;
+  courseId?: number;
 };
 
 export function CourseCurriculumSection({
   curriculum,
   lectureCount,
+  canWatch,
+  courseId,
 }: CourseCurriculumSectionProps) {
   return (
     <div className="detail-main">
@@ -25,7 +29,7 @@ export function CourseCurriculumSection({
       <div className="chapter-list">
         {curriculum.length > 0 ? (
           curriculum.map((chapter) => (
-            <ChapterAccordion key={chapter.id} chapter={chapter} />
+            <ChapterAccordion key={chapter.id} chapter={chapter} canWatch={canWatch} courseId={courseId} />
           ))
         ) : (
           <div className="empty-state">

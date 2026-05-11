@@ -131,6 +131,14 @@ export class LearningRepository {
     };
   }
 
+  async findCourseInstructorId(courseId: number): Promise<number | null> {
+    const course = await prisma.courses.findUnique({
+      where: { id: courseId },
+      select: { instructor_id: true },
+    });
+    return course?.instructor_id ?? null;
+  }
+
   findLectureWithCourse(lectureId: number) {
     return prisma.lectures.findUnique({
       where: {

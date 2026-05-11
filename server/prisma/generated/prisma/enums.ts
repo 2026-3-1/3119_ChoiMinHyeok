@@ -28,6 +28,7 @@ export type Roles = (typeof Roles)[keyof typeof Roles]
 
 
 export const CourseLifecycleStatus = {
+  DRAFT: 'DRAFT',
   OPEN: 'OPEN',
   CANCELED: 'CANCELED'
 } as const
@@ -128,3 +129,12 @@ export const LecturePlaybackEventType = {
 } as const
 
 export type LecturePlaybackEventType = (typeof LecturePlaybackEventType)[keyof typeof LecturePlaybackEventType]
+
+
+export const ReportType = {
+  COPYRIGHT: 'COPYRIGHT',
+  WRONG_INFO: 'WRONG_INFO',
+  OTHER: 'OTHER'
+} as const
+
+export type ReportType = (typeof ReportType)[keyof typeof ReportType]

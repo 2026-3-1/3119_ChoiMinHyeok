@@ -12,7 +12,7 @@ export class UserProfileResponse {
   email: string;
 
   @ApiProperty({ enum: Roles, enumName: 'Roles', example: Roles.STUDENT })
-  roles: Roles;
+  role: Roles;
 
   @ApiProperty({ example: '보안 입문 학습자입니다.', nullable: true })
   description: string | null;

@@ -9,6 +9,17 @@
   font-family: "Noto Sans KR", sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
+  --text-primary: #f3f7ff;
+  --text-secondary: #aec2d7;
+  --text-muted: #90a7bf;
+  --accent-primary: #00ff88;
+  --surface-secondary: rgba(255, 255, 255, 0.04);
+  --surface-tertiary: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(112, 132, 155, 0.2);
+  --error: #ff5a72;
+  --success: #00ff88;
+  --warning: #ffc046;
 }
 
 * {
@@ -59,10 +70,13 @@ img {
 
 .page-shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .page-main {
   padding-top: 88px;
+  flex: 1;
 }
 
 .site-container {
@@ -746,6 +760,16 @@ img {
   justify-content: center;
 }
 
+.lecture-row--link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.lecture-row--link:hover {
+  background: rgba(112, 132, 155, 0.08);
+  cursor: pointer;
+}
+
 .summary-card {
   padding: 22px;
 }
@@ -776,10 +800,24 @@ img {
 }
 
 .player-topbar__back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   margin-bottom: 4px;
+  padding: 0;
+  background: none;
+  border: none;
   color: #00ff88;
   font-family: "Share Tech Mono", monospace;
+  font-size: inherit;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.player-topbar__back:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 .player-topbar strong {
@@ -828,8 +866,60 @@ img {
   color: #90a7bf;
 }
 
+.player-video--loading {
+  background: #050d16;
+  color: #90a7bf;
+  font-size: 0.9rem;
+}
+
 .player-info {
   padding: 24px;
+}
+
+.player-attachments {
+  padding: 20px 24px;
+  border-top: 1px solid #1e2d3d;
+}
+
+.player-attachments__title {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #c8d8e8;
+}
+
+.player-attachments__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-attachments__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #0d1b2a;
+  border: 1px solid #1e2d3d;
+  border-radius: 6px;
+}
+
+.player-attachments__filename {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #c8d8e8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-attachments__size {
+  font-size: 0.8rem;
+  color: #5a7a94;
+  white-space: nowrap;
 }
 
 .player-sidebar {
@@ -878,6 +968,15 @@ img {
 
 .sidebar-lecture.is-active {
   background: rgba(77, 171, 255, 0.08);
+}
+
+.sidebar-lecture.is-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sidebar-lecture.is-locked:hover {
+  background: transparent;
 }
 
 .app-loading {
@@ -1070,6 +1169,15 @@ img {
 
 .site-header__cart:hover {
   background: rgba(255, 255, 255, 0.07);
+}
+
+.site-header__cart--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.site-header__cart--disabled:hover {
+  background: rgba(7, 17, 27, 0.55);
 }
 
 .site-header__cart-icon {
@@ -1535,6 +1643,86 @@ img {
   color: #00ff88 !important;
 }
 
+/* ── Lecture Comments ─────────────────────────────────────────── */
+.player-comments {
+  padding: 24px 20px;
+  border: 1px solid rgba(112, 132, 155, 0.18);
+  border-radius: 20px;
+  background: rgba(7, 17, 27, 0.72);
+  margin-top: 16px;
+}
+
+.player-comments__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.player-comments__form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(112, 132, 155, 0.14);
+}
+
+.player-comments__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.player-comment {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.player-comment__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.player-comment__author {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.player-comment__date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.player-comment__delete {
+  font-size: 0.78rem;
+  color: #90a7bf;
+  background: transparent;
+  padding: 2px 8px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.player-comment__delete:hover {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff9a9a;
+}
+
+.player-comment__content {
+  font-size: 0.9rem;
+  color: #aec2d7;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 @media (max-width: 1024px) {
   .hero-section__grid,
   .detail-hero,
@@ -1602,4 +1790,87 @@ img {
   .cart-summary-panel {
     position: static;
   }
+}
+
+/* ─── Admin Table ─────────────────────────────────────────────────── */
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(112, 132, 155, 0.2);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #90a7bf;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(112, 132, 155, 0.2);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(112, 132, 155, 0.1);
+  color: #d7e4f5;
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ─── Badge ───────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.badge--success {
+  background: rgba(0, 255, 136, 0.12);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.25);
+}
+
+.badge--neutral {
+  background: rgba(112, 132, 155, 0.15);
+  color: #aec2d7;
+  border: 1px solid rgba(112, 132, 155, 0.25);
+}
+
+.badge--warning {
+  background: rgba(255, 192, 70, 0.12);
+  color: #ffc046;
+  border: 1px solid rgba(255, 192, 70, 0.25);
+}
+
+/* ─── Button danger ───────────────────────────────────────────────── */
+
+.button--danger {
+  background: rgba(255, 90, 114, 0.15);
+  color: #ff5a72;
+  border: 1px solid rgba(255, 90, 114, 0.3);
+}
+
+.button--danger:hover {
+  background: rgba(255, 90, 114, 0.25);
 }

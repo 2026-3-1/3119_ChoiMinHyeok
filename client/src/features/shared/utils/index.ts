@@ -117,7 +117,7 @@ export const getCategoryAccent = (categoryName?: string) => {
   return "#00ff88";
 };
 
-export const getYouTubeEmbedUrl = (videoUrl?: string) => {
+export const getYouTubeEmbedUrl = (videoUrl?: string, startSeconds?: number) => {
   if (!videoUrl) {
     return null;
   }
@@ -128,7 +128,9 @@ export const getYouTubeEmbedUrl = (videoUrl?: string) => {
     return null;
   }
 
-  return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0`;
+  const origin = typeof window !== "undefined" ? encodeURIComponent(window.location.origin) : "";
+  const start = startSeconds && startSeconds > 5 ? `&start=${Math.floor(startSeconds)}` : "";
+  return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0&enablejsapi=1&origin=${origin}${start}`;
 };
 
 export const buildCurriculum = (

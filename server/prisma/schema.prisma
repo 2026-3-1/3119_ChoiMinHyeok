@@ -21,6 +21,7 @@ enum Roles {
 }
 
 enum CourseLifecycleStatus {
+  DRAFT
   OPEN
   CANCELED
 }
@@ -101,7 +102,7 @@ model users {
   name                     String
   email                    String                   @unique
   password                 String
-  roles                    Roles[]
+  role                     Roles                    @default(STUDENT)
   description              String?                  @default("")
   updated_at               DateTime                 @updatedAt
   created_at               DateTime                 @default(now())
@@ -138,7 +139,7 @@ model courses {
   rating        Float                 @default(0)
   max_capacity  Int                   @default(30)
   min_enrollment Int                  @default(1)
-  status        CourseLifecycleStatus @default(OPEN)
+  status        CourseLifecycleStatus @default(DRAFT)
   canceled_at   DateTime?
   cancel_reason CancellationReason?
   created_at    DateTime              @default(now())
@@ -178,8 +179,22 @@ model lectures {
   playback_history  lecture_playback_history[]
   bookmarks         lecture_bookmark[]
   lecture_comments  lecture_comment[]
+  attachments       lecture_attachment[]
 
   @@unique([chapter_id, position])
+}
+
+model lecture_attachment {
+  id          Int      @id @default(autoincrement())
+  lecture_id  Int
+  filename    String
+  stored_name String   @unique
+  mime_type   String
+  size        Int
+  created_at  DateTime @default(now())
+  lectures    lectures @relation(fields: [lecture_id], references: [id], onDelete: Cascade)
+
+  @@index([lecture_id])
 }
 
 model cart_items {
@@ -314,7 +329,7 @@ model course_comment {
 
 model lecture_comment {
   id         Int       @id @default(autoincrement())
-  title      String
+  title      String?
   content    String
   star       Int       @default(0)
   user_id    Int

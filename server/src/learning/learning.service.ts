@@ -62,11 +62,11 @@ export class LearningService {
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
-    const enrollment = await this.learningRepository.findActiveEnrollment(
-      userId,
-      targetLecture.chapters.course_id,
-    );
-    this.learningManager.assertEnrollmentExists(enrollment);
+    const [enrollment, instructorId] = await Promise.all([
+      this.learningRepository.findActiveEnrollment(userId, targetLecture.chapters.course_id),
+      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+    ]);
+    if (instructorId !== userId) this.learningManager.assertEnrollmentExists(enrollment);
 
     const progress = await this.learningRepository.findLectureProgress(
       userId,
@@ -88,15 +88,20 @@ export class LearningService {
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
-    const enrollment = await this.learningRepository.findActiveEnrollment(
-      data.userId,
-      targetLecture.chapters.course_id,
-    );
-    this.learningManager.assertEnrollmentExists(enrollment);
+    const [enrollment, instructorId] = await Promise.all([
+      this.learningRepository.findActiveEnrollment(data.userId, targetLecture.chapters.course_id),
+      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+    ]);
+    if (instructorId !== data.userId) this.learningManager.assertEnrollmentExists(enrollment);
+
+    // Clamp client values to lecture duration to handle timer drift or replay edge cases
+    const clampedWatchedSeconds = Math.min(data.watchedSeconds, targetLecture.duration);
+    const clampedLastPosition = Math.min(data.lastPosition, targetLecture.duration);
+
     this.learningManager.validateProgressInput(
       targetLecture.duration,
-      data.lastPosition,
-      data.watchedSeconds,
+      clampedLastPosition,
+      clampedWatchedSeconds,
     );
 
     const existingProgress = await this.learningRepository.findLectureProgress(
@@ -105,7 +110,7 @@ export class LearningService {
     );
     const watchedSeconds = this.learningManager.calculateWatchedSeconds(
       existingProgress?.watched_seconds,
-      data.watchedSeconds,
+      clampedWatchedSeconds,
     );
     const progressPercent = this.learningManager.calculateProgressPercent(
       targetLecture.duration,
@@ -114,7 +119,7 @@ export class LearningService {
     const progress = await this.learningRepository.upsertLectureProgressAndHistory({
       userId: data.userId,
       lectureId,
-      lastPosition: data.lastPosition,
+      lastPosition: clampedLastPosition,
       watchedSeconds,
       progressPercent,
       eventType: data.eventType,
@@ -133,11 +138,11 @@ export class LearningService {
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
-    const enrollment = await this.learningRepository.findActiveEnrollment(
-      userId,
-      targetLecture.chapters.course_id,
-    );
-    this.learningManager.assertEnrollmentExists(enrollment);
+    const [enrollment, instructorId] = await Promise.all([
+      this.learningRepository.findActiveEnrollment(userId, targetLecture.chapters.course_id),
+      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+    ]);
+    if (instructorId !== userId) this.learningManager.assertEnrollmentExists(enrollment);
 
     return this.learningRepository.getLectureHistory(userId, lectureId);
   }
@@ -147,11 +152,11 @@ export class LearningService {
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
-    const enrollment = await this.learningRepository.findActiveEnrollment(
-      userId,
-      targetLecture.chapters.course_id,
-    );
-    this.learningManager.assertEnrollmentExists(enrollment);
+    const [enrollment, instructorId] = await Promise.all([
+      this.learningRepository.findActiveEnrollment(userId, targetLecture.chapters.course_id),
+      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+    ]);
+    if (instructorId !== userId) this.learningManager.assertEnrollmentExists(enrollment);
 
     return this.learningRepository.getLectureBookmarks(userId, lectureId);
   }
@@ -164,11 +169,11 @@ export class LearningService {
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
-    const enrollment = await this.learningRepository.findActiveEnrollment(
-      data.userId,
-      targetLecture.chapters.course_id,
-    );
-    this.learningManager.assertEnrollmentExists(enrollment);
+    const [enrollment, instructorId] = await Promise.all([
+      this.learningRepository.findActiveEnrollment(data.userId, targetLecture.chapters.course_id),
+      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+    ]);
+    if (instructorId !== data.userId) this.learningManager.assertEnrollmentExists(enrollment);
     this.learningManager.validateBookmarkPosition(
       targetLecture.duration,
       data.position,
@@ -221,6 +226,7 @@ export class LearningService {
     ]);
 
     this.learningManager.assertCourseExists(course);
+    this.learningManager.assertNotCourseInstructor(course!, data.userId);
 
     const metrics = this.learningManager.buildCourseMetrics(source);
     this.learningManager.assertReviewWritable(

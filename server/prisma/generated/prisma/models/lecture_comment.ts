@@ -28,14 +28,14 @@ export type AggregateLecture_comment = {
 
 export type Lecture_commentAvgAggregateOutputType = {
   id: number | null
-  start: number | null
+  star: number | null
   user_id: number | null
   lecture_id: number | null
 }
 
 export type Lecture_commentSumAggregateOutputType = {
   id: number | null
-  start: number | null
+  star: number | null
   user_id: number | null
   lecture_id: number | null
 }
@@ -44,7 +44,7 @@ export type Lecture_commentMinAggregateOutputType = {
   id: number | null
   title: string | null
   content: string | null
-  start: number | null
+  star: number | null
   user_id: number | null
   lecture_id: number | null
   create_at: Date | null
@@ -54,7 +54,7 @@ export type Lecture_commentMaxAggregateOutputType = {
   id: number | null
   title: string | null
   content: string | null
-  start: number | null
+  star: number | null
   user_id: number | null
   lecture_id: number | null
   create_at: Date | null
@@ -64,7 +64,7 @@ export type Lecture_commentCountAggregateOutputType = {
   id: number
   title: number
   content: number
-  start: number
+  star: number
   user_id: number
   lecture_id: number
   create_at: number
@@ -74,14 +74,14 @@ export type Lecture_commentCountAggregateOutputType = {
 
 export type Lecture_commentAvgAggregateInputType = {
   id?: true
-  start?: true
+  star?: true
   user_id?: true
   lecture_id?: true
 }
 
 export type Lecture_commentSumAggregateInputType = {
   id?: true
-  start?: true
+  star?: true
   user_id?: true
   lecture_id?: true
 }
@@ -90,7 +90,7 @@ export type Lecture_commentMinAggregateInputType = {
   id?: true
   title?: true
   content?: true
-  start?: true
+  star?: true
   user_id?: true
   lecture_id?: true
   create_at?: true
@@ -100,7 +100,7 @@ export type Lecture_commentMaxAggregateInputType = {
   id?: true
   title?: true
   content?: true
-  start?: true
+  star?: true
   user_id?: true
   lecture_id?: true
   create_at?: true
@@ -110,7 +110,7 @@ export type Lecture_commentCountAggregateInputType = {
   id?: true
   title?: true
   content?: true
-  start?: true
+  star?: true
   user_id?: true
   lecture_id?: true
   create_at?: true
@@ -205,9 +205,9 @@ export type lecture_commentGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 
 export type Lecture_commentGroupByOutputType = {
   id: number
-  title: string
+  title: string | null
   content: string
-  start: number
+  star: number
   user_id: number
   lecture_id: number
   create_at: Date
@@ -238,9 +238,9 @@ export type lecture_commentWhereInput = {
   OR?: Prisma.lecture_commentWhereInput[]
   NOT?: Prisma.lecture_commentWhereInput | Prisma.lecture_commentWhereInput[]
   id?: Prisma.IntFilter<"lecture_comment"> | number
-  title?: Prisma.StringFilter<"lecture_comment"> | string
+  title?: Prisma.StringNullableFilter<"lecture_comment"> | string | null
   content?: Prisma.StringFilter<"lecture_comment"> | string
-  start?: Prisma.IntFilter<"lecture_comment"> | number
+  star?: Prisma.IntFilter<"lecture_comment"> | number
   user_id?: Prisma.IntFilter<"lecture_comment"> | number
   lecture_id?: Prisma.IntFilter<"lecture_comment"> | number
   create_at?: Prisma.DateTimeFilter<"lecture_comment"> | Date | string
@@ -250,9 +250,9 @@ export type lecture_commentWhereInput = {
 
 export type lecture_commentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
@@ -265,9 +265,9 @@ export type lecture_commentWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.lecture_commentWhereInput | Prisma.lecture_commentWhereInput[]
   OR?: Prisma.lecture_commentWhereInput[]
   NOT?: Prisma.lecture_commentWhereInput | Prisma.lecture_commentWhereInput[]
-  title?: Prisma.StringFilter<"lecture_comment"> | string
+  title?: Prisma.StringNullableFilter<"lecture_comment"> | string | null
   content?: Prisma.StringFilter<"lecture_comment"> | string
-  start?: Prisma.IntFilter<"lecture_comment"> | number
+  star?: Prisma.IntFilter<"lecture_comment"> | number
   user_id?: Prisma.IntFilter<"lecture_comment"> | number
   lecture_id?: Prisma.IntFilter<"lecture_comment"> | number
   create_at?: Prisma.DateTimeFilter<"lecture_comment"> | Date | string
@@ -277,9 +277,9 @@ export type lecture_commentWhereUniqueInput = Prisma.AtLeast<{
 
 export type lecture_commentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
@@ -295,18 +295,18 @@ export type lecture_commentScalarWhereWithAggregatesInput = {
   OR?: Prisma.lecture_commentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.lecture_commentScalarWhereWithAggregatesInput | Prisma.lecture_commentScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"lecture_comment"> | number
-  title?: Prisma.StringWithAggregatesFilter<"lecture_comment"> | string
+  title?: Prisma.StringNullableWithAggregatesFilter<"lecture_comment"> | string | null
   content?: Prisma.StringWithAggregatesFilter<"lecture_comment"> | string
-  start?: Prisma.IntWithAggregatesFilter<"lecture_comment"> | number
+  star?: Prisma.IntWithAggregatesFilter<"lecture_comment"> | number
   user_id?: Prisma.IntWithAggregatesFilter<"lecture_comment"> | number
   lecture_id?: Prisma.IntWithAggregatesFilter<"lecture_comment"> | number
   create_at?: Prisma.DateTimeWithAggregatesFilter<"lecture_comment"> | Date | string
 }
 
 export type lecture_commentCreateInput = {
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   create_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutLecture_commentsInput
   lectures: Prisma.lecturesCreateNestedOneWithoutLecture_commentsInput
@@ -314,18 +314,18 @@ export type lecture_commentCreateInput = {
 
 export type lecture_commentUncheckedCreateInput = {
   id?: number
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   user_id: number
   lecture_id: number
   create_at?: Date | string
 }
 
 export type lecture_commentUpdateInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutLecture_commentsNestedInput
   lectures?: Prisma.lecturesUpdateOneRequiredWithoutLecture_commentsNestedInput
@@ -333,9 +333,9 @@ export type lecture_commentUpdateInput = {
 
 export type lecture_commentUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   lecture_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -343,26 +343,26 @@ export type lecture_commentUncheckedUpdateInput = {
 
 export type lecture_commentCreateManyInput = {
   id?: number
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   user_id: number
   lecture_id: number
   create_at?: Date | string
 }
 
 export type lecture_commentUpdateManyMutationInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type lecture_commentUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   lecture_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,7 +382,7 @@ export type lecture_commentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
@@ -390,7 +390,7 @@ export type lecture_commentCountOrderByAggregateInput = {
 
 export type lecture_commentAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
 }
@@ -399,7 +399,7 @@ export type lecture_commentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
@@ -409,7 +409,7 @@ export type lecture_commentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
   create_at?: Prisma.SortOrder
@@ -417,7 +417,7 @@ export type lecture_commentMinOrderByAggregateInput = {
 
 export type lecture_commentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  start?: Prisma.SortOrder
+  star?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   lecture_id?: Prisma.SortOrder
 }
@@ -507,18 +507,18 @@ export type lecture_commentUncheckedUpdateManyWithoutLecturesNestedInput = {
 }
 
 export type lecture_commentCreateWithoutUsersInput = {
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   create_at?: Date | string
   lectures: Prisma.lecturesCreateNestedOneWithoutLecture_commentsInput
 }
 
 export type lecture_commentUncheckedCreateWithoutUsersInput = {
   id?: number
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   lecture_id: number
   create_at?: Date | string
 }
@@ -554,27 +554,27 @@ export type lecture_commentScalarWhereInput = {
   OR?: Prisma.lecture_commentScalarWhereInput[]
   NOT?: Prisma.lecture_commentScalarWhereInput | Prisma.lecture_commentScalarWhereInput[]
   id?: Prisma.IntFilter<"lecture_comment"> | number
-  title?: Prisma.StringFilter<"lecture_comment"> | string
+  title?: Prisma.StringNullableFilter<"lecture_comment"> | string | null
   content?: Prisma.StringFilter<"lecture_comment"> | string
-  start?: Prisma.IntFilter<"lecture_comment"> | number
+  star?: Prisma.IntFilter<"lecture_comment"> | number
   user_id?: Prisma.IntFilter<"lecture_comment"> | number
   lecture_id?: Prisma.IntFilter<"lecture_comment"> | number
   create_at?: Prisma.DateTimeFilter<"lecture_comment"> | Date | string
 }
 
 export type lecture_commentCreateWithoutLecturesInput = {
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   create_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutLecture_commentsInput
 }
 
 export type lecture_commentUncheckedCreateWithoutLecturesInput = {
   id?: number
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   user_id: number
   create_at?: Date | string
 }
@@ -607,70 +607,70 @@ export type lecture_commentUpdateManyWithWhereWithoutLecturesInput = {
 
 export type lecture_commentCreateManyUsersInput = {
   id?: number
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   lecture_id: number
   create_at?: Date | string
 }
 
 export type lecture_commentUpdateWithoutUsersInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lectures?: Prisma.lecturesUpdateOneRequiredWithoutLecture_commentsNestedInput
 }
 
 export type lecture_commentUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   lecture_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type lecture_commentUncheckedUpdateManyWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   lecture_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type lecture_commentCreateManyLecturesInput = {
   id?: number
-  title: string
+  title?: string | null
   content: string
-  start?: number
+  star?: number
   user_id: number
   create_at?: Date | string
 }
 
 export type lecture_commentUpdateWithoutLecturesInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutLecture_commentsNestedInput
 }
 
 export type lecture_commentUncheckedUpdateWithoutLecturesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type lecture_commentUncheckedUpdateManyWithoutLecturesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  start?: Prisma.IntFieldUpdateOperationsInput | number
+  star?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.IntFieldUpdateOperationsInput | number
   create_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -681,7 +681,7 @@ export type lecture_commentSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   title?: boolean
   content?: boolean
-  start?: boolean
+  star?: boolean
   user_id?: boolean
   lecture_id?: boolean
   create_at?: boolean
@@ -693,7 +693,7 @@ export type lecture_commentSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   title?: boolean
   content?: boolean
-  start?: boolean
+  star?: boolean
   user_id?: boolean
   lecture_id?: boolean
   create_at?: boolean
@@ -705,7 +705,7 @@ export type lecture_commentSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   title?: boolean
   content?: boolean
-  start?: boolean
+  star?: boolean
   user_id?: boolean
   lecture_id?: boolean
   create_at?: boolean
@@ -717,13 +717,13 @@ export type lecture_commentSelectScalar = {
   id?: boolean
   title?: boolean
   content?: boolean
-  start?: boolean
+  star?: boolean
   user_id?: boolean
   lecture_id?: boolean
   create_at?: boolean
 }
 
-export type lecture_commentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "start" | "user_id" | "lecture_id" | "create_at", ExtArgs["result"]["lecture_comment"]>
+export type lecture_commentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "content" | "star" | "user_id" | "lecture_id" | "create_at", ExtArgs["result"]["lecture_comment"]>
 export type lecture_commentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   lectures?: boolean | Prisma.lecturesDefaultArgs<ExtArgs>
@@ -745,9 +745,9 @@ export type $lecture_commentPayload<ExtArgs extends runtime.Types.Extensions.Int
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    title: string
+    title: string | null
     content: string
-    start: number
+    star: number
     user_id: number
     lecture_id: number
     create_at: Date
@@ -1179,7 +1179,7 @@ export interface lecture_commentFieldRefs {
   readonly id: Prisma.FieldRef<"lecture_comment", 'Int'>
   readonly title: Prisma.FieldRef<"lecture_comment", 'String'>
   readonly content: Prisma.FieldRef<"lecture_comment", 'String'>
-  readonly start: Prisma.FieldRef<"lecture_comment", 'Int'>
+  readonly star: Prisma.FieldRef<"lecture_comment", 'Int'>
   readonly user_id: Prisma.FieldRef<"lecture_comment", 'Int'>
   readonly lecture_id: Prisma.FieldRef<"lecture_comment", 'Int'>
   readonly create_at: Prisma.FieldRef<"lecture_comment", 'DateTime'>

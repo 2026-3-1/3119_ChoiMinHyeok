@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [roles, setRoles] = useState<"STUDENT" | "INSTRUCTOR">("STUDENT");
+  const [role, setRole] = useState<"STUDENT" | "INSTRUCTOR">("STUDENT");
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +26,7 @@ export default function RegisterPage() {
         name,
         email,
         password,
-        roles,
+        role,
         ...(description.trim() ? { description: description.trim() } : {}),
       };
       const user = await register(payload);
@@ -96,23 +96,23 @@ export default function RegisterPage() {
           <div className="auth-form__field">
             <label className="auth-form__label">역할</label>
             <div className="auth-form__role-group">
-              <label className={`auth-form__role-option${roles === "STUDENT" ? " is-active" : ""}`}>
+              <label className={`auth-form__role-option${role === "STUDENT" ? " is-active" : ""}`}>
                 <input
                   type="radio"
-                  name="roles"
+                  name="role"
                   value="STUDENT"
-                  checked={roles === "STUDENT"}
-                  onChange={() => setRoles("STUDENT")}
+                  checked={role === "STUDENT"}
+                  onChange={() => setRole("STUDENT")}
                 />
                 학습자
               </label>
-              <label className={`auth-form__role-option${roles === "INSTRUCTOR" ? " is-active" : ""}`}>
+              <label className={`auth-form__role-option${role === "INSTRUCTOR" ? " is-active" : ""}`}>
                 <input
                   type="radio"
-                  name="roles"
+                  name="role"
                   value="INSTRUCTOR"
-                  checked={roles === "INSTRUCTOR"}
-                  onChange={() => setRoles("INSTRUCTOR")}
+                  checked={role === "INSTRUCTOR"}
+                  onChange={() => setRole("INSTRUCTOR")}
                 />
                 강사
               </label>

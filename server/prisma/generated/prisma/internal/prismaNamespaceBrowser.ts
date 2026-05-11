@@ -56,6 +56,7 @@ export const ModelName = {
   courses: 'courses',
   chapter: 'chapter',
   lectures: 'lectures',
+  lecture_attachment: 'lecture_attachment',
   cart_items: 'cart_items',
   orders: 'orders',
   order_items: 'order_items',
@@ -66,7 +67,8 @@ export const ModelName = {
   lecture_comment: 'lecture_comment',
   lectures_progress: 'lectures_progress',
   lecture_playback_history: 'lecture_playback_history',
-  lecture_bookmark: 'lecture_bookmark'
+  lecture_bookmark: 'lecture_bookmark',
+  course_report: 'course_report'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -90,7 +92,7 @@ export const UsersScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
-  roles: 'roles',
+  role: 'role',
   description: 'description',
   updated_at: 'updated_at',
   created_at: 'created_at'
@@ -154,6 +156,19 @@ export const LecturesScalarFieldEnum = {
 } as const
 
 export type LecturesScalarFieldEnum = (typeof LecturesScalarFieldEnum)[keyof typeof LecturesScalarFieldEnum]
+
+
+export const Lecture_attachmentScalarFieldEnum = {
+  id: 'id',
+  lecture_id: 'lecture_id',
+  filename: 'filename',
+  stored_name: 'stored_name',
+  mime_type: 'mime_type',
+  size: 'size',
+  created_at: 'created_at'
+} as const
+
+export type Lecture_attachmentScalarFieldEnum = (typeof Lecture_attachmentScalarFieldEnum)[keyof typeof Lecture_attachmentScalarFieldEnum]
 
 
 export const Cart_itemsScalarFieldEnum = {
@@ -272,7 +287,7 @@ export const Lecture_commentScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
-  start: 'start',
+  star: 'star',
   user_id: 'user_id',
   lecture_id: 'lecture_id',
   create_at: 'create_at'
@@ -320,6 +335,19 @@ export const Lecture_bookmarkScalarFieldEnum = {
 } as const
 
 export type Lecture_bookmarkScalarFieldEnum = (typeof Lecture_bookmarkScalarFieldEnum)[keyof typeof Lecture_bookmarkScalarFieldEnum]
+
+
+export const Course_reportScalarFieldEnum = {
+  id: 'id',
+  course_id: 'course_id',
+  user_id: 'user_id',
+  type: 'type',
+  content: 'content',
+  is_resolved: 'is_resolved',
+  created_at: 'created_at'
+} as const
+
+export type Course_reportScalarFieldEnum = (typeof Course_reportScalarFieldEnum)[keyof typeof Course_reportScalarFieldEnum]
 
 
 export const SortOrder = {
