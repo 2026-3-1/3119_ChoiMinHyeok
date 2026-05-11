@@ -158,7 +158,7 @@ model chapter {
   course_id Int
   title    String
   position Int
-  courses  courses  @relation(fields: [course_id], references: [id])
+  courses  courses  @relation(fields: [course_id], references: [id], onDelete: Cascade)
   lectures lectures[]
 
   @@unique([course_id, position])
@@ -174,7 +174,7 @@ model lectures {
   position          Int
   is_published      Boolean                  @default(false)
   created_at        DateTime                 @default(now())
-  chapters          chapter                  @relation(fields: [chapter_id], references: [id])
+  chapters          chapter                  @relation(fields: [chapter_id], references: [id], onDelete: Cascade)
   progresses        lectures_progress[]
   playback_history  lecture_playback_history[]
   bookmarks         lecture_bookmark[]
@@ -206,7 +206,7 @@ model cart_items {
   updated_at     DateTime       @updatedAt
   checked_out_at DateTime?
   users          users          @relation(fields: [user_id], references: [id])
-  courses        courses        @relation(fields: [course_id], references: [id])
+  courses        courses        @relation(fields: [course_id], references: [id], onDelete: Cascade)
 
   @@index([user_id, status])
   @@index([course_id, status])
@@ -288,7 +288,7 @@ model enrollments {
   canceled_at         DateTime?
   cancellation_reason CancellationReason?
   users               users            @relation(fields: [user_id], references: [id])
-  courses             courses          @relation(fields: [course_id], references: [id])
+  courses             courses          @relation(fields: [course_id], references: [id], onDelete: Cascade)
   order_item          order_items?     @relation(fields: [order_item_id], references: [id])
   histories           enrollment_history[]
 
@@ -303,9 +303,9 @@ model enrollment_history {
   event_type    EnrollmentHistoryType
   reason        String?
   created_at    DateTime              @default(now())
-  enrollment    enrollments           @relation(fields: [enrollment_id], references: [id])
+  enrollment    enrollments           @relation(fields: [enrollment_id], references: [id], onDelete: Cascade)
   users         users                 @relation(fields: [user_id], references: [id])
-  courses       courses               @relation(fields: [course_id], references: [id])
+  courses       courses               @relation(fields: [course_id], references: [id], onDelete: Cascade)
 
   @@index([enrollment_id, created_at])
   @@index([user_id, course_id, created_at])
@@ -321,7 +321,7 @@ model course_comment {
   create_at  DateTime  @default(now())
   updated_at DateTime  @updatedAt
   users      users     @relation(fields: [user_id], references: [id])
-  courses    courses   @relation(fields: [course_id], references: [id])
+  courses    courses   @relation(fields: [course_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, course_id])
   @@index([course_id, create_at])
@@ -336,7 +336,7 @@ model lecture_comment {
   lecture_id Int
   create_at  DateTime  @default(now())
   users      users     @relation(fields: [user_id], references: [id])
-  lectures   lectures  @relation(fields: [lecture_id], references: [id])
+  lectures   lectures  @relation(fields: [lecture_id], references: [id], onDelete: Cascade)
 }
 
 model lectures_progress {
@@ -349,7 +349,7 @@ model lectures_progress {
   is_completed   Boolean  @default(false)
   updated_at     DateTime @updatedAt
   users          users    @relation(fields: [user_id], references: [id])
-  lectures       lectures @relation(fields: [lecture_id], references: [id])
+  lectures       lectures @relation(fields: [lecture_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, lecture_id])
   @@index([lecture_id, progress])
@@ -365,7 +365,7 @@ model lecture_playback_history {
   progress    Int                      @default(0)
   created_at  DateTime                 @default(now())
   users       users                    @relation(fields: [user_id], references: [id])
-  lectures    lectures                 @relation(fields: [lecture_id], references: [id])
+  lectures    lectures                 @relation(fields: [lecture_id], references: [id], onDelete: Cascade)
 
   @@index([user_id, lecture_id, created_at])
 }
@@ -379,7 +379,7 @@ model lecture_bookmark {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   users      users    @relation(fields: [user_id], references: [id])
-  lectures   lectures @relation(fields: [lecture_id], references: [id])
+  lectures   lectures @relation(fields: [lecture_id], references: [id], onDelete: Cascade)
 
   @@index([user_id, lecture_id, created_at])
 }

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addToCart,
+  createReport,
   getCart,
   getChapters,
   getCourseLearningStatus,
@@ -24,12 +26,23 @@ import {
   formatDate,
 } from "../features/shared/utils";
 
+const REPORT_TYPES = [
+  { value: "COPYRIGHT", label: "저작권 침해" },
+  { value: "WRONG_INFO", label: "잘못된 정보" },
+  { value: "OTHER", label: "기타" },
+];
+
 export default function CourseDetailPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { courseId } = useParams<{ courseId: string }>();
   const numericCourseId = Number(courseId);
   const { user, isLoggedIn, isInstructor } = useAuth();
+
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportType, setReportType] = useState("OTHER");
+  const [reportContent, setReportContent] = useState("");
+  const [reportDone, setReportDone] = useState(false);
 
   const { data: categories = [] } = useCategories();
 
@@ -70,6 +83,19 @@ export default function CourseDetailPage() {
     mutationFn: () => addToCart(user!.id, numericCourseId),
     onSuccess: (updatedCart) => {
       queryClient.setQueryData(["cart", user?.id], updatedCart);
+    },
+  });
+
+  const reportMutation = useMutation({
+    mutationFn: () =>
+      createReport(numericCourseId, {
+        userId: user!.id,
+        type: reportType,
+        content: reportContent,
+      }),
+    onSuccess: () => {
+      setReportDone(true);
+      setReportContent("");
     },
   });
 
@@ -195,12 +221,107 @@ export default function CourseDetailPage() {
                   </div>
                 </div>
               )}
+
+              {isLoggedIn && !isOwnCourse && (
+                <div style={{ marginTop: 14 }}>
+                  <button
+                    type="button"
+                    className="button button--ghost"
+                    style={{ width: "100%", fontSize: "0.82rem", opacity: 0.6 }}
+                    onClick={() => { setShowReportModal(true); setReportDone(false); }}
+                  >
+                    이 강의 신고하기
+                  </button>
+                </div>
+              )}
             </aside>
           </div>
         </section>
       </main>
 
       <SiteFooter />
+
+      {showReportModal && (
+        <div className="modal-backdrop" onClick={() => setShowReportModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal__header">
+              <h3>강의 신고</h3>
+              <button type="button" className="modal__close" onClick={() => setShowReportModal(false)}>✕</button>
+            </div>
+
+            {reportDone ? (
+              <div className="modal__body" style={{ textAlign: "center", padding: "32px 0" }}>
+                <p style={{ color: "var(--color-success, #4caf50)", fontSize: "1.1rem", marginBottom: 8 }}>신고가 접수되었습니다.</p>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "0.88rem" }}>검토 후 조치하겠습니다.</p>
+                <button
+                  type="button"
+                  className="button button--primary"
+                  style={{ marginTop: 20 }}
+                  onClick={() => setShowReportModal(false)}
+                >
+                  닫기
+                </button>
+              </div>
+            ) : (
+              <div className="modal__body">
+                <div className="form-group">
+                  <label className="form-label">신고 유형</label>
+                  <select
+                    className="form-input"
+                    value={reportType}
+                    onChange={(e) => setReportType(e.target.value)}
+                  >
+                    {REPORT_TYPES.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group" style={{ marginTop: 14 }}>
+                  <label className="form-label">신고 내용</label>
+                  <textarea
+                    className="form-input"
+                    rows={4}
+                    placeholder="신고 사유를 구체적으로 입력해 주세요. (최소 10자)"
+                    value={reportContent}
+                    onChange={(e) => setReportContent(e.target.value)}
+                    style={{ resize: "vertical" }}
+                  />
+                  {reportContent.length > 0 && reportContent.trim().length < 10 && (
+                    <p style={{ color: "var(--color-error, #f44)", fontSize: "0.8rem", marginTop: 4 }}>
+                      최소 10자 이상 입력해 주세요. ({reportContent.trim().length}/10)
+                    </p>
+                  )}
+                </div>
+
+                {reportMutation.isError && (
+                  <p style={{ color: "var(--color-error, #f44)", fontSize: "0.85rem", marginTop: 8 }}>
+                    신고 접수 중 오류가 발생했습니다.
+                  </p>
+                )}
+
+                <div style={{ display: "flex", gap: 10, marginTop: 20, justifyContent: "flex-end" }}>
+                  <button
+                    type="button"
+                    className="button button--ghost"
+                    onClick={() => setShowReportModal(false)}
+                  >
+                    취소
+                  </button>
+                  <button
+                    type="button"
+                    className="button button--primary"
+                    disabled={reportContent.trim().length < 10 || reportMutation.isPending}
+                    onClick={() => reportMutation.mutate()}
+                  >
+                    {reportMutation.isPending ? "접수 중..." : "신고 접수"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

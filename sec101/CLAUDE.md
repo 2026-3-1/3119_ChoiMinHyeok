@@ -4,6 +4,19 @@
 
 ## 설계 문서
 
+### P1 (구현 완료)
+
+| 문서 | 내용 |
+|---|---|
+| [01-project-overview](P1/01-project-overview.md) | P1 구현 범위, 기술 스택, 실행 방법 |
+| [02-data-model](P1/02-data-model.md) | 실제 DB 스키마 (16개 테이블, 7개 Enum) |
+| [03-api-design](P1/03-api-design.md) | P1 구현 REST API 전체 목록 |
+| [04-requirements-user](P1/04-requirements-user.md) | 수강생 기능 요구사항 명세 |
+| [05-requirements-instructor](P1/05-requirements-instructor.md) | 강사 기능 요구사항 명세 |
+| [06-implementation-checklist](P1/06-implementation-checklist.md) | P1 구현 체크리스트 |
+
+### P2 (구현 예정)
+
 | 문서 | 내용 |
 |---|---|
 | [01-project-overview](P2/01-project-overview.md) | 프로젝트 비전, 핵심 기능, 비기능 요구사항 |

@@ -1874,3 +1874,56 @@ img {
 .button--danger:hover {
   background: rgba(255, 90, 114, 0.25);
 }
+
+/* ─── Modal ───────────────────────────────────────────────────────── */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--color-surface, #1a2332);
+  border: 1px solid rgba(112, 132, 155, 0.2);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  margin: 16px;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(112, 132, 155, 0.15);
+}
+
+.modal__header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted, #90a7bf);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+.modal__close:hover {
+  color: var(--color-text, #e2eaf3);
+}
+
+.modal__body {
+  padding: 20px 24px 24px;
+}
