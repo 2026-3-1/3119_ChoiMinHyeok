@@ -5,7 +5,6 @@ import { deleteInstructorCourse, getInstructorCourses, setInstructorCourseStatus
 import { useAuth } from "../../features/shared/context/AuthContext";
 import { SiteHeader } from "../../features/shared/layout/SiteHeader";
 import { SiteFooter } from "../../features/shared/layout/SiteFooter";
-import type { CourseStatus } from "../../features/shared/types";
 
 const difficultyLabel: Record<string, string> = { EASY: "입문", MEDIUM: "중급", HARD: "고급" };
 const statusLabel: Record<string, string> = { OPEN: "공개", CLOSED: "비공개", DRAFT: "초안" };
