@@ -35,7 +35,7 @@ export default function InstructorCoursesPage() {
   });
 
   const statusMutation = useMutation({
-    mutationFn: ({ courseId, status }: { courseId: number; status: CourseStatus }) =>
+    mutationFn: ({ courseId, status }: { courseId: number; status: "DRAFT" | "OPEN" }) =>
       setInstructorCourseStatus(courseId, status),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["instructor-courses"] }),
   });
