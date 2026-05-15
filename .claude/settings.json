@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npx prisma *)",
       "Bash(npm run *)",
-      "PowerShell(Stop-Process -Id 2664 -Force)"
+      "PowerShell(Stop-Process -Id 2664 -Force)",
+      "PowerShell(Get-ChildItem -Path \"d:\\\\pr0j3ct\\\\pr0j3t\" -Recurse -Force | Select-Object -Property @{Name=\"Path\";Expression={$_.FullName}} | Format-Table -AutoSize)"
+    ],
+    "additionalDirectories": [
+      "d:\\pr0j3ct\\pr0j3t\\sec101"
     ]
   }
 }
