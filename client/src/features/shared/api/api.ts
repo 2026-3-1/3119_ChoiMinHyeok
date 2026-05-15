@@ -13,7 +13,6 @@ import type {
   CourseListData,
   CourseReview,
   Course,
-  CourseStatus,
   Difficulty,
   InstructorChapter,
   InstructorCourse,
