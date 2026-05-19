@@ -16,10 +16,13 @@ export class InstructorService {
   async createCourse(instructorId: number, data: CreateInstructorCourseRequest) {
     const base = data.title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/[\s]+/g, '-')
+      .replace(/[^a-z0-9\-]+/g, '')
+      .replace(/-+/g, '-')
       .replace(/^-+|-+$/g, '')
       .slice(0, 60);
-    const slug = (base || 'course') + '-' + Date.now().toString(36);
+    const randomSuffix = Math.random().toString(36).slice(2, 8);
+    const slug = (base || 'course') + '-' + randomSuffix;
 
     const course = await this.instructorRepository.createCourse(instructorId, {
       title: data.title,

@@ -1,1 +1,1 @@
-ALTER TYPE "CourseLifecycleStatus" ADD VALUE 'DRAFT';
+ALTER TYPE "CourseLifecycleStatus" ADD VALUE IF NOT EXISTS 'DRAFT';
