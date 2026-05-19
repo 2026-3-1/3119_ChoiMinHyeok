@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { GlobalExceptionFilter } from './global/global.exception';
-import { CourseModule } from './lectures_feature/course/course.module';
 import { ChapterModule } from './lectures_feature/chapter/chapter.module';
 import { CategoryModule } from './lectures_feature/category/category.module';
 import { LectureModule } from './lectures_feature/lecture/lecture.module';
@@ -21,7 +20,6 @@ import { LectureCommentModule } from './lectures_feature/lecture-comment/lecture
 
 @Module({
   imports: [
-    CourseModule,
     ChapterModule,
     CategoryModule,
     LectureModule,

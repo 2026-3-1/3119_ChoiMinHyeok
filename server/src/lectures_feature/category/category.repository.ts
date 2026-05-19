@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '../../../prisma/generated/prisma/client';
+import { CourseLifecycleStatus } from '../../../prisma/generated/prisma/enums';
 import prisma from '../../../prisma/prisma.client';
 
 @Injectable()
@@ -24,6 +26,29 @@ export class CategoryRepository {
   }
 
   async findCoursesByCategory(categoryId: number) {
-    return prisma.courses.findMany({ where: { category_id: categoryId } });
+    return prisma.courses.findMany({
+      where: { category_id: categoryId, status: CourseLifecycleStatus.OPEN },
+      orderBy: { created_at: 'desc' },
+    });
+  }
+
+  async findCourses(search: string | undefined, categoryId: number | undefined, skip: number, take: number) {
+    const where: Prisma.coursesWhereInput = {
+      status: CourseLifecycleStatus.OPEN,
+      ...(categoryId !== undefined && { category_id: categoryId }),
+      ...(search && {
+        OR: [
+          { title: { contains: search, mode: Prisma.QueryMode.insensitive } },
+          { description: { contains: search, mode: Prisma.QueryMode.insensitive } },
+        ],
+      }),
+    };
+
+    const [data, count] = await Promise.all([
+      prisma.courses.findMany({ where, skip, take, orderBy: { created_at: 'desc' } }),
+      prisma.courses.count({ where }),
+    ]);
+
+    return { data, count };
   }
 }

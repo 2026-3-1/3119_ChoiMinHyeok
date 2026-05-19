@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -22,7 +23,6 @@ import { SwaggerResponse } from '../../global/global_decorator/decorator.swagger
 import { JwtAuthGuard } from '../../global/guards/jwt-auth.guard';
 import { RolesGuard } from '../../global/guards/roles.guard';
 import { Roles } from '../../global/global_decorator/decorator.roles';
-import { course } from '../course/dto/courses.response';
 import { CategoryService } from './category.service';
 import { createCategory, updateCategory } from './dto/category.request';
 import { category } from './dto/category.response';
@@ -31,6 +31,21 @@ import { category } from './dto/category.response';
 @Controller('/api/v1')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
+
+  @ResponseMessage('강좌 목록 조회 성공')
+  @Get('courses')
+  @ApiOperation({ summary: '강좌 전체 목록 조회 (검색, 카테고리 필터)' })
+  getCourses(
+    @Query('search') search?: string,
+    @Query('categoryId') categoryId?: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    const parsedCategoryId = categoryId ? parseInt(categoryId, 10) : undefined;
+    const parsedPage = Math.max(1, parseInt(page ?? '1', 10) || 1);
+    const parsedLimit = Math.min(100, Math.max(1, parseInt(limit ?? '12', 10) || 12));
+    return this.categoryService.getCourses(search, parsedCategoryId, parsedPage, parsedLimit);
+  }
 
   @ResponseMessage('카테고리 목록 조회 성공')
   @Get('categories')
@@ -44,7 +59,6 @@ export class CategoryController {
   @Get('categories/:categoryId/courses')
   @ApiOperation({ summary: '카테고리별 강좌 조회' })
   @ApiParam({ name: 'categoryId', required: true, type: Number })
-  @SwaggerResponse(course, true, 200, '카테고리별 강좌 조회 성공')
   getCourseByCategory(@Param('categoryId', ParseIntPipe) categoryId: number) {
     return this.categoryService.getCourseByCategories(categoryId);
   }

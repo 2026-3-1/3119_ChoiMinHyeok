@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { EnrollmentStatus } from '../../prisma/generated/prisma/enums';
+import { CourseLifecycleStatus, EnrollmentStatus } from '../../prisma/generated/prisma/enums';
 import prisma from '../../prisma/prisma.client';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class InstructorRepository {
     if (existing) throw new ConflictException('이미 사용 중인 슬러그입니다.');
 
     return prisma.courses.create({
-      data: { ...data, instructor_id: instructorId },
+      data: { ...data, instructor_id: instructorId, status: CourseLifecycleStatus.OPEN },
     });
   }
 
@@ -128,7 +128,7 @@ export class InstructorRepository {
     });
   }
 
-  async findLectureByIdAndChapter(lectureId: number, chapterCourseId: number, instructorId: number) {
+  async findLectureByIdAndChapter(lectureId: number, instructorId: number) {
     const lecture = await prisma.lectures.findUnique({
       where: { id: lectureId },
       include: {

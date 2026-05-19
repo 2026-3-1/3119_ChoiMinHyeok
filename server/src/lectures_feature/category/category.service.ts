@@ -14,6 +14,11 @@ export class CategoryService {
     return this.categoryRepository.findCoursesByCategory(categoryId);
   }
 
+  async getCourses(search: string | undefined, categoryId: number | undefined, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    return this.categoryRepository.findCourses(search?.trim(), categoryId, skip, limit);
+  }
+
   async createCategory(data: createCategory) {
     return this.categoryRepository.create(data.name);
   }

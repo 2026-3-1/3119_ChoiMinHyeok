@@ -143,7 +143,7 @@ export class InstructorService {
     await this.instructorRepository.deleteChapter(chapterId);
   }
 
-  async addLecture(chapterId: number, instructorId: number, data: CreateLectureRequest) {
+  async addLecture(chapterId: number, _instructorId: number, data: CreateLectureRequest) {
     const lecture = await this.instructorRepository.addLecture(chapterId, {
       title: data.title,
       video_url: data.videoUrl,
@@ -164,7 +164,7 @@ export class InstructorService {
   }
 
   async updateLecture(lectureId: number, instructorId: number, data: UpdateLectureRequest) {
-    await this.instructorRepository.findLectureByIdAndChapter(lectureId, 0, instructorId);
+    await this.instructorRepository.findLectureByIdAndChapter(lectureId, instructorId);
 
     const updated = await this.instructorRepository.updateLecture(lectureId, {
       ...(data.title && { title: data.title }),
@@ -186,7 +186,7 @@ export class InstructorService {
   }
 
   async deleteLecture(lectureId: number, instructorId: number) {
-    await this.instructorRepository.findLectureByIdAndChapter(lectureId, 0, instructorId);
+    await this.instructorRepository.findLectureByIdAndChapter(lectureId, instructorId);
     await this.instructorRepository.deleteLecture(lectureId);
   }
 
