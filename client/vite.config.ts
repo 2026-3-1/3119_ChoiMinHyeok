@@ -14,13 +14,10 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // React 핵심 라이브러리 묶음
-          "vendor-react": ["react", "react-dom", "react-router-dom"],
-          // 데이터 패칭 / 상태
-          "vendor-query": ["@tanstack/react-query"],
-          // UI 유틸
-          "vendor-ui": ["axios"],
+        manualChunks: (id) => {
+          if (id.includes("react-dom") || id.includes("react-router-dom") || id.includes("node_modules/react/")) return "vendor-react";
+          if (id.includes("@tanstack/react-query")) return "vendor-query";
+          if (id.includes("node_modules/axios/")) return "vendor-ui";
         },
       },
     },
