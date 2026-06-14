@@ -187,8 +187,11 @@ export function CourseInfoSection({ courseId, course }: CourseInfoSectionProps) 
             type="number"
             min={0}
             className="auth-form__input"
-            value={infoForm.price}
-            onChange={(e) => setInfoForm((f) => ({ ...f, price: Number(e.target.value) }))}
+            value={infoForm.price === 0 ? "" : infoForm.price}
+            placeholder="0 (무료)"
+            onChange={(e) =>
+              setInfoForm((f) => ({ ...f, price: e.target.value === "" ? 0 : Number(e.target.value) }))
+            }
           />
         </div>
         <div className="auth-form__field">

@@ -220,8 +220,8 @@ export default function InstructorCreateCoursePage() {
                       className="auth-form__input"
                       min={0}
                       placeholder="0 (무료)"
-                      value={form.price}
-                      onChange={(e) => set("price", Number(e.target.value))}
+                      value={form.price === 0 ? "" : form.price}
+                      onChange={(e) => set("price", e.target.value === "" ? 0 : Number(e.target.value))}
                     />
                   </div>
 
