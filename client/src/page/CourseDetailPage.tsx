@@ -242,68 +242,184 @@ export default function CourseDetailPage() {
       <SiteFooter />
 
       {showReportModal && (
-        <div className="modal-backdrop" onClick={() => setShowReportModal(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal__header">
-              <h3>강의 신고</h3>
-              <button type="button" className="modal__close" onClick={() => setShowReportModal(false)}>✕</button>
+        <div
+          style={{
+            position: "fixed", inset: 0, zIndex: 1000,
+            background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "16px",
+          }}
+          onClick={() => setShowReportModal(false)}
+        >
+          <div
+            style={{
+              background: "var(--surface-primary, #18181b)",
+              border: "1px solid var(--border-subtle)",
+              borderRadius: 20,
+              width: "100%", maxWidth: 460,
+              boxShadow: "0 24px 64px rgba(0,0,0,0.5)",
+              overflow: "hidden",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 헤더 */}
+            <div
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "20px 24px 0",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{
+                  fontSize: 18, lineHeight: 1,
+                  background: "rgba(239,68,68,0.12)",
+                  color: "#ef4444",
+                  borderRadius: 8,
+                  padding: "6px 8px",
+                }}>
+                  ⚑
+                </span>
+                <span style={{ fontWeight: 700, fontSize: 16 }}>강의 신고</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowReportModal(false)}
+                style={{
+                  background: "none", border: "none", cursor: "pointer",
+                  color: "var(--text-muted)", fontSize: 20, lineHeight: 1,
+                  padding: "4px 6px", borderRadius: 6,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}
+              >
+                ✕
+              </button>
             </div>
 
+            {/* 구분선 */}
+            <div style={{ height: 1, background: "var(--border-subtle)", margin: "16px 0 0" }} />
+
             {reportDone ? (
-              <div className="modal__body" style={{ textAlign: "center", padding: "32px 0" }}>
-                <p style={{ color: "var(--color-success, #4caf50)", fontSize: "1.1rem", marginBottom: 8 }}>신고가 접수되었습니다.</p>
-                <p style={{ color: "var(--color-text-muted)", fontSize: "0.88rem" }}>검토 후 조치하겠습니다.</p>
+              <div style={{ padding: "40px 24px 28px", textAlign: "center" }}>
+                <div style={{
+                  width: 56, height: 56, borderRadius: "50%",
+                  background: "rgba(34,197,94,0.12)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 16px", fontSize: 26,
+                }}>
+                  ✓
+                </div>
+                <p style={{ fontWeight: 700, fontSize: "1.05rem", marginBottom: 6 }}>신고가 접수되었습니다</p>
+                <p style={{ color: "var(--text-muted)", fontSize: "0.875rem", lineHeight: 1.5 }}>
+                  검토 후 적절한 조치를 취하겠습니다.
+                </p>
                 <button
                   type="button"
                   className="button button--primary"
-                  style={{ marginTop: 20 }}
+                  style={{ marginTop: 24, width: "100%" }}
                   onClick={() => setShowReportModal(false)}
                 >
-                  닫기
+                  확인
                 </button>
               </div>
             ) : (
-              <div className="modal__body">
-                <div className="form-group">
-                  <label className="form-label">신고 유형</label>
-                  <select
-                    className="form-input"
-                    value={reportType}
-                    onChange={(e) => setReportType(e.target.value)}
-                  >
-                    {REPORT_TYPES.map((t) => (
-                      <option key={t.value} value={t.value}>{t.label}</option>
-                    ))}
-                  </select>
+              <div style={{ padding: "20px 24px 24px" }}>
+                {/* 신고 유형 버튼 그룹 */}
+                <div style={{ marginBottom: 18 }}>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text-muted)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                    신고 유형
+                  </p>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    {REPORT_TYPES.map((t) => {
+                      const selected = reportType === t.value;
+                      return (
+                        <button
+                          key={t.value}
+                          type="button"
+                          onClick={() => setReportType(t.value)}
+                          style={{
+                            flex: 1,
+                            padding: "9px 4px",
+                            borderRadius: 10,
+                            border: selected
+                              ? "1.5px solid var(--accent-primary)"
+                              : "1.5px solid var(--border-subtle)",
+                            background: selected
+                              ? "rgba(var(--accent-primary-rgb, 99,102,241), 0.1)"
+                              : "transparent",
+                            color: selected ? "var(--accent-primary)" : "var(--text-muted)",
+                            fontWeight: selected ? 700 : 500,
+                            fontSize: 13,
+                            cursor: "pointer",
+                            transition: "all 0.15s ease",
+                          }}
+                        >
+                          {t.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                <div className="form-group" style={{ marginTop: 14 }}>
-                  <label className="form-label">신고 내용</label>
+                {/* 신고 내용 */}
+                <div style={{ marginBottom: 6 }}>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: "var(--text-muted)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                    신고 내용
+                  </p>
                   <textarea
-                    className="form-input"
-                    rows={4}
+                    rows={5}
                     placeholder="신고 사유를 구체적으로 입력해 주세요. (최소 10자)"
                     value={reportContent}
                     onChange={(e) => setReportContent(e.target.value)}
-                    style={{ resize: "vertical" }}
+                    style={{
+                      width: "100%",
+                      padding: "12px 14px",
+                      borderRadius: 10,
+                      border: "1.5px solid var(--border-subtle)",
+                      background: "var(--surface-secondary)",
+                      color: "var(--text-primary)",
+                      fontSize: 14,
+                      lineHeight: 1.6,
+                      resize: "vertical",
+                      outline: "none",
+                      fontFamily: "inherit",
+                      boxSizing: "border-box",
+                      transition: "border-color 0.15s ease",
+                    }}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent-primary)"; }}
+                    onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border-subtle)"; }}
                   />
-                  {reportContent.length > 0 && reportContent.trim().length < 10 && (
-                    <p style={{ color: "var(--color-error, #f44)", fontSize: "0.8rem", marginTop: 4 }}>
-                      최소 10자 이상 입력해 주세요. ({reportContent.trim().length}/10)
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
+                    {reportContent.length > 0 && reportContent.trim().length < 10 ? (
+                      <p style={{ fontSize: 12, color: "var(--error, #ef4444)" }}>
+                        최소 10자 이상 입력해 주세요.
+                      </p>
+                    ) : (
+                      <span />
+                    )}
+                    <p style={{ fontSize: 12, color: reportContent.trim().length >= 10 ? "var(--text-muted)" : "var(--error, #ef4444)" }}>
+                      {reportContent.trim().length} / 10+
                     </p>
-                  )}
+                  </div>
                 </div>
 
                 {reportMutation.isError && (
-                  <p style={{ color: "var(--color-error, #f44)", fontSize: "0.85rem", marginTop: 8 }}>
-                    신고 접수 중 오류가 발생했습니다.
-                  </p>
+                  <div style={{
+                    background: "rgba(239,68,68,0.08)",
+                    border: "1px solid rgba(239,68,68,0.25)",
+                    borderRadius: 8,
+                    padding: "10px 14px",
+                    marginBottom: 14,
+                  }}>
+                    <p style={{ color: "#ef4444", fontSize: 13 }}>신고 접수 중 오류가 발생했습니다. 다시 시도해 주세요.</p>
+                  </div>
                 )}
 
-                <div style={{ display: "flex", gap: 10, marginTop: 20, justifyContent: "flex-end" }}>
+                {/* 버튼 */}
+                <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
                   <button
                     type="button"
                     className="button button--ghost"
+                    style={{ flex: 1 }}
                     onClick={() => setShowReportModal(false)}
                   >
                     취소
@@ -311,6 +427,7 @@ export default function CourseDetailPage() {
                   <button
                     type="button"
                     className="button button--primary"
+                    style={{ flex: 2 }}
                     disabled={reportContent.trim().length < 10 || reportMutation.isPending}
                     onClick={() => reportMutation.mutate()}
                   >
