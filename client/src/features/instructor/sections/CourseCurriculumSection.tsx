@@ -159,19 +159,46 @@ function AttachmentPanel({ lectureId }: { lectureId: number }) {
             </ul>
           )}
 
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <input
               ref={fileInputRef}
               type="file"
-              style={{ fontSize: 12, flex: 1 }}
+              style={{ display: "none" }}
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) uploadMutation.mutate(file);
               }}
             />
-            {uploadMutation.isPending && (
-              <span style={{ fontSize: 11, color: "var(--accent-primary)" }}>업로드 중...</span>
-            )}
+            <button
+              type="button"
+              disabled={uploadMutation.isPending}
+              onClick={() => fileInputRef.current?.click()}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "7px 14px",
+                fontSize: 13,
+                fontWeight: 500,
+                color: uploadMutation.isPending ? "#999" : "var(--accent-primary)",
+                background: "#fff",
+                border: "1.5px dashed",
+                borderColor: uploadMutation.isPending ? "#ddd" : "var(--accent-primary)",
+                borderRadius: 8,
+                cursor: uploadMutation.isPending ? "not-allowed" : "pointer",
+                transition: "background 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                if (!uploadMutation.isPending)
+                  (e.currentTarget as HTMLButtonElement).style.background = "var(--accent-primary-light, #f0eeff)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "#fff";
+              }}
+            >
+              <span style={{ fontSize: 16 }}>📎</span>
+              {uploadMutation.isPending ? "업로드 중..." : "파일 첨부"}
+            </button>
           </div>
           {uploadMutation.isError && (
             <p style={{ fontSize: 11, color: "var(--error)", marginTop: 4 }}>

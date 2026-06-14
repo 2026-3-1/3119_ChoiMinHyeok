@@ -365,6 +365,31 @@ export interface CancelOrderPayload {
 export const cancelOrder = async (orderId: number, payload: CancelOrderPayload): Promise<Order> =>
   unwrapResponse(api.post<ApiResponse<Order>>(`/api/v1/orders/${orderId}/cancel`, payload));
 
+export interface TossPreparePayload {
+  userId: number;
+  cartItemIds: number[];
+}
+
+export interface TossPrepareResult {
+  orderId: string;
+  orderName: string;
+  amount: number;
+}
+
+export const prepareTossPayment = async (payload: TossPreparePayload): Promise<TossPrepareResult> =>
+  unwrapResponse(api.post<ApiResponse<TossPrepareResult>>("/api/v1/payments/toss/prepare", payload));
+
+export interface TossConfirmPayload {
+  userId: number;
+  cartItemIds: number[];
+  paymentKey: string;
+  orderId: string;
+  amount: number;
+}
+
+export const confirmTossPayment = async (payload: TossConfirmPayload): Promise<Order> =>
+  unwrapResponse(api.post<ApiResponse<Order>>("/api/v1/payments/toss/confirm", payload));
+
 /* ─── Learning ───────────────────────────────────────────────────── */
 
 export const getMyLearning = async (userId: number): Promise<LearningCourseCard[]> =>

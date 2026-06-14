@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -16,13 +17,18 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { Roles } from '../global/global_decorator/decorator.roles';
 import { ResponseMessage } from '../global/global_decorator/decorator.message';
 import { SwaggerResponse } from '../global/global_decorator/decorator.swagger-response';
+import { JwtAuthGuard } from '../global/guards/jwt-auth.guard';
+import { RolesGuard } from '../global/guards/roles.guard';
 import { EnrollmentService } from './enrollment.service';
 import { EnrollRequest, EnrollUserQueryRequest } from './dto/enrollment.request';
 import { EnrollmentResponse } from './dto/enrollment.response';
 
 @ApiTags('enrollments')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('STUDENT')
 @Controller('/api/v1')
 export class EnrollmentController {
   constructor(private readonly enrollmentService: EnrollmentService) {}

@@ -25,6 +25,30 @@ export class CategoryRepository {
     return prisma.categories.delete({ where: { id } });
   }
 
+  async findCourseById(courseId: number) {
+    return prisma.courses.findUnique({
+      where: { id: courseId },
+      include: {
+        category: true,
+        chapters: {
+          orderBy: { position: 'asc' },
+          include: {
+            lectures: {
+              orderBy: { position: 'asc' },
+              select: {
+                id: true,
+                title: true,
+                duration: true,
+                position: true,
+                is_published: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
   async findCoursesByCategory(categoryId: number) {
     return prisma.courses.findMany({
       where: { category_id: categoryId, status: CourseLifecycleStatus.OPEN },

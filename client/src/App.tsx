@@ -5,6 +5,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 import { AuthProvider } from "./features/shared/context/AuthContext";
 
 const MainPage = lazy(() => import("./page/MainPage"));
@@ -16,6 +17,9 @@ const RegisterPage = lazy(() => import("./page/RegisterPage"));
 const MyLearningPage = lazy(() => import("./page/MyLearningPage"));
 const MyPage = lazy(() => import("./page/MyPage"));
 const CartPage = lazy(() => import("./page/CartPage"));
+const PaymentPage = lazy(() => import("./page/PaymentPage"));
+const PaymentSuccessPage = lazy(() => import("./page/PaymentSuccessPage"));
+const PaymentFailPage = lazy(() => import("./page/PaymentFailPage"));
 
 const InstructorCoursesPage = lazy(() => import("./page/instructor/InstructorCoursesPage"));
 const InstructorCourseEditPage = lazy(() => import("./page/instructor/InstructorCourseEditPage"));
@@ -62,6 +66,9 @@ const router = createBrowserRouter([
       { path: "my-learning", element: <MyLearningPage /> },
       { path: "my-page", element: <MyPage /> },
       { path: "cart", element: <CartPage /> },
+      { path: "payment", element: <PaymentPage /> },
+      { path: "payment/success", element: <PaymentSuccessPage /> },
+      { path: "payment/fail", element: <PaymentFailPage /> },
 
       // Instructor
       { path: "instructor/courses", element: <InstructorCoursesPage /> },
@@ -91,5 +98,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Sentry.ErrorBoundary fallback={<p>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p>}>
+      <RouterProvider router={router} />
+    </Sentry.ErrorBoundary>
+  );
 }

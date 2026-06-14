@@ -48,7 +48,7 @@ export function CartSummarySection({
       </button>
 
       <p className="cart-summary-panel__notice">
-        데모 결제 방식으로 실제 과금 없이 수강 등록됩니다.
+        토스페이먼츠를 통해 안전하게 결제됩니다.
       </p>
     </div>
   );

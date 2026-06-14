@@ -47,6 +47,14 @@ export class CategoryController {
     return this.categoryService.getCourses(search, parsedCategoryId, parsedPage, parsedLimit);
   }
 
+  @ResponseMessage('강좌 상세 조회 성공')
+  @Get('courses/:courseId')
+  @ApiOperation({ summary: '강좌 상세 조회' })
+  @ApiParam({ name: 'courseId', required: true, type: Number })
+  getCourseById(@Param('courseId', ParseIntPipe) courseId: number) {
+    return this.categoryService.getCourseById(courseId);
+  }
+
   @ResponseMessage('카테고리 목록 조회 성공')
   @Get('categories')
   @ApiOperation({ summary: '카테고리 목록 조회' })

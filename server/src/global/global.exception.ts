@@ -5,6 +5,7 @@ import {
   Injectable,
   Logger,
 } from '@nestjs/common';
+import * as Sentry from '@sentry/nestjs';
 
 @Injectable()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -30,6 +31,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
       if (status >= 500) {
         this.log.error(exception.message, exception.stack);
+        Sentry.captureException(exception);
       } else {
         this.log.warn(`${status} ${request.method} ${request.url} — ${exception.message}`);
       }

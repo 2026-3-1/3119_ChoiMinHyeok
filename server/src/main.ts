@@ -1,11 +1,17 @@
+import './instrument'; // Sentry must be imported first
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { winstonLogger } from './global/logger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: winstonLogger });
+
+  app.use(helmet());
+
   const clientOrigins = process.env.CLIENT_ORIGIN?.split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);

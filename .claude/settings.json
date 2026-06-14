@@ -4,10 +4,15 @@
       "Bash(npx prisma *)",
       "Bash(npm run *)",
       "PowerShell(Stop-Process -Id 2664 -Force)",
-      "PowerShell(Get-ChildItem -Path \"d:\\\\pr0j3ct\\\\pr0j3t\" -Recurse -Force | Select-Object -Property @{Name=\"Path\";Expression={$_.FullName}} | Format-Table -AutoSize)"
+      "PowerShell(Get-ChildItem -Path \"d:\\\\pr0j3ct\\\\pr0j3t\" -Recurse -Force | Select-Object -Property @{Name=\"Path\";Expression={$_.FullName}} | Format-Table -AutoSize)",
+      "Bash(mkdir -p \"d:/pr0j3ct/pr0j3t/.github/workflows\")",
+      "Bash(npx jest *)",
+      "Bash(Get-ChildItem -Path \"d:\\\\pr0j3ct\\\\pr0j3t\\\\client\\\\src\" -Recurse -File)",
+      "Bash(Select-Object -First 50)"
     ],
     "additionalDirectories": [
-      "d:\\pr0j3ct\\pr0j3t\\sec101"
+      "d:\\pr0j3ct\\pr0j3t\\sec101",
+      "d:\\pr0j3ct\\pr0j3t\\.github"
     ]
   }
 }

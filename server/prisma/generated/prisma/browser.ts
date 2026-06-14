@@ -107,3 +107,8 @@ export type lecture_bookmark = Prisma.lecture_bookmarkModel
  * 
  */
 export type course_report = Prisma.course_reportModel
+/**
+ * Model webhook_endpoints
+ * 
+ */
+export type webhook_endpoints = Prisma.webhook_endpointsModel

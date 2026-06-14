@@ -2,12 +2,19 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryRepository } from './category.repository';
 import { createCategory, updateCategory } from './dto/category.request';
 
+
 @Injectable()
 export class CategoryService {
   constructor(private readonly categoryRepository: CategoryRepository) {}
 
   async getCategories() {
     return this.categoryRepository.findAll();
+  }
+
+  async getCourseById(courseId: number) {
+    const course = await this.categoryRepository.findCourseById(courseId);
+    if (!course) throw new NotFoundException('강의를 찾을 수 없습니다.');
+    return course;
   }
 
   async getCourseByCategories(categoryId: number) {

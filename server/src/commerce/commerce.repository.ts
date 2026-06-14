@@ -38,6 +38,13 @@ export type OrderWithRelations = Prisma.ordersGetPayload<{
 
 @Injectable()
 export class CommerceRepository {
+  async findUserById(userId: number) {
+    return prisma.users.findUnique({
+      where: { id: userId },
+      select: { id: true, name: true, email: true },
+    });
+  }
+
   async assertUserExists(userId: number) {
     const user = await prisma.users.findUnique({
       where: { id: userId },

@@ -68,7 +68,8 @@ export const ModelName = {
   lectures_progress: 'lectures_progress',
   lecture_playback_history: 'lecture_playback_history',
   lecture_bookmark: 'lecture_bookmark',
-  course_report: 'course_report'
+  course_report: 'course_report',
+  webhook_endpoints: 'webhook_endpoints'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -348,6 +349,18 @@ export const Course_reportScalarFieldEnum = {
 } as const
 
 export type Course_reportScalarFieldEnum = (typeof Course_reportScalarFieldEnum)[keyof typeof Course_reportScalarFieldEnum]
+
+
+export const Webhook_endpointsScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  event: 'event',
+  secret: 'secret',
+  is_active: 'is_active',
+  created_at: 'created_at'
+} as const
+
+export type Webhook_endpointsScalarFieldEnum = (typeof Webhook_endpointsScalarFieldEnum)[keyof typeof Webhook_endpointsScalarFieldEnum]
 
 
 export const SortOrder = {

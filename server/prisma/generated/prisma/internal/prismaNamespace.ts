@@ -401,7 +401,8 @@ export const ModelName = {
   lectures_progress: 'lectures_progress',
   lecture_playback_history: 'lecture_playback_history',
   lecture_bookmark: 'lecture_bookmark',
-  course_report: 'course_report'
+  course_report: 'course_report',
+  webhook_endpoints: 'webhook_endpoints'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "categories" | "courses" | "chapter" | "lectures" | "lecture_attachment" | "cart_items" | "orders" | "order_items" | "payment_transactions" | "enrollments" | "enrollment_history" | "course_comment" | "lecture_comment" | "lectures_progress" | "lecture_playback_history" | "lecture_bookmark" | "course_report"
+    modelProps: "users" | "categories" | "courses" | "chapter" | "lectures" | "lecture_attachment" | "cart_items" | "orders" | "order_items" | "payment_transactions" | "enrollments" | "enrollment_history" | "course_comment" | "lecture_comment" | "lectures_progress" | "lecture_playback_history" | "lecture_bookmark" | "course_report" | "webhook_endpoints"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1753,6 +1754,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    webhook_endpoints: {
+      payload: Prisma.$webhook_endpointsPayload<ExtArgs>
+      fields: Prisma.webhook_endpointsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.webhook_endpointsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.webhook_endpointsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>
+        }
+        findFirst: {
+          args: Prisma.webhook_endpointsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.webhook_endpointsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>
+        }
+        findMany: {
+          args: Prisma.webhook_endpointsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>[]
+        }
+        create: {
+          args: Prisma.webhook_endpointsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>
+        }
+        createMany: {
+          args: Prisma.webhook_endpointsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.webhook_endpointsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>[]
+        }
+        delete: {
+          args: Prisma.webhook_endpointsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>
+        }
+        update: {
+          args: Prisma.webhook_endpointsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>
+        }
+        deleteMany: {
+          args: Prisma.webhook_endpointsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.webhook_endpointsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.webhook_endpointsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>[]
+        }
+        upsert: {
+          args: Prisma.webhook_endpointsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$webhook_endpointsPayload>
+        }
+        aggregate: {
+          args: Prisma.Webhook_endpointsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWebhook_endpoints>
+        }
+        groupBy: {
+          args: Prisma.webhook_endpointsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Webhook_endpointsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.webhook_endpointsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Webhook_endpointsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2053,6 +2128,18 @@ export const Course_reportScalarFieldEnum = {
 } as const
 
 export type Course_reportScalarFieldEnum = (typeof Course_reportScalarFieldEnum)[keyof typeof Course_reportScalarFieldEnum]
+
+
+export const Webhook_endpointsScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  event: 'event',
+  secret: 'secret',
+  is_active: 'is_active',
+  created_at: 'created_at'
+} as const
+
+export type Webhook_endpointsScalarFieldEnum = (typeof Webhook_endpointsScalarFieldEnum)[keyof typeof Webhook_endpointsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2487,6 +2574,7 @@ export type GlobalOmitConfig = {
   lecture_playback_history?: Prisma.lecture_playback_historyOmit
   lecture_bookmark?: Prisma.lecture_bookmarkOmit
   course_report?: Prisma.course_reportOmit
+  webhook_endpoints?: Prisma.webhook_endpointsOmit
 }
 
 /* Types for Logging */

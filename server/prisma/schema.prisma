@@ -151,6 +151,10 @@ model courses {
   enrollments   enrollments[]
   enrollment_histories enrollment_history[]
   comments      course_comment[]
+
+  @@index([status, created_at])
+  @@index([category_id, status])
+  @@index([instructor_id])
 }
 
 model chapter {
@@ -182,6 +186,7 @@ model lectures {
   attachments       lecture_attachment[]
 
   @@unique([chapter_id, position])
+  @@index([chapter_id])
 }
 
 model lecture_attachment {
@@ -392,4 +397,15 @@ model course_report {
   content    String
   is_resolved Boolean   @default(false)
   created_at DateTime   @default(now())
+}
+
+model webhook_endpoints {
+  id         Int      @id @default(autoincrement())
+  url        String
+  event      String
+  secret     String
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  @@index([event, is_active])
 }

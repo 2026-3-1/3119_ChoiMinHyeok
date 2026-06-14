@@ -108,6 +108,56 @@ export class CancelOrderRequest {
   reasonDetail?: string;
 }
 
+export class TossPrepareRequest {
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @ApiProperty({ example: 1 })
+  userId: number;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayUnique()
+  @Type(() => Number)
+  @IsInt({ each: true })
+  @Min(1, { each: true })
+  @ApiProperty({ example: [1, 2] })
+  cartItemIds: number[];
+}
+
+export class TossConfirmRequest {
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @ApiProperty({ example: 1 })
+  userId: number;
+
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayUnique()
+  @Type(() => Number)
+  @IsInt({ each: true })
+  @Min(1, { each: true })
+  @ApiProperty({ example: [1, 2] })
+  cartItemIds: number[];
+
+  @IsString()
+  @MaxLength(200)
+  @ApiProperty({ example: 'tgen_20250101abc123' })
+  paymentKey: string;
+
+  @IsString()
+  @MaxLength(120)
+  @ApiProperty({ example: 'ORD-20260101-ABC123' })
+  orderId: string;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @ApiProperty({ example: 50000 })
+  amount: number;
+}
+
 export class CancelCourseRequest {
   @IsEnum(CancellationReason)
   @ApiProperty({

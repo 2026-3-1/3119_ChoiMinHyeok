@@ -32,7 +32,7 @@ export function SiteHeader() {
 
         <nav className="site-header__nav">
           <Link to="/courses" className="site-header__link">강의</Link>
-          {isLoggedIn && (
+          {isLoggedIn && !isInstructor && (
             <Link to="/my-learning" className="site-header__link">내 학습</Link>
           )}
           {isLoggedIn && isInstructor && (

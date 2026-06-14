@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { checkoutCart, getCart, removeCartItem } from "../features/shared/api/api";
+import { getCart, prepareTossPayment, removeCartItem } from "../features/shared/api/api";
 import { useAuth } from "../features/shared/context/AuthContext";
 import { SiteHeader } from "../features/shared/layout/SiteHeader";
 import { SiteFooter } from "../features/shared/layout/SiteFooter";
@@ -39,16 +39,20 @@ export default function CartPage() {
   });
 
   const checkoutMutation = useMutation({
-    mutationFn: () => checkoutCart({ userId: user!.id, cartItemIds: checkedItems, provider: "DEMO" }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["my-learning", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["learning-status", user?.id] });
-      navigate("/my-learning");
+    mutationFn: () => prepareTossPayment({ userId: user!.id, cartItemIds: checkedItems }),
+    onSuccess: (prepared) => {
+      navigate("/payment", {
+        state: {
+          orderId: prepared.orderId,
+          orderName: prepared.orderName,
+          amount: prepared.amount,
+          cartItemIds: checkedItems,
+        },
+      });
     },
     onError: (err: unknown) => {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
-      setCheckoutError(msg ?? "결제 중 오류가 발생했습니다.");
+      setCheckoutError(msg ?? "결제 준비 중 오류가 발생했습니다.");
     },
   });
 
