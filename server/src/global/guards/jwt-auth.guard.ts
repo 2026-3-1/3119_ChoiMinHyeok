@@ -20,10 +20,12 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     try {
-      const payload = this.jwtService.verify<{ sub: number; email: string; role: string; type: string }>(
-        token,
-        { secret: process.env.JWT_ACCESS_SECRET },
-      );
+      const payload = this.jwtService.verify<{
+        sub: number;
+        email: string;
+        role: string;
+        type: string;
+      }>(token, { secret: process.env.JWT_ACCESS_SECRET });
 
       if (payload.type !== 'access') {
         throw new UnauthorizedException('유효하지 않은 토큰 타입입니다.');

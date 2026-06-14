@@ -30,7 +30,9 @@ export class AuthController {
 
   @Post('refresh')
   @HttpCode(200)
-  @ApiOperation({ summary: 'HTTP-only 쿠키의 refresh_token으로 새 access_token 발급' })
+  @ApiOperation({
+    summary: 'HTTP-only 쿠키의 refresh_token으로 새 access_token 발급',
+  })
   async refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -48,10 +50,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(200)
   @ApiOperation({ summary: '로그아웃: refresh_token 무효화 및 쿠키 제거' })
-  async logout(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const incoming = (req.cookies as Record<string, string>)?.[REFRESH_COOKIE];
     if (incoming) {
       await this.authService.revokeRefreshToken(incoming);

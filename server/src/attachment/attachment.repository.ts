@@ -48,7 +48,8 @@ export class AttachmentRepository {
       },
     });
 
-    if (!attachment) throw new NotFoundException('첨부파일을 찾을 수 없습니다.');
+    if (!attachment)
+      throw new NotFoundException('첨부파일을 찾을 수 없습니다.');
     return attachment;
   }
 
@@ -56,7 +57,10 @@ export class AttachmentRepository {
     return prisma.lecture_attachment.delete({ where: { id } });
   }
 
-  async isEnrolledOrInstructor(userId: number, lectureId: number): Promise<boolean> {
+  async isEnrolledOrInstructor(
+    userId: number,
+    lectureId: number,
+  ): Promise<boolean> {
     const lecture = await prisma.lectures.findUnique({
       where: { id: lectureId },
       include: { chapters: { include: { courses: true } } },

@@ -37,8 +37,17 @@ export class AuthService {
     );
 
     const refreshToken = this.jwtService.sign(
-      { sub: userId, email, role, jti, type: 'refresh' } satisfies RefreshTokenPayload,
-      { secret: process.env.JWT_REFRESH_SECRET, expiresIn: REFRESH_TTL_SECONDS },
+      {
+        sub: userId,
+        email,
+        role,
+        jti,
+        type: 'refresh',
+      } satisfies RefreshTokenPayload,
+      {
+        secret: process.env.JWT_REFRESH_SECRET,
+        expiresIn: REFRESH_TTL_SECONDS,
+      },
     );
 
     await this.redisService.set(
@@ -54,9 +63,12 @@ export class AuthService {
     let payload: RefreshTokenPayload;
 
     try {
-      payload = this.jwtService.verify<RefreshTokenPayload>(incomingRefreshToken, {
-        secret: process.env.JWT_REFRESH_SECRET,
-      });
+      payload = this.jwtService.verify<RefreshTokenPayload>(
+        incomingRefreshToken,
+        {
+          secret: process.env.JWT_REFRESH_SECRET,
+        },
+      );
     } catch {
       throw new UnauthorizedException('유효하지 않은 리프레시 토큰입니다.');
     }
@@ -68,7 +80,9 @@ export class AuthService {
     const storedUserId = await this.redisService.get(`refresh:${payload.jti}`);
 
     if (!storedUserId || Number(storedUserId) !== payload.sub) {
-      throw new UnauthorizedException('만료되었거나 이미 사용된 리프레시 토큰입니다.');
+      throw new UnauthorizedException(
+        '만료되었거나 이미 사용된 리프레시 토큰입니다.',
+      );
     }
 
     await this.redisService.del(`refresh:${payload.jti}`);

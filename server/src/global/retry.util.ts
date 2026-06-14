@@ -20,7 +20,10 @@ export async function withRetry<T>(
       if (attempt === maxAttempts) break;
 
       // Exponential backoff with jitter
-      const delay = Math.min(baseDelayMs * 2 ** (attempt - 1) + Math.random() * 100, maxDelayMs);
+      const delay = Math.min(
+        baseDelayMs * 2 ** (attempt - 1) + Math.random() * 100,
+        maxDelayMs,
+      );
       await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }

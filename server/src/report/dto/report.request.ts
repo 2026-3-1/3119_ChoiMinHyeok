@@ -6,7 +6,11 @@ import { normalizeText } from '../../global/global.request-transform';
 
 export class CreateReportRequest {
   @IsEnum(ReportType)
-  @ApiProperty({ enum: ReportType, enumName: 'ReportType', example: 'COPYRIGHT' })
+  @ApiProperty({
+    enum: ReportType,
+    enumName: 'ReportType',
+    example: 'COPYRIGHT',
+  })
   type!: ReportType;
 
   @Transform(normalizeText)

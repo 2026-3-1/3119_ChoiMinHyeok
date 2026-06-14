@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DiscordService } from './discord.service';
 import { EmailService } from './email.service';
-import { NotificationService, PurchaseNotificationData } from './notification.service';
+import {
+  NotificationService,
+  PurchaseNotificationData,
+} from './notification.service';
 
 const mockEmailService = { sendPurchaseConfirmation: jest.fn() };
 const mockDiscordService = { sendPurchaseNotification: jest.fn() };
@@ -36,23 +39,35 @@ describe('NotificationService', () => {
 
     await service.notifyPurchaseComplete(sampleData);
 
-    expect(mockEmailService.sendPurchaseConfirmation).toHaveBeenCalledWith(sampleData);
-    expect(mockDiscordService.sendPurchaseNotification).toHaveBeenCalledWith(sampleData);
+    expect(mockEmailService.sendPurchaseConfirmation).toHaveBeenCalledWith(
+      sampleData,
+    );
+    expect(mockDiscordService.sendPurchaseNotification).toHaveBeenCalledWith(
+      sampleData,
+    );
   });
 
   it('이메일 실패해도 디스코드는 전송된다', async () => {
-    mockEmailService.sendPurchaseConfirmation.mockRejectedValue(new Error('SMTP 오류'));
+    mockEmailService.sendPurchaseConfirmation.mockRejectedValue(
+      new Error('SMTP 오류'),
+    );
     mockDiscordService.sendPurchaseNotification.mockResolvedValue(undefined);
 
-    await expect(service.notifyPurchaseComplete(sampleData)).resolves.not.toThrow();
+    await expect(
+      service.notifyPurchaseComplete(sampleData),
+    ).resolves.not.toThrow();
     expect(mockDiscordService.sendPurchaseNotification).toHaveBeenCalled();
   });
 
   it('디스코드 실패해도 전체 메서드는 완료된다', async () => {
     mockEmailService.sendPurchaseConfirmation.mockResolvedValue(undefined);
-    mockDiscordService.sendPurchaseNotification.mockRejectedValue(new Error('Webhook 오류'));
+    mockDiscordService.sendPurchaseNotification.mockRejectedValue(
+      new Error('Webhook 오류'),
+    );
 
-    await expect(service.notifyPurchaseComplete(sampleData)).resolves.not.toThrow();
+    await expect(
+      service.notifyPurchaseComplete(sampleData),
+    ).resolves.not.toThrow();
     expect(mockEmailService.sendPurchaseConfirmation).toHaveBeenCalled();
   });
 });

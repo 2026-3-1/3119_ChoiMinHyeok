@@ -15,10 +15,15 @@ export class ChapterRepository {
   }
 
   async create(title: string, courseId: number, position: number) {
-    return prisma.chapter.create({ data: { title, course_id: courseId, position } });
+    return prisma.chapter.create({
+      data: { title, course_id: courseId, position },
+    });
   }
 
-  async update(chapterId: number, data: Partial<{ title: string; position: number }>) {
+  async update(
+    chapterId: number,
+    data: Partial<{ title: string; position: number }>,
+  ) {
     return prisma.chapter.update({ where: { id: chapterId }, data });
   }
 

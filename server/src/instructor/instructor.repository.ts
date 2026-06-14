@@ -4,7 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CourseLifecycleStatus, EnrollmentStatus } from '../../prisma/generated/prisma/enums';
+import {
+  CourseLifecycleStatus,
+  EnrollmentStatus,
+} from '../../prisma/generated/prisma/enums';
 import prisma from '../../prisma/prisma.client';
 
 @Injectable()
@@ -22,11 +25,17 @@ export class InstructorRepository {
       max_capacity: number;
     },
   ) {
-    const existing = await prisma.courses.findUnique({ where: { slug: data.slug } });
+    const existing = await prisma.courses.findUnique({
+      where: { slug: data.slug },
+    });
     if (existing) throw new ConflictException('이미 사용 중인 슬러그입니다.');
 
     return prisma.courses.create({
-      data: { ...data, instructor_id: instructorId, status: CourseLifecycleStatus.OPEN },
+      data: {
+        ...data,
+        instructor_id: instructorId,
+        status: CourseLifecycleStatus.OPEN,
+      },
     });
   }
 
@@ -97,7 +106,10 @@ export class InstructorRepository {
     return chapter;
   }
 
-  async updateChapter(chapterId: number, data: Partial<{ title: string; position: number }>) {
+  async updateChapter(
+    chapterId: number,
+    data: Partial<{ title: string; position: number }>,
+  ) {
     return prisma.chapter.update({ where: { id: chapterId }, data });
   }
 
@@ -194,7 +206,9 @@ export class InstructorRepository {
     });
 
     if (!enrollment)
-      throw new NotFoundException('해당 수강생의 수강 정보를 찾을 수 없습니다.');
+      throw new NotFoundException(
+        '해당 수강생의 수강 정보를 찾을 수 없습니다.',
+      );
 
     return prisma.enrollments.update({
       where: { id: enrollment.id },

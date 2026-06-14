@@ -23,7 +23,9 @@ export class DiscordService {
   constructor() {
     this.webhookUrl = process.env.DISCORD_WEBHOOK_URL;
     if (!this.webhookUrl) {
-      this.logger.warn('DISCORD_WEBHOOK_URL이 설정되지 않아 디스코드 알림이 비활성화됩니다.');
+      this.logger.warn(
+        'DISCORD_WEBHOOK_URL이 설정되지 않아 디스코드 알림이 비활성화됩니다.',
+      );
     }
   }
 
@@ -31,17 +33,26 @@ export class DiscordService {
     if (!this.webhookUrl) return;
     const payload = {
       username: '강의 플랫폼',
-      embeds: [{ ...data, timestamp: new Date().toISOString(), footer: { text: '강의 플랫폼 운영 알림' } }],
+      embeds: [
+        {
+          ...data,
+          timestamp: new Date().toISOString(),
+          footer: { text: '강의 플랫폼 운영 알림' },
+        },
+      ],
     };
     try {
-      await withRetry(async () => {
-        const res = await fetch(this.webhookUrl!, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      }, { maxAttempts: 3, baseDelayMs: 500 });
+      await withRetry(
+        async () => {
+          const res = await fetch(this.webhookUrl!, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        },
+        { maxAttempts: 3, baseDelayMs: 500 },
+      );
     } catch (err) {
       this.logger.error('디스코드 전송 최종 실패 (3회 시도)', err);
     }
@@ -51,7 +62,10 @@ export class DiscordService {
     if (!this.webhookUrl) return;
 
     const courseList = data.courses
-      .map((c) => `• **${c.title}** — ${c.price === 0 ? '무료' : `${c.price.toLocaleString()}원`}`)
+      .map(
+        (c) =>
+          `• **${c.title}** — ${c.price === 0 ? '무료' : `${c.price.toLocaleString()}원`}`,
+      )
       .join('\n');
 
     const payload = {
@@ -79,7 +93,10 @@ export class DiscordService {
             },
             {
               name: '💰 결제 금액',
-              value: data.totalAmount === 0 ? '무료' : `**${data.totalAmount.toLocaleString()}원**`,
+              value:
+                data.totalAmount === 0
+                  ? '무료'
+                  : `**${data.totalAmount.toLocaleString()}원**`,
               inline: true,
             },
           ],
@@ -90,14 +107,17 @@ export class DiscordService {
     };
 
     try {
-      await withRetry(async () => {
-        const res = await fetch(this.webhookUrl!, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-      }, { maxAttempts: 3, baseDelayMs: 500 });
+      await withRetry(
+        async () => {
+          const res = await fetch(this.webhookUrl!, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        },
+        { maxAttempts: 3, baseDelayMs: 500 },
+      );
       this.logger.log(`디스코드 알림 전송 완료 (주문: ${data.orderNumber})`);
     } catch (err) {
       this.logger.error('디스코드 전송 최종 실패 (3회 시도)', err);

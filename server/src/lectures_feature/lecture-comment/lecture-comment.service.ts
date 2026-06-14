@@ -21,7 +21,11 @@ export class LectureCommentService {
       id: comment.id,
       content: comment.content,
       createdAt: comment.create_at,
-      user: { id: comment.users.id, name: comment.users.name, role: comment.users.role },
+      user: {
+        id: comment.users.id,
+        name: comment.users.name,
+        role: comment.users.role,
+      },
     };
   }
 

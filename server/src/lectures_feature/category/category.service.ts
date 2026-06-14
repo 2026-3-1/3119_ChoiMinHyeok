@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryRepository } from './category.repository';
 import { createCategory, updateCategory } from './dto/category.request';
 
-
 @Injectable()
 export class CategoryService {
   constructor(private readonly categoryRepository: CategoryRepository) {}
@@ -21,9 +20,19 @@ export class CategoryService {
     return this.categoryRepository.findCoursesByCategory(categoryId);
   }
 
-  async getCourses(search: string | undefined, categoryId: number | undefined, page: number, limit: number) {
+  async getCourses(
+    search: string | undefined,
+    categoryId: number | undefined,
+    page: number,
+    limit: number,
+  ) {
     const skip = (page - 1) * limit;
-    return this.categoryRepository.findCourses(search?.trim(), categoryId, skip, limit);
+    return this.categoryRepository.findCourses(
+      search?.trim(),
+      categoryId,
+      skip,
+      limit,
+    );
   }
 
   async createCategory(data: createCategory) {

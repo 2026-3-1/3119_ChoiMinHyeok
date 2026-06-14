@@ -110,8 +110,12 @@ describe('Commerce + Learning flow (e2e)', () => {
   });
 
   it('supports cart checkout, progress, review, bookmark, refund, and course cancellation', async () => {
-    const webCourse = seeded.categories.find((category) => category.name === 'web')!.courses[0];
-    const pwnCourse = seeded.categories.find((category) => category.name === 'pwn')!.courses[0];
+    const webCourse = seeded.categories.find(
+      (category) => category.name === 'web',
+    )!.courses[0];
+    const pwnCourse = seeded.categories.find(
+      (category) => category.name === 'pwn',
+    )!.courses[0];
 
     const addFirstCartItemResponse = await request(app.getHttpServer())
       .post('/api/v1/cart/items')
@@ -149,9 +153,9 @@ describe('Commerce + Learning flow (e2e)', () => {
       .expect(201);
 
     expect(checkoutResponse.body.data.items).toHaveLength(2);
-    expect(checkoutResponse.body.data.payment_transactions[0].transaction_type).toBe(
-      'PAYMENT',
-    );
+    expect(
+      checkoutResponse.body.data.payment_transactions[0].transaction_type,
+    ).toBe('PAYMENT');
 
     const courseLearningBeforeProgress = await request(app.getHttpServer())
       .get(`/api/v1/users/${userId}/courses/${webCourse.id}/learning-status`)

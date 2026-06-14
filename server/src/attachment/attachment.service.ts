@@ -1,8 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AttachmentRepository } from './attachment.repository';
 import { StorageService } from '../storage/storage.service';
 
@@ -23,7 +19,9 @@ export class AttachmentService {
       lectureId,
     );
     if (!canAccess) {
-      throw new ForbiddenException('본인 강의에만 파일을 업로드할 수 있습니다.');
+      throw new ForbiddenException(
+        '본인 강의에만 파일을 업로드할 수 있습니다.',
+      );
     }
 
     const storedName = await this.storageService.save(
@@ -57,7 +55,7 @@ export class AttachmentService {
   async listByLecture(lectureId: number) {
     const attachments =
       await this.attachmentRepository.findByLectureId(lectureId);
-    return attachments.map(this.toResponse);
+    return attachments.map((a) => this.toResponse(a));
   }
 
   async getDownloadStream(userId: number, attachmentId: number) {
@@ -71,7 +69,9 @@ export class AttachmentService {
     );
 
     if (!canAccess) {
-      throw new ForbiddenException('수강 중인 강의의 파일만 다운로드할 수 있습니다.');
+      throw new ForbiddenException(
+        '수강 중인 강의의 파일만 다운로드할 수 있습니다.',
+      );
     }
 
     return {

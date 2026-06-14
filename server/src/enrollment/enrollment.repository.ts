@@ -37,7 +37,9 @@ export class EnrollmentRepository {
     }
 
     if (course.price !== 0) {
-      throw new ConflictException('유료 강의는 결제를 통해 수강 신청해야 합니다.');
+      throw new ConflictException(
+        '유료 강의는 결제를 통해 수강 신청해야 합니다.',
+      );
     }
 
     return course;
@@ -50,7 +52,8 @@ export class EnrollmentRepository {
     });
 
     if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
-    if (user.role !== Roles.STUDENT) throw new ForbiddenException('학생 계정만 수강 신청할 수 있습니다.');
+    if (user.role !== Roles.STUDENT)
+      throw new ForbiddenException('학생 계정만 수강 신청할 수 있습니다.');
   }
 
   async getMyEnrollments(userId: number) {

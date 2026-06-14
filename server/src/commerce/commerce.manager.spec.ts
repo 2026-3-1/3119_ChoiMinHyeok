@@ -14,14 +14,20 @@ describe('CommerceManager', () => {
     });
 
     it('강의가 있으면 예외를 던지지 않는다', () => {
-      expect(() => manager.assertCourseExists({ id: 1, status: 'OPEN' })).not.toThrow();
+      expect(() =>
+        manager.assertCourseExists({ id: 1, status: 'OPEN' }),
+      ).not.toThrow();
     });
   });
 
   describe('assertCourseOpen', () => {
     it('OPEN 상태가 아니면 BadRequestException을 던진다', () => {
-      expect(() => manager.assertCourseOpen({ status: 'CANCELED' })).toThrow(BadRequestException);
-      expect(() => manager.assertCourseOpen({ status: 'DRAFT' })).toThrow(BadRequestException);
+      expect(() => manager.assertCourseOpen({ status: 'CANCELED' })).toThrow(
+        BadRequestException,
+      );
+      expect(() => manager.assertCourseOpen({ status: 'DRAFT' })).toThrow(
+        BadRequestException,
+      );
     });
 
     it('OPEN 상태면 예외를 던지지 않는다', () => {
@@ -31,7 +37,9 @@ describe('CommerceManager', () => {
 
   describe('assertEnrollmentAbsent', () => {
     it('이미 수강 중이면 BadRequestException을 던진다', () => {
-      expect(() => manager.assertEnrollmentAbsent({ id: 1 })).toThrow(BadRequestException);
+      expect(() => manager.assertEnrollmentAbsent({ id: 1 })).toThrow(
+        BadRequestException,
+      );
     });
 
     it('수강 중이 아니면 예외를 던지지 않는다', () => {
@@ -41,9 +49,9 @@ describe('CommerceManager', () => {
 
   describe('assertCheckoutCartItemsFound', () => {
     it('요청한 항목 수와 실제 항목 수가 다르면 BadRequestException', () => {
-      expect(() =>
-        manager.assertCheckoutCartItemsFound([], [1, 2]),
-      ).toThrow(BadRequestException);
+      expect(() => manager.assertCheckoutCartItemsFound([], [1, 2])).toThrow(
+        BadRequestException,
+      );
     });
 
     it('요청한 항목 수와 실제 항목 수가 같으면 예외 없음', () => {

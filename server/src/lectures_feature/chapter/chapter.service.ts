@@ -15,7 +15,11 @@ export class ChapterService {
   }
 
   async addChapter(data: createChapter) {
-    await this.chapterRepository.create(data.title, data.courseId, data.position);
+    await this.chapterRepository.create(
+      data.title,
+      data.courseId,
+      data.position,
+    );
   }
 
   async updateChapter(chapterId: number, data: updateChapter) {

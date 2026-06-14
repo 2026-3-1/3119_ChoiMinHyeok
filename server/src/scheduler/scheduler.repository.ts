@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { OrderStatus, CourseLifecycleStatus, CancellationReason } from '../../prisma/generated/prisma/enums';
+import {
+  OrderStatus,
+  CourseLifecycleStatus,
+  CancellationReason,
+} from '../../prisma/generated/prisma/enums';
 import prisma from '../../prisma/prisma.client';
 
 @Injectable()
@@ -61,8 +65,7 @@ export class SchedulerRepository {
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const targets = courses.filter(
       (c) =>
-        c.created_at < sevenDaysAgo &&
-        c._count.enrollments < c.min_enrollment,
+        c.created_at < sevenDaysAgo && c._count.enrollments < c.min_enrollment,
     );
 
     if (targets.length === 0) return { count: 0, titles: [] };

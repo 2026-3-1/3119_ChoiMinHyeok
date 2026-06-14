@@ -7,7 +7,8 @@ export class EnrollmentService {
 
   async getMyEnrollments(userId: number) {
     await this.enrollmentRepository.assertUserExists(userId);
-    const enrollments = await this.enrollmentRepository.getMyEnrollments(userId);
+    const enrollments =
+      await this.enrollmentRepository.getMyEnrollments(userId);
 
     return enrollments.map((e) => ({
       id: e.id,

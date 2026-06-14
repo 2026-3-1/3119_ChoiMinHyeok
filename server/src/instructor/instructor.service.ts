@@ -13,11 +13,14 @@ import {
 export class InstructorService {
   constructor(private readonly instructorRepository: InstructorRepository) {}
 
-  async createCourse(instructorId: number, data: CreateInstructorCourseRequest) {
+  async createCourse(
+    instructorId: number,
+    data: CreateInstructorCourseRequest,
+  ) {
     const base = data.title
       .toLowerCase()
       .replace(/[\s]+/g, '-')
-      .replace(/[^a-z0-9\-]+/g, '')
+      .replace(/[^a-z0-9-]+/g, '')
       .replace(/-+/g, '-')
       .replace(/^-+|-+$/g, '')
       .slice(0, 60);
@@ -49,7 +52,8 @@ export class InstructorService {
   }
 
   async getMyCourses(instructorId: number) {
-    const courses = await this.instructorRepository.getInstructorCourses(instructorId);
+    const courses =
+      await this.instructorRepository.getInstructorCourses(instructorId);
     return courses.map((c) => ({
       id: c.id,
       title: c.title,
@@ -63,8 +67,15 @@ export class InstructorService {
     }));
   }
 
-  async updateCourse(courseId: number, instructorId: number, data: UpdateCourseRequest) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
+  async updateCourse(
+    courseId: number,
+    instructorId: number,
+    data: UpdateCourseRequest,
+  ) {
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
 
     const updated = await this.instructorRepository.updateCourse(courseId, {
       ...(data.title && { title: data.title }),
@@ -90,13 +101,25 @@ export class InstructorService {
   }
 
   async deleteCourse(courseId: number, instructorId: number) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
     await this.instructorRepository.deleteCourse(courseId);
   }
 
-  async setCourseStatus(courseId: number, instructorId: number, status: 'DRAFT' | 'OPEN') {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
-    const updated = await this.instructorRepository.updateCourse(courseId, { status: status as any });
+  async setCourseStatus(
+    courseId: number,
+    instructorId: number,
+    status: 'DRAFT' | 'OPEN',
+  ) {
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
+    const updated = await this.instructorRepository.updateCourse(courseId, {
+      status: status as any,
+    });
     return {
       id: updated.id,
       title: updated.title,
@@ -110,8 +133,15 @@ export class InstructorService {
     };
   }
 
-  async addChapter(courseId: number, instructorId: number, data: CreateChapterRequest) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
+  async addChapter(
+    courseId: number,
+    instructorId: number,
+    data: CreateChapterRequest,
+  ) {
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
     const chapter = await this.instructorRepository.addChapter(
       courseId,
       data.title,
@@ -126,8 +156,14 @@ export class InstructorService {
     instructorId: number,
     data: UpdateChapterRequest,
   ) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
-    await this.instructorRepository.findChapterByIdAndCourse(chapterId, courseId);
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
+    await this.instructorRepository.findChapterByIdAndCourse(
+      chapterId,
+      courseId,
+    );
 
     const updated = await this.instructorRepository.updateChapter(chapterId, {
       ...(data.title && { title: data.title }),
@@ -137,13 +173,27 @@ export class InstructorService {
     return { id: updated.id, title: updated.title, position: updated.position };
   }
 
-  async deleteChapter(courseId: number, chapterId: number, instructorId: number) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
-    await this.instructorRepository.findChapterByIdAndCourse(chapterId, courseId);
+  async deleteChapter(
+    courseId: number,
+    chapterId: number,
+    instructorId: number,
+  ) {
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
+    await this.instructorRepository.findChapterByIdAndCourse(
+      chapterId,
+      courseId,
+    );
     await this.instructorRepository.deleteChapter(chapterId);
   }
 
-  async addLecture(chapterId: number, _instructorId: number, data: CreateLectureRequest) {
+  async addLecture(
+    chapterId: number,
+    _instructorId: number,
+    data: CreateLectureRequest,
+  ) {
     const lecture = await this.instructorRepository.addLecture(chapterId, {
       title: data.title,
       video_url: data.videoUrl,
@@ -163,8 +213,15 @@ export class InstructorService {
     };
   }
 
-  async updateLecture(lectureId: number, instructorId: number, data: UpdateLectureRequest) {
-    await this.instructorRepository.findLectureByIdAndChapter(lectureId, instructorId);
+  async updateLecture(
+    lectureId: number,
+    instructorId: number,
+    data: UpdateLectureRequest,
+  ) {
+    await this.instructorRepository.findLectureByIdAndChapter(
+      lectureId,
+      instructorId,
+    );
 
     const updated = await this.instructorRepository.updateLecture(lectureId, {
       ...(data.title && { title: data.title }),
@@ -186,17 +243,26 @@ export class InstructorService {
   }
 
   async deleteLecture(lectureId: number, instructorId: number) {
-    await this.instructorRepository.findLectureByIdAndChapter(lectureId, instructorId);
+    await this.instructorRepository.findLectureByIdAndChapter(
+      lectureId,
+      instructorId,
+    );
     await this.instructorRepository.deleteLecture(lectureId);
   }
 
   async getStudents(courseId: number, instructorId: number) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
     return this.instructorRepository.getStudents(courseId);
   }
 
   async kickStudent(courseId: number, userId: number, instructorId: number) {
-    await this.instructorRepository.findCourseByIdAndInstructor(courseId, instructorId);
+    await this.instructorRepository.findCourseByIdAndInstructor(
+      courseId,
+      instructorId,
+    );
     await this.instructorRepository.kickStudent(courseId, userId);
   }
 }

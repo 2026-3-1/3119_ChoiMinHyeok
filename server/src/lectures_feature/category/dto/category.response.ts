@@ -7,6 +7,10 @@ export class category {
   @ApiProperty({ example: 'Backend' })
   name: string;
 
-  @ApiProperty({ type: String, format: 'date-time', example: '2026-03-23T00:00:00.000Z' })
+  @ApiProperty({
+    type: String,
+    format: 'date-time',
+    example: '2026-03-23T00:00:00.000Z',
+  })
   created_at: Date;
 }

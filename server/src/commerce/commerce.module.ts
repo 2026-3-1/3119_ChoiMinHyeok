@@ -11,7 +11,12 @@ import { TossPaymentService } from './toss-payment.service';
 @Module({
   imports: [JwtModule.register({}), NotificationModule, WebhookModule],
   controllers: [CommerceController],
-  providers: [CommerceService, CommerceRepository, CommerceManager, TossPaymentService],
+  providers: [
+    CommerceService,
+    CommerceRepository,
+    CommerceManager,
+    TossPaymentService,
+  ],
   exports: [CommerceService],
 })
 export class CommerceModule {}

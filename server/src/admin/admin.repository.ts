@@ -1,13 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../../prisma/generated/prisma/client';
-import { Roles, ReportType, EnrollmentStatus, OrderStatus } from '../../prisma/generated/prisma/enums';
+import {
+  Roles,
+  ReportType,
+  EnrollmentStatus,
+  OrderStatus,
+} from '../../prisma/generated/prisma/enums';
 import prisma from '../../prisma/prisma.client';
 
 @Injectable()
 export class AdminRepository {
   async getDashboard() {
     const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+    );
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
     const [
@@ -25,7 +34,9 @@ export class AdminRepository {
       prisma.course_report.count({ where: { is_resolved: false } }),
       prisma.orders.aggregate({
         _sum: { paid_amount: true },
-        where: { status: { in: [OrderStatus.PAID, OrderStatus.PARTIALLY_REFUNDED] } },
+        where: {
+          status: { in: [OrderStatus.PAID, OrderStatus.PARTIALLY_REFUNDED] },
+        },
       }),
       prisma.users.count({ where: { created_at: { gte: todayStart } } }),
       prisma.orders.aggregate({
@@ -90,7 +101,13 @@ export class AdminRepository {
   async findUserById(userId: number) {
     const user = await prisma.users.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, email: true, role: true, created_at: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        created_at: true,
+      },
     });
 
     if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
@@ -189,7 +206,9 @@ export class AdminRepository {
   }
 
   async resolveReport(reportId: number, isResolved: boolean) {
-    const report = await prisma.course_report.findUnique({ where: { id: reportId } });
+    const report = await prisma.course_report.findUnique({
+      where: { id: reportId },
+    });
     if (!report) throw new NotFoundException('신고를 찾을 수 없습니다.');
 
     return prisma.course_report.update({

@@ -43,8 +43,16 @@ export class CategoryController {
   ) {
     const parsedCategoryId = categoryId ? parseInt(categoryId, 10) : undefined;
     const parsedPage = Math.max(1, parseInt(page ?? '1', 10) || 1);
-    const parsedLimit = Math.min(100, Math.max(1, parseInt(limit ?? '12', 10) || 12));
-    return this.categoryService.getCourses(search, parsedCategoryId, parsedPage, parsedLimit);
+    const parsedLimit = Math.min(
+      100,
+      Math.max(1, parseInt(limit ?? '12', 10) || 12),
+    );
+    return this.categoryService.getCourses(
+      search,
+      parsedCategoryId,
+      parsedPage,
+      parsedLimit,
+    );
   }
 
   @ResponseMessage('강좌 상세 조회 성공')

@@ -24,14 +24,19 @@ export class LectureService {
       throw new BadRequestException();
     }
 
-    const chapters = await this.lectureRepository.findOrderedChaptersWithLectures(
-      lecture.chapters.course_id,
-    );
+    const chapters =
+      await this.lectureRepository.findOrderedChaptersWithLectures(
+        lecture.chapters.course_id,
+      );
 
     const orderedLectures = chapters.flatMap((chapter) => chapter.lectures);
-    const lectureIndex = orderedLectures.findIndex((item) => item.id === lecture.id);
-    const nextLecture = lectureIndex >= 0 ? orderedLectures[lectureIndex + 1] : null;
-    const prevLecture = lectureIndex > 0 ? orderedLectures[lectureIndex - 1] : null;
+    const lectureIndex = orderedLectures.findIndex(
+      (item) => item.id === lecture.id,
+    );
+    const nextLecture =
+      lectureIndex >= 0 ? orderedLectures[lectureIndex + 1] : null;
+    const prevLecture =
+      lectureIndex > 0 ? orderedLectures[lectureIndex - 1] : null;
 
     return {
       lecture: {
@@ -69,7 +74,9 @@ export class LectureService {
     return this.lectureRepository.update(lectureId, {
       ...(data.title !== undefined && { title: data.title }),
       ...(data.videoUrl !== undefined && { video_url: data.videoUrl }),
-      ...(data.thumbnailUrl !== undefined && { thumbnail_url: data.thumbnailUrl }),
+      ...(data.thumbnailUrl !== undefined && {
+        thumbnail_url: data.thumbnailUrl,
+      }),
       ...(data.position !== undefined && { position: data.position }),
       ...(data.duration !== undefined && { duration: data.duration }),
       ...(data.isPublished !== undefined && { is_published: data.isPublished }),

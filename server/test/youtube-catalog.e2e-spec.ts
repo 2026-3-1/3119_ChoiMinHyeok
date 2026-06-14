@@ -75,7 +75,9 @@ describe('YouTube seed catalog (e2e)', () => {
   });
 
   it('walks the seeded category -> course -> chapter -> lecture chain', async () => {
-    const webCategory = seeded.categories.find((category) => category.name === 'web');
+    const webCategory = seeded.categories.find(
+      (category) => category.name === 'web',
+    );
 
     expect(webCategory).toBeDefined();
 
@@ -115,14 +117,20 @@ describe('YouTube seed catalog (e2e)', () => {
 
     expect(lecturesResponse.body.data).toHaveLength(1);
     expect(lecturesResponse.body.data[0].id).toBe(firstChapter.lecture.id);
-    expect(lecturesResponse.body.data[0].video_url).toBe(firstChapter.lecture.url);
+    expect(lecturesResponse.body.data[0].video_url).toBe(
+      firstChapter.lecture.url,
+    );
 
     const lectureDetailResponse = await request(app.getHttpServer())
       .get(`/api/v1/lectures/${firstChapter.lecture.id}`)
       .expect(200);
 
-    expect(lectureDetailResponse.body.data.lecture.id).toBe(firstChapter.lecture.id);
-    expect(lectureDetailResponse.body.data.nextLecture).toBe(secondChapter.lecture.id);
+    expect(lectureDetailResponse.body.data.lecture.id).toBe(
+      firstChapter.lecture.id,
+    );
+    expect(lectureDetailResponse.body.data.nextLecture).toBe(
+      secondChapter.lecture.id,
+    );
     expect(lectureDetailResponse.body.data.prevLecture).toBeNull();
   });
 });

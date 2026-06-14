@@ -1,4 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { EnrollmentStatus } from '../../prisma/generated/prisma/enums';
 import type {
   CourseReviewWithUser,
@@ -37,15 +42,21 @@ export class LearningManager {
     }
   }
 
-  assertEnrollmentExists(enrollment: { id: number; status?: EnrollmentStatus } | null) {
+  assertEnrollmentExists(
+    enrollment: { id: number; status?: EnrollmentStatus } | null,
+  ) {
     if (!enrollment) {
-      throw new BadRequestException('구매한 강의만 학습 기록을 남길 수 있습니다.');
+      throw new BadRequestException(
+        '구매한 강의만 학습 기록을 남길 수 있습니다.',
+      );
     }
   }
 
   assertNotCourseInstructor(course: { instructor_id: number }, userId: number) {
     if (course.instructor_id === userId) {
-      throw new ForbiddenException('자신의 강의에는 리뷰를 작성할 수 없습니다.');
+      throw new ForbiddenException(
+        '자신의 강의에는 리뷰를 작성할 수 없습니다.',
+      );
     }
   }
 
@@ -54,7 +65,9 @@ export class LearningManager {
     progressPercent: number,
   ) {
     if (!enrollment) {
-      throw new BadRequestException('수강 중인 강의만 리뷰를 작성할 수 있습니다.');
+      throw new BadRequestException(
+        '수강 중인 강의만 리뷰를 작성할 수 있습니다.',
+      );
     }
 
     if (progressPercent < 80) {
@@ -70,9 +83,15 @@ export class LearningManager {
     }
   }
 
-  validateProgressInput(duration: number, lastPosition: number, watchedSeconds: number) {
+  validateProgressInput(
+    duration: number,
+    lastPosition: number,
+    watchedSeconds: number,
+  ) {
     if (lastPosition > duration || watchedSeconds > duration) {
-      throw new BadRequestException('강의 길이를 초과한 진도값은 저장할 수 없습니다.');
+      throw new BadRequestException(
+        '강의 길이를 초과한 진도값은 저장할 수 없습니다.',
+      );
     }
   }
 
@@ -85,9 +104,15 @@ export class LearningManager {
   buildCourseMetrics(source: CourseProgressSource) {
     const lectures = source.chapters.flatMap((chapter) => chapter.lectures);
     const progressMap = new Map(
-      source.progressRows.map((progressRow) => [progressRow.lecture_id, progressRow]),
+      source.progressRows.map((progressRow) => [
+        progressRow.lecture_id,
+        progressRow,
+      ]),
     );
-    const totalDuration = lectures.reduce((sum, lecture) => sum + lecture.duration, 0);
+    const totalDuration = lectures.reduce(
+      (sum, lecture) => sum + lecture.duration,
+      0,
+    );
     const totalWatchedSeconds = lectures.reduce((sum, lecture) => {
       const watchedSeconds = progressMap.get(lecture.id)?.watched_seconds ?? 0;
       return sum + Math.min(watchedSeconds, lecture.duration);
@@ -180,7 +205,10 @@ export class LearningManager {
     };
   }
 
-  calculateWatchedSeconds(existingWatchedSeconds: number | undefined, nextWatchedSeconds: number) {
+  calculateWatchedSeconds(
+    existingWatchedSeconds: number | undefined,
+    nextWatchedSeconds: number,
+  ) {
     return Math.max(existingWatchedSeconds ?? 0, nextWatchedSeconds);
   }
 

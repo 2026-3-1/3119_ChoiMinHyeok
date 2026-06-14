@@ -5,7 +5,10 @@ export const normalizeText = ({ value }: TransformFnParams) => {
     return value;
   }
 
-  return value.replace(/[\r\n\t]+/g, ' ').replace(/\s+/g, ' ').trim();
+  return value
+    .replace(/[\r\n\t]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 };
 
 export const normalizeOptionalSearch = ({ value }: TransformFnParams) => {

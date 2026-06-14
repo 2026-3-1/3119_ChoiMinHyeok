@@ -56,20 +56,35 @@ export class CategoryRepository {
     });
   }
 
-  async findCourses(search: string | undefined, categoryId: number | undefined, skip: number, take: number) {
+  async findCourses(
+    search: string | undefined,
+    categoryId: number | undefined,
+    skip: number,
+    take: number,
+  ) {
     const where: Prisma.coursesWhereInput = {
       status: CourseLifecycleStatus.OPEN,
       ...(categoryId !== undefined && { category_id: categoryId }),
       ...(search && {
         OR: [
           { title: { contains: search, mode: Prisma.QueryMode.insensitive } },
-          { description: { contains: search, mode: Prisma.QueryMode.insensitive } },
+          {
+            description: {
+              contains: search,
+              mode: Prisma.QueryMode.insensitive,
+            },
+          },
         ],
       }),
     };
 
     const [data, count] = await Promise.all([
-      prisma.courses.findMany({ where, skip, take, orderBy: { created_at: 'desc' } }),
+      prisma.courses.findMany({
+        where,
+        skip,
+        take,
+        orderBy: { created_at: 'desc' },
+      }),
       prisma.courses.count({ where }),
     ]);
 

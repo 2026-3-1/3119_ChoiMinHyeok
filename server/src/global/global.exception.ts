@@ -33,7 +33,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         this.log.error(exception.message, exception.stack);
         Sentry.captureException(exception);
       } else {
-        this.log.warn(`${status} ${request.method} ${request.url} — ${exception.message}`);
+        this.log.warn(
+          `${status} ${request.method} ${request.url} — ${exception.message}`,
+        );
       }
 
       return response.status(status).json({

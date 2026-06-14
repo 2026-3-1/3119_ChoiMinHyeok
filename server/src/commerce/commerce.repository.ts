@@ -52,7 +52,8 @@ export class CommerceRepository {
     });
 
     if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
-    if (user.role !== Roles.STUDENT) throw new ForbiddenException('학생 계정만 구매할 수 있습니다.');
+    if (user.role !== Roles.STUDENT)
+      throw new ForbiddenException('학생 계정만 구매할 수 있습니다.');
   }
 
   findCourseById(courseId: number) {
@@ -312,7 +313,9 @@ export class CommerceRepository {
     reasonDetail?: string,
   ) {
     const order = await this.getOrderByIdForUser(orderId, userId);
-    const targetItems = order.items.filter((item) => orderItemIds.includes(item.id));
+    const targetItems = order.items.filter((item) =>
+      orderItemIds.includes(item.id),
+    );
 
     if (targetItems.length === 0) {
       throw new BadRequestException('환불 가능한 주문 항목이 없습니다.');
@@ -359,7 +362,10 @@ export class CommerceRepository {
 
     const groupedByOrder = new Map<
       number,
-      { userId: number; items: { id: number; price: number; status: OrderItemStatus }[] }
+      {
+        userId: number;
+        items: { id: number; price: number; status: OrderItemStatus }[];
+      }
     >();
 
     enrollments.forEach((enrollment) => {
@@ -506,7 +512,9 @@ export class CommerceRepository {
     const remainingActiveItemCount = order.items.filter(
       (item) =>
         item.status === OrderItemStatus.ENROLLED &&
-        !refundableItems.some((refundableItem) => refundableItem.id === item.id),
+        !refundableItems.some(
+          (refundableItem) => refundableItem.id === item.id,
+        ),
     ).length;
 
     await tx.orders.update({

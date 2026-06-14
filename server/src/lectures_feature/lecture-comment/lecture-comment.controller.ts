@@ -9,7 +9,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../global/guards/jwt-auth.guard';
 import { User } from '../../global/global_decorator/decorator.user';
 import { ResponseMessage } from '../../global/global_decorator/decorator.message';
@@ -41,7 +46,11 @@ export class LectureCommentController {
     @User('sub') userId: number,
     @Body() body: CreateLectureCommentRequest,
   ) {
-    return this.lectureCommentService.createComment(userId, lectureId, body.content);
+    return this.lectureCommentService.createComment(
+      userId,
+      lectureId,
+      body.content,
+    );
   }
 
   @Delete('lectures/:lectureId/comments/:commentId')

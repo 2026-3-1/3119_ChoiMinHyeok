@@ -17,14 +17,11 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect({
-        success: true,
-        status: 200,
-        message: '',
-        data: 'Nothing Over here! This is Test page',
-      });
+    return request(app.getHttpServer()).get('/').expect(200).expect({
+      success: true,
+      status: 200,
+      message: '',
+      data: 'Nothing Over here! This is Test page',
+    });
   });
 });

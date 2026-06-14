@@ -1,13 +1,9 @@
 import { createLogger, format, transports } from 'winston';
 import { utilities as nestWinstonUtilities, WinstonModule } from 'nest-winston';
 
-const { combine, timestamp, printf, colorize, errors } = format;
+const { combine, timestamp, colorize, errors } = format;
 
-const jsonFormat = combine(
-  timestamp(),
-  errors({ stack: true }),
-  format.json(),
-);
+const jsonFormat = combine(timestamp(), errors({ stack: true }), format.json());
 
 const prettyFormat = combine(
   colorize({ all: true }),

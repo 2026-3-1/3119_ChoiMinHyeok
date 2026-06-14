@@ -31,7 +31,11 @@ export class CreateInstructorCourseRequest {
   description!: string;
 
   @IsEnum(Difficulty)
-  @ApiProperty({ enum: Difficulty, enumName: 'Difficulty', example: Difficulty.EASY })
+  @ApiProperty({
+    enum: Difficulty,
+    enumName: 'Difficulty',
+    example: Difficulty.EASY,
+  })
   difficulty!: Difficulty;
 
   @Type(() => Number)

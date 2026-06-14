@@ -33,11 +33,15 @@ export class CommerceService {
   async addToCart(data: AddCartItemRequest) {
     await this.commerceRepository.assertUserExists(data.userId);
 
-    const [course, existingActiveCartItem, activeEnrollment] = await Promise.all([
-      this.commerceRepository.findCourseById(data.courseId),
-      this.commerceRepository.findActiveCartItem(data.userId, data.courseId),
-      this.commerceRepository.findActiveEnrollment(data.userId, data.courseId),
-    ]);
+    const [course, existingActiveCartItem, activeEnrollment] =
+      await Promise.all([
+        this.commerceRepository.findCourseById(data.courseId),
+        this.commerceRepository.findActiveCartItem(data.userId, data.courseId),
+        this.commerceRepository.findActiveEnrollment(
+          data.userId,
+          data.courseId,
+        ),
+      ]);
 
     this.commerceManager.assertCourseExists(course);
     const targetCourse = course!;
@@ -100,8 +104,14 @@ export class CommerceService {
         orderId: order.id,
         orderNumber: order.order_number,
         userId: data.userId,
-        totalAmount: cartItems.reduce((sum, item) => sum + item.courses.price, 0),
-        courses: cartItems.map((item) => ({ id: item.course_id, title: item.courses.title })),
+        totalAmount: cartItems.reduce(
+          (sum, item) => sum + item.courses.price,
+          0,
+        ),
+        courses: cartItems.map((item) => ({
+          id: item.course_id,
+          title: item.courses.title,
+        })),
       });
       void this.notificationService.notifyPurchaseComplete({
         userName: user.name,
@@ -111,7 +121,10 @@ export class CommerceService {
           title: item.courses.title,
           price: item.courses.price,
         })),
-        totalAmount: cartItems.reduce((sum, item) => sum + item.courses.price, 0),
+        totalAmount: cartItems.reduce(
+          (sum, item) => sum + item.courses.price,
+          0,
+        ),
       });
     }
 
@@ -158,13 +171,17 @@ export class CommerceService {
       data.cartItemIds,
     );
 
-    this.commerceManager.assertCheckoutCartItemsFound(cartItems, data.cartItemIds);
+    this.commerceManager.assertCheckoutCartItemsFound(
+      cartItems,
+      data.cartItemIds,
+    );
     this.commerceManager.assertCoursesPurchasable(cartItems);
 
-    const activeEnrollments = await this.commerceRepository.findActiveEnrollmentsForCourses(
-      data.userId,
-      cartItems.map((item) => item.course_id),
-    );
+    const activeEnrollments =
+      await this.commerceRepository.findActiveEnrollmentsForCourses(
+        data.userId,
+        cartItems.map((item) => item.course_id),
+      );
     this.commerceManager.assertNoDuplicatePurchasedCourses(activeEnrollments);
 
     const orderId = this.commerceManager.createOrderNumber();
@@ -180,25 +197,36 @@ export class CommerceService {
   async confirmTossPayment(data: TossConfirmRequest) {
     await this.commerceRepository.assertUserExists(data.userId);
 
-    await this.tossPaymentService.confirmPayment(data.paymentKey, data.orderId, data.amount);
+    await this.tossPaymentService.confirmPayment(
+      data.paymentKey,
+      data.orderId,
+      data.amount,
+    );
 
     const cartItems = await this.commerceRepository.getCheckoutCartItems(
       data.userId,
       data.cartItemIds,
     );
 
-    this.commerceManager.assertCheckoutCartItemsFound(cartItems, data.cartItemIds);
+    this.commerceManager.assertCheckoutCartItemsFound(
+      cartItems,
+      data.cartItemIds,
+    );
     this.commerceManager.assertCoursesPurchasable(cartItems);
 
-    const expectedAmount = cartItems.reduce((sum, item) => sum + item.courses.price, 0);
+    const expectedAmount = cartItems.reduce(
+      (sum, item) => sum + item.courses.price,
+      0,
+    );
     if (expectedAmount !== data.amount) {
       throw new BadRequestException('결제 금액이 일치하지 않습니다.');
     }
 
-    const activeEnrollments = await this.commerceRepository.findActiveEnrollmentsForCourses(
-      data.userId,
-      cartItems.map((item) => item.course_id),
-    );
+    const activeEnrollments =
+      await this.commerceRepository.findActiveEnrollmentsForCourses(
+        data.userId,
+        cartItems.map((item) => item.course_id),
+      );
     this.commerceManager.assertNoDuplicatePurchasedCourses(activeEnrollments);
 
     const [order, user] = await Promise.all([
@@ -219,7 +247,10 @@ export class CommerceService {
         orderNumber: order.order_number,
         userId: data.userId,
         totalAmount: data.amount,
-        courses: cartItems.map((item) => ({ id: item.course_id, title: item.courses.title })),
+        courses: cartItems.map((item) => ({
+          id: item.course_id,
+          title: item.courses.title,
+        })),
       });
       void this.notificationService.notifyPurchaseComplete({
         userName: user.name,

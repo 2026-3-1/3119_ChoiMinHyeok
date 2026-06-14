@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { IsEnum, IsUrl } from 'class-validator';
 import { Roles } from '../global/global_decorator/decorator.roles';
@@ -11,7 +21,12 @@ class RegisterWebhookDto {
   @IsUrl({ require_protocol: true })
   url: string | undefined;
 
-  @IsEnum(['order.completed', 'order.canceled', 'course.canceled', 'enrollment.created'])
+  @IsEnum([
+    'order.completed',
+    'order.canceled',
+    'course.canceled',
+    'enrollment.created',
+  ])
   event: WebhookEvent | undefined;
 }
 
@@ -35,7 +50,7 @@ export class WebhookController {
   @ApiOperation({ summary: 'Webhook 엔드포인트 등록 (ADMIN)' })
   @ApiBody({ type: RegisterWebhookDto })
   register(@Body() body: RegisterWebhookDto) {
-    if(!body.url || !body.event) {
+    if (!body.url || !body.event) {
       return;
     }
     return this.webhookService.registerEndpoint(body.url, body.event);

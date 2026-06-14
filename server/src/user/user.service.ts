@@ -71,7 +71,10 @@ export class UserService {
     return this.toProfile(user);
   }
 
-  async updateUserProfile(userId: number, data: { name?: string; description?: string }) {
+  async updateUserProfile(
+    userId: number,
+    data: { name?: string; description?: string },
+  ) {
     const user = await this.userRepository.findUserById(userId);
     if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
     const updated = await this.userRepository.updateUser(userId, data);

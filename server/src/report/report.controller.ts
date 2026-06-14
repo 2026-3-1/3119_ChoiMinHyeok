@@ -6,12 +6,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import {
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { ResponseMessage } from '../global/global_decorator/decorator.message';
 import { SwaggerResponse } from '../global/global_decorator/decorator.swagger-response';
 import { ReportService } from './report.service';

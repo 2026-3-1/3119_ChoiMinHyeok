@@ -23,7 +23,10 @@ import { SwaggerResponse } from '../global/global_decorator/decorator.swagger-re
 import { JwtAuthGuard } from '../global/guards/jwt-auth.guard';
 import { RolesGuard } from '../global/guards/roles.guard';
 import { EnrollmentService } from './enrollment.service';
-import { EnrollRequest, EnrollUserQueryRequest } from './dto/enrollment.request';
+import {
+  EnrollRequest,
+  EnrollUserQueryRequest,
+} from './dto/enrollment.request';
 import { EnrollmentResponse } from './dto/enrollment.response';
 
 @ApiTags('enrollments')
@@ -37,7 +40,12 @@ export class EnrollmentController {
   @Get('enrollments')
   @ApiOperation({ summary: '내 수강 목록을 조회합니다.' })
   @ApiQuery({ name: 'userId', type: Number, description: '사용자 ID' })
-  @SwaggerResponse(EnrollmentResponse, true, 200, '수강 목록 조회에 성공했습니다.')
+  @SwaggerResponse(
+    EnrollmentResponse,
+    true,
+    200,
+    '수강 목록 조회에 성공했습니다.',
+  )
   getMyEnrollments(@Query() query: EnrollUserQueryRequest) {
     return this.enrollmentService.getMyEnrollments(query.userId);
   }
@@ -47,7 +55,12 @@ export class EnrollmentController {
   @HttpCode(201)
   @ApiOperation({ summary: '무료 강의를 수강 신청합니다.' })
   @ApiBody({ type: EnrollRequest })
-  @SwaggerResponse(EnrollmentResponse, false, 201, '수강 신청이 완료되었습니다.')
+  @SwaggerResponse(
+    EnrollmentResponse,
+    false,
+    201,
+    '수강 신청이 완료되었습니다.',
+  )
   enroll(@Body() data: EnrollRequest, @Query() query: EnrollUserQueryRequest) {
     return this.enrollmentService.enroll(query.userId, data.courseId);
   }

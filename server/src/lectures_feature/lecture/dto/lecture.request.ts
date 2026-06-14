@@ -25,7 +25,10 @@ export class createLecture {
   title: string;
 
   @Transform(normalizeText)
-  @IsUrl({ require_protocol: true }, { message: 'videoUrl must be a valid URL' })
+  @IsUrl(
+    { require_protocol: true },
+    { message: 'videoUrl must be a valid URL' },
+  )
   @ApiProperty({ example: 'https://cdn.example.com/lecture.mp4' })
   videoUrl: string;
 
@@ -73,14 +76,22 @@ export class updateLecture {
 
   @IsOptional()
   @Transform(normalizeText)
-  @IsUrl({ require_protocol: true }, { message: 'videoUrl must be a valid URL' })
+  @IsUrl(
+    { require_protocol: true },
+    { message: 'videoUrl must be a valid URL' },
+  )
   @ApiPropertyOptional({ example: 'https://cdn.example.com/lecture.mp4' })
   videoUrl?: string;
 
   @IsOptional()
   @Transform(normalizeText)
-  @IsUrl({ require_protocol: true }, { message: 'thumbnailUrl must be a valid URL' })
-  @ApiPropertyOptional({ example: 'https://cdn.example.com/lecture-thumbnail.png' })
+  @IsUrl(
+    { require_protocol: true },
+    { message: 'thumbnailUrl must be a valid URL' },
+  )
+  @ApiPropertyOptional({
+    example: 'https://cdn.example.com/lecture-thumbnail.png',
+  })
   thumbnailUrl?: string;
 
   @IsOptional()

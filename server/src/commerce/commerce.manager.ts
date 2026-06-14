@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   CancellationReason,
   EnrollmentStatus,
@@ -12,10 +16,12 @@ import type {
 
 @Injectable()
 export class CommerceManager {
-  assertCourseExists(course: {
-    id: number;
-    status: string;
-  } | null) {
+  assertCourseExists(
+    course: {
+      id: number;
+      status: string;
+    } | null,
+  ) {
     if (!course) {
       throw new NotFoundException('강의를 찾을 수 없습니다.');
     }
@@ -33,7 +39,9 @@ export class CommerceManager {
     }
   }
 
-  assertEnrollmentAbsent(enrollment: { id: number; status?: EnrollmentStatus } | null) {
+  assertEnrollmentAbsent(
+    enrollment: { id: number; status?: EnrollmentStatus } | null,
+  ) {
     if (enrollment) {
       throw new BadRequestException('이미 수강 중인 강의입니다.');
     }
@@ -50,7 +58,9 @@ export class CommerceManager {
     requestedCartItemIds: number[],
   ) {
     if (cartItems.length !== requestedCartItemIds.length) {
-      throw new BadRequestException('결제할 장바구니 항목을 정확히 찾지 못했습니다.');
+      throw new BadRequestException(
+        '결제할 장바구니 항목을 정확히 찾지 못했습니다.',
+      );
     }
   }
 
@@ -96,9 +106,7 @@ export class CommerceManager {
       CancellationReason.OTHER,
     ];
 
-    if (
-      !allowedReasons.includes(reason)
-    ) {
+    if (!allowedReasons.includes(reason)) {
       throw new BadRequestException(
         '강의 취소 사유는 강의 취소/정원 초과/인원 미달/기타만 사용할 수 있습니다.',
       );

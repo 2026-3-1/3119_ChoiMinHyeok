@@ -30,7 +30,12 @@ export class ReportRepository {
     if (existing) throw new ConflictException('이미 신고한 강의입니다.');
   }
 
-  async createReport(courseId: number, userId: number, type: ReportType, content: string) {
+  async createReport(
+    courseId: number,
+    userId: number,
+    type: ReportType,
+    content: string,
+  ) {
     return prisma.course_report.create({
       data: {
         course_id: courseId,

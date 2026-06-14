@@ -58,15 +58,22 @@ export class LearningService {
   }
 
   async getLectureProgress(userId: number, lectureId: number) {
-    const lecture = await this.learningRepository.findLectureWithCourse(lectureId);
+    const lecture =
+      await this.learningRepository.findLectureWithCourse(lectureId);
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
     const [enrollment, instructorId] = await Promise.all([
-      this.learningRepository.findActiveEnrollment(userId, targetLecture.chapters.course_id),
-      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+      this.learningRepository.findActiveEnrollment(
+        userId,
+        targetLecture.chapters.course_id,
+      ),
+      this.learningRepository.findCourseInstructorId(
+        targetLecture.chapters.course_id,
+      ),
     ]);
-    if (instructorId !== userId) this.learningManager.assertEnrollmentExists(enrollment);
+    if (instructorId !== userId)
+      this.learningManager.assertEnrollmentExists(enrollment);
 
     const progress = await this.learningRepository.findLectureProgress(
       userId,
@@ -84,19 +91,32 @@ export class LearningService {
     lectureId: number,
     data: UpdateLectureProgressRequest,
   ) {
-    const lecture = await this.learningRepository.findLectureWithCourse(lectureId);
+    const lecture =
+      await this.learningRepository.findLectureWithCourse(lectureId);
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
     const [enrollment, instructorId] = await Promise.all([
-      this.learningRepository.findActiveEnrollment(data.userId, targetLecture.chapters.course_id),
-      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+      this.learningRepository.findActiveEnrollment(
+        data.userId,
+        targetLecture.chapters.course_id,
+      ),
+      this.learningRepository.findCourseInstructorId(
+        targetLecture.chapters.course_id,
+      ),
     ]);
-    if (instructorId !== data.userId) this.learningManager.assertEnrollmentExists(enrollment);
+    if (instructorId !== data.userId)
+      this.learningManager.assertEnrollmentExists(enrollment);
 
     // Clamp client values to lecture duration to handle timer drift or replay edge cases
-    const clampedWatchedSeconds = Math.min(data.watchedSeconds, targetLecture.duration);
-    const clampedLastPosition = Math.min(data.lastPosition, targetLecture.duration);
+    const clampedWatchedSeconds = Math.min(
+      data.watchedSeconds,
+      targetLecture.duration,
+    );
+    const clampedLastPosition = Math.min(
+      data.lastPosition,
+      targetLecture.duration,
+    );
 
     this.learningManager.validateProgressInput(
       targetLecture.duration,
@@ -116,15 +136,16 @@ export class LearningService {
       targetLecture.duration,
       watchedSeconds,
     );
-    const progress = await this.learningRepository.upsertLectureProgressAndHistory({
-      userId: data.userId,
-      lectureId,
-      lastPosition: clampedLastPosition,
-      watchedSeconds,
-      progressPercent,
-      eventType: data.eventType,
-      fromSecond: existingProgress?.last_position ?? 0,
-    });
+    const progress =
+      await this.learningRepository.upsertLectureProgressAndHistory({
+        userId: data.userId,
+        lectureId,
+        lastPosition: clampedLastPosition,
+        watchedSeconds,
+        progressPercent,
+        eventType: data.eventType,
+        fromSecond: existingProgress?.last_position ?? 0,
+      });
 
     return this.learningManager.toLectureProgress({
       userId: data.userId,
@@ -134,29 +155,43 @@ export class LearningService {
   }
 
   async getLectureHistory(userId: number, lectureId: number) {
-    const lecture = await this.learningRepository.findLectureWithCourse(lectureId);
+    const lecture =
+      await this.learningRepository.findLectureWithCourse(lectureId);
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
     const [enrollment, instructorId] = await Promise.all([
-      this.learningRepository.findActiveEnrollment(userId, targetLecture.chapters.course_id),
-      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+      this.learningRepository.findActiveEnrollment(
+        userId,
+        targetLecture.chapters.course_id,
+      ),
+      this.learningRepository.findCourseInstructorId(
+        targetLecture.chapters.course_id,
+      ),
     ]);
-    if (instructorId !== userId) this.learningManager.assertEnrollmentExists(enrollment);
+    if (instructorId !== userId)
+      this.learningManager.assertEnrollmentExists(enrollment);
 
     return this.learningRepository.getLectureHistory(userId, lectureId);
   }
 
   async getLectureBookmarks(userId: number, lectureId: number) {
-    const lecture = await this.learningRepository.findLectureWithCourse(lectureId);
+    const lecture =
+      await this.learningRepository.findLectureWithCourse(lectureId);
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
     const [enrollment, instructorId] = await Promise.all([
-      this.learningRepository.findActiveEnrollment(userId, targetLecture.chapters.course_id),
-      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+      this.learningRepository.findActiveEnrollment(
+        userId,
+        targetLecture.chapters.course_id,
+      ),
+      this.learningRepository.findCourseInstructorId(
+        targetLecture.chapters.course_id,
+      ),
     ]);
-    if (instructorId !== userId) this.learningManager.assertEnrollmentExists(enrollment);
+    if (instructorId !== userId)
+      this.learningManager.assertEnrollmentExists(enrollment);
 
     return this.learningRepository.getLectureBookmarks(userId, lectureId);
   }
@@ -165,15 +200,22 @@ export class LearningService {
     lectureId: number,
     data: AddLectureBookmarkRequest,
   ) {
-    const lecture = await this.learningRepository.findLectureWithCourse(lectureId);
+    const lecture =
+      await this.learningRepository.findLectureWithCourse(lectureId);
     this.learningManager.assertLectureExists(lecture);
     const targetLecture = lecture!;
 
     const [enrollment, instructorId] = await Promise.all([
-      this.learningRepository.findActiveEnrollment(data.userId, targetLecture.chapters.course_id),
-      this.learningRepository.findCourseInstructorId(targetLecture.chapters.course_id),
+      this.learningRepository.findActiveEnrollment(
+        data.userId,
+        targetLecture.chapters.course_id,
+      ),
+      this.learningRepository.findCourseInstructorId(
+        targetLecture.chapters.course_id,
+      ),
     ]);
-    if (instructorId !== data.userId) this.learningManager.assertEnrollmentExists(enrollment);
+    if (instructorId !== data.userId)
+      this.learningManager.assertEnrollmentExists(enrollment);
     this.learningManager.validateBookmarkPosition(
       targetLecture.duration,
       data.position,
@@ -213,10 +255,7 @@ export class LearningService {
     return this.learningManager.toCourseReviews(reviews);
   }
 
-  async createCourseReview(
-    courseId: number,
-    data: CreateCourseReviewRequest,
-  ) {
+  async createCourseReview(courseId: number, data: CreateCourseReviewRequest) {
     await this.learningRepository.assertUserExists(data.userId);
 
     const [course, activeEnrollment, source] = await Promise.all([

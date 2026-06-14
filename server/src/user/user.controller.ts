@@ -10,12 +10,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { ResponseMessage } from '../global/global_decorator/decorator.message';
 import { SwaggerResponse } from '../global/global_decorator/decorator.swagger-response';
@@ -47,9 +42,16 @@ export class UserController {
   @ResponseMessage('회원가입이 완료되었습니다.')
   @Post('auth/register')
   @HttpCode(201)
-  @ApiOperation({ summary: '회원가입 후 access_token 반환, refresh_token은 쿠키로 설정' })
+  @ApiOperation({
+    summary: '회원가입 후 access_token 반환, refresh_token은 쿠키로 설정',
+  })
   @ApiBody({ type: RegisterRequest })
-  @SwaggerResponse(UserProfileResponse, false, 201, '회원가입이 완료되었습니다.')
+  @SwaggerResponse(
+    UserProfileResponse,
+    false,
+    201,
+    '회원가입이 완료되었습니다.',
+  )
   async createUser(
     @Body() data: RegisterRequest,
     @Res({ passthrough: true }) res: Response,
@@ -63,7 +65,9 @@ export class UserController {
   @ResponseMessage('로그인이 완료되었습니다.')
   @Post('auth/login')
   @HttpCode(200)
-  @ApiOperation({ summary: '로그인 후 access_token 반환, refresh_token은 쿠키로 설정' })
+  @ApiOperation({
+    summary: '로그인 후 access_token 반환, refresh_token은 쿠키로 설정',
+  })
   @ApiBody({ type: LoginRequest })
   @SwaggerResponse(UserProfileResponse, false, 200, '로그인이 완료되었습니다.')
   async loginUser(
@@ -79,7 +83,12 @@ export class UserController {
   @ResponseMessage('사용자 목록 조회에 성공했습니다.')
   @Get('users')
   @ApiOperation({ summary: '전체 사용자 목록을 조회합니다.' })
-  @SwaggerResponse(UserProfileResponse, true, 200, '사용자 목록 조회에 성공했습니다.')
+  @SwaggerResponse(
+    UserProfileResponse,
+    true,
+    200,
+    '사용자 목록 조회에 성공했습니다.',
+  )
   getUsers() {
     return this.userService.getUsers();
   }
@@ -88,7 +97,12 @@ export class UserController {
   @Get('users/:userId')
   @ApiOperation({ summary: '사용자 프로필을 조회합니다.' })
   @ApiParam({ name: 'userId', type: Number, description: '사용자 ID' })
-  @SwaggerResponse(UserProfileResponse, false, 200, '사용자 프로필 조회에 성공했습니다.')
+  @SwaggerResponse(
+    UserProfileResponse,
+    false,
+    200,
+    '사용자 프로필 조회에 성공했습니다.',
+  )
   getUserProfile(@Param('userId', ParseIntPipe) userId: number) {
     return this.userService.getUserProfile(userId);
   }

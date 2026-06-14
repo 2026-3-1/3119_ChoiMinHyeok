@@ -9,7 +9,10 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import { normalizeOptionalSearch, toBooleanValue } from '../../global/global.request-transform';
+import {
+  normalizeOptionalSearch,
+  toBooleanValue,
+} from '../../global/global.request-transform';
 import { Roles, ReportType } from '../../../prisma/generated/prisma/enums';
 
 export class AdminUserQueryRequest {
@@ -22,7 +25,9 @@ export class AdminUserQueryRequest {
 
   @IsOptional()
   @IsString()
-  @ApiPropertyOptional({ description: '역할 필터 (STUDENT / INSTRUCTOR / ADMIN)' })
+  @ApiPropertyOptional({
+    description: '역할 필터 (STUDENT / INSTRUCTOR / ADMIN)',
+  })
   role?: string;
 
   @IsOptional()

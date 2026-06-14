@@ -47,9 +47,16 @@ export class LearningController {
   @Roles('STUDENT')
   @ResponseMessage('내 학습 목록 조회에 성공했습니다.')
   @Get('users/:userId/learning')
-  @ApiOperation({ summary: '사용자의 현재 수강 목록과 이어보기 정보를 조회합니다.' })
+  @ApiOperation({
+    summary: '사용자의 현재 수강 목록과 이어보기 정보를 조회합니다.',
+  })
   @ApiParam({ name: 'userId', type: Number, description: '사용자 ID' })
-  @SwaggerResponse(LearningCourseCardResponse, true, 200, '내 학습 목록 조회에 성공했습니다.')
+  @SwaggerResponse(
+    LearningCourseCardResponse,
+    true,
+    200,
+    '내 학습 목록 조회에 성공했습니다.',
+  )
   getMyLearning(@Param('userId', ParseIntPipe) userId: number) {
     return this.learningService.getMyLearning(userId);
   }
@@ -81,7 +88,12 @@ export class LearningController {
   @ApiOperation({ summary: '강의 이어보기 위치와 진도를 조회합니다.' })
   @ApiParam({ name: 'lectureId', type: Number, description: '강의 ID' })
   @ApiQuery({ name: 'userId', type: Number, description: '사용자 ID' })
-  @SwaggerResponse(LectureProgressResponse, false, 200, '강의 진도 조회에 성공했습니다.')
+  @SwaggerResponse(
+    LectureProgressResponse,
+    false,
+    200,
+    '강의 진도 조회에 성공했습니다.',
+  )
   getLectureProgress(
     @Param('lectureId', ParseIntPipe) lectureId: number,
     @Query() query: LearningUserQueryRequest,
@@ -96,7 +108,12 @@ export class LearningController {
   @ApiOperation({ summary: '강의 시청 히스토리와 이어보기 위치를 저장합니다.' })
   @ApiParam({ name: 'lectureId', type: Number, description: '강의 ID' })
   @ApiBody({ type: UpdateLectureProgressRequest })
-  @SwaggerResponse(LectureProgressResponse, false, 200, '강의 진도 저장에 성공했습니다.')
+  @SwaggerResponse(
+    LectureProgressResponse,
+    false,
+    200,
+    '강의 진도 저장에 성공했습니다.',
+  )
   updateLectureProgress(
     @Param('lectureId', ParseIntPipe) lectureId: number,
     @Body() data: UpdateLectureProgressRequest,
@@ -131,7 +148,12 @@ export class LearningController {
   @ApiOperation({ summary: '강의 북마크 목록을 조회합니다.' })
   @ApiParam({ name: 'lectureId', type: Number, description: '강의 ID' })
   @ApiQuery({ name: 'userId', type: Number, description: '사용자 ID' })
-  @SwaggerResponse(LectureBookmarkResponse, true, 200, '북마크 조회에 성공했습니다.')
+  @SwaggerResponse(
+    LectureBookmarkResponse,
+    true,
+    200,
+    '북마크 조회에 성공했습니다.',
+  )
   getLectureBookmarks(
     @Param('lectureId', ParseIntPipe) lectureId: number,
     @Query() query: LearningUserQueryRequest,
@@ -146,7 +168,12 @@ export class LearningController {
   @ApiOperation({ summary: '강의 북마크를 추가합니다.' })
   @ApiParam({ name: 'lectureId', type: Number, description: '강의 ID' })
   @ApiBody({ type: AddLectureBookmarkRequest })
-  @SwaggerResponse(LectureBookmarkResponse, true, 201, '북마크 추가에 성공했습니다.')
+  @SwaggerResponse(
+    LectureBookmarkResponse,
+    true,
+    201,
+    '북마크 추가에 성공했습니다.',
+  )
   createLectureBookmark(
     @Param('lectureId', ParseIntPipe) lectureId: number,
     @Body() data: AddLectureBookmarkRequest,
@@ -161,7 +188,12 @@ export class LearningController {
   @ApiOperation({ summary: '강의 북마크를 삭제합니다.' })
   @ApiParam({ name: 'bookmarkId', type: Number, description: '북마크 ID' })
   @ApiQuery({ name: 'userId', type: Number, description: '사용자 ID' })
-  @SwaggerResponse(LectureBookmarkResponse, true, 200, '북마크 삭제에 성공했습니다.')
+  @SwaggerResponse(
+    LectureBookmarkResponse,
+    true,
+    200,
+    '북마크 삭제에 성공했습니다.',
+  )
   removeLectureBookmark(
     @Param('bookmarkId', ParseIntPipe) bookmarkId: number,
     @Query() query: LearningUserQueryRequest,
@@ -182,7 +214,9 @@ export class LearningController {
   @Roles('STUDENT')
   @ResponseMessage('리뷰 저장에 성공했습니다.')
   @Post('courses/:courseId/reviews')
-  @ApiOperation({ summary: '진도율 80% 이상일 때 리뷰를 작성하거나 수정합니다.' })
+  @ApiOperation({
+    summary: '진도율 80% 이상일 때 리뷰를 작성하거나 수정합니다.',
+  })
   @ApiParam({ name: 'courseId', type: Number, description: '강의 ID' })
   @ApiBody({ type: CreateCourseReviewRequest })
   @SwaggerResponse(CourseReviewResponse, true, 201, '리뷰 저장에 성공했습니다.')

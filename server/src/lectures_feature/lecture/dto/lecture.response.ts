@@ -25,7 +25,11 @@ export class lecture {
   @ApiProperty({ example: true })
   is_published: boolean;
 
-  @ApiProperty({ type: String, format: 'date-time', example: '2026-03-23T00:00:00.000Z' })
+  @ApiProperty({
+    type: String,
+    format: 'date-time',
+    example: '2026-03-23T00:00:00.000Z',
+  })
   created_at: Date;
 }
 

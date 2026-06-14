@@ -14,25 +14,40 @@ export class WebhookService {
 
   constructor(private readonly webhookRepository: WebhookRepository) {}
 
-  async dispatch(event: WebhookEvent, payload: Record<string, unknown>): Promise<void> {
+  async dispatch(
+    event: WebhookEvent,
+    payload: Record<string, unknown>,
+  ): Promise<void> {
     let endpoints: { url: string; secret: string }[];
     try {
       endpoints = await this.webhookRepository.findActiveEndpoints(event);
     } catch (err) {
-      this.logger.warn(`Webhook 엔드포인트 조회 실패 (테이블 미존재 가능) [${event}]`, err);
+      this.logger.warn(
+        `Webhook 엔드포인트 조회 실패 (테이블 미존재 가능) [${event}]`,
+        err,
+      );
       return;
     }
 
     if (endpoints.length === 0) return;
 
-    const body = JSON.stringify({ event, payload, timestamp: new Date().toISOString() });
+    const body = JSON.stringify({
+      event,
+      payload,
+      timestamp: new Date().toISOString(),
+    });
 
     await Promise.allSettled(
       endpoints.map((ep) => this.send(ep.url, ep.secret, body, event)),
     );
   }
 
-  private async send(url: string, secret: string, body: string, event: string): Promise<void> {
+  private async send(
+    url: string,
+    secret: string,
+    body: string,
+    event: string,
+  ): Promise<void> {
     const signature = crypto
       .createHmac('sha256', secret)
       .update(body)
@@ -51,7 +66,9 @@ export class WebhookService {
       });
 
       if (!res.ok) {
-        this.logger.warn(`Webhook 전송 실패 [${event}] → ${url} (${res.status})`);
+        this.logger.warn(
+          `Webhook 전송 실패 [${event}] → ${url} (${res.status})`,
+        );
       } else {
         this.logger.log(`Webhook 전송 완료 [${event}] → ${url}`);
       }
@@ -62,7 +79,11 @@ export class WebhookService {
 
   async registerEndpoint(url: string, event: WebhookEvent) {
     const secret = crypto.randomBytes(32).toString('hex');
-    const endpoint = await this.webhookRepository.create({ url, event, secret });
+    const endpoint = await this.webhookRepository.create({
+      url,
+      event,
+      secret,
+    });
     return { ...endpoint, secret };
   }
 
@@ -73,9 +94,12 @@ export class WebhookService {
   async listEndpoints() {
     try {
       const endpoints = await this.webhookRepository.findAll();
-      return endpoints.map(({ secret: _s, ...rest }) => rest);
+      return endpoints.map(({ secret: _secret, ...rest }) => rest);
     } catch (err) {
-      this.logger.warn('Webhook 엔드포인트 조회 실패 (테이블 미존재 가능)', err);
+      this.logger.warn(
+        'Webhook 엔드포인트 조회 실패 (테이블 미존재 가능)',
+        err,
+      );
       return [];
     }
   }

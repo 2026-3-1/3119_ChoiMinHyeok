@@ -1,4 +1,9 @@
-import { BadGatewayException, BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 
 export interface TossPaymentResult {
   paymentKey: string;
@@ -12,13 +17,18 @@ export interface TossPaymentResult {
 @Injectable()
 export class TossPaymentService {
   private readonly logger = new Logger(TossPaymentService.name);
-  private readonly confirmUrl = 'https://api.tosspayments.com/v1/payments/confirm';
+  private readonly confirmUrl =
+    'https://api.tosspayments.com/v1/payments/confirm';
 
   private get secretKey(): string {
     return process.env.TOSS_SECRET_KEY ?? '';
   }
 
-  async confirmPayment(paymentKey: string, orderId: string, amount: number): Promise<TossPaymentResult> {
+  async confirmPayment(
+    paymentKey: string,
+    orderId: string,
+    amount: number,
+  ): Promise<TossPaymentResult> {
     const secretKey = this.secretKey;
     if (!secretKey) {
       throw new BadRequestException('결제 서비스가 설정되지 않았습니다.');
@@ -36,7 +46,7 @@ export class TossPaymentService {
     });
 
     if (!res.ok) {
-      const body = await res.json().catch(() => ({})) as { message?: string };
+      const body = (await res.json().catch(() => ({}))) as { message?: string };
       this.logger.error('Toss 결제 확인 실패', { status: res.status, body });
       throw new BadGatewayException(
         `결제 확인 실패: ${body.message ?? '토스페이먼츠 오류'}`,

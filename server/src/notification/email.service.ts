@@ -26,7 +26,9 @@ export class EmailService {
     this.enabled = !!(host && user && pass);
 
     if (!this.enabled) {
-      this.logger.warn('SMTP 환경변수가 설정되지 않아 이메일 알림이 비활성화됩니다.');
+      this.logger.warn(
+        'SMTP 환경변수가 설정되지 않아 이메일 알림이 비활성화됩니다.',
+      );
     }
 
     this.transporter = nodemailer.createTransport({
@@ -122,17 +124,23 @@ export class EmailService {
 
     try {
       await withRetry(
-        () => this.transporter.sendMail({
-          from: `"강의 플랫폼" <${this.from}>`,
-          to: data.userEmail,
-          subject: `[구매 완료] ${data.courses.length}개 강의가 등록되었습니다`,
-          html,
-        }),
+        () =>
+          this.transporter.sendMail({
+            from: `"강의 플랫폼" <${this.from}>`,
+            to: data.userEmail,
+            subject: `[구매 완료] ${data.courses.length}개 강의가 등록되었습니다`,
+            html,
+          }),
         { maxAttempts: 3, baseDelayMs: 1000 },
       );
-      this.logger.log(`이메일 발송 완료 → ${data.userEmail} (주문: ${data.orderNumber})`);
+      this.logger.log(
+        `이메일 발송 완료 → ${data.userEmail} (주문: ${data.orderNumber})`,
+      );
     } catch (err) {
-      this.logger.error(`이메일 발송 최종 실패 (3회 시도) → ${data.userEmail}`, err);
+      this.logger.error(
+        `이메일 발송 최종 실패 (3회 시도) → ${data.userEmail}`,
+        err,
+      );
     }
   }
 }

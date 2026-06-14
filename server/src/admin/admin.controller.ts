@@ -51,7 +51,12 @@ export class AdminController {
   @ResponseMessage('대시보드 통계 조회에 성공했습니다.')
   @Get('dashboard')
   @ApiOperation({ summary: '전체 통계를 조회합니다.' })
-  @SwaggerResponse(AdminDashboardResponse, false, 200, '대시보드 통계 조회에 성공했습니다.')
+  @SwaggerResponse(
+    AdminDashboardResponse,
+    false,
+    200,
+    '대시보드 통계 조회에 성공했습니다.',
+  )
   getDashboard() {
     return this.adminService.getDashboard();
   }
@@ -61,7 +66,12 @@ export class AdminController {
   @ResponseMessage('사용자 목록 조회에 성공했습니다.')
   @Get('users')
   @ApiOperation({ summary: '전체 사용자 목록을 조회합니다.' })
-  @SwaggerResponse(AdminUserResponse, true, 200, '사용자 목록 조회에 성공했습니다.')
+  @SwaggerResponse(
+    AdminUserResponse,
+    true,
+    200,
+    '사용자 목록 조회에 성공했습니다.',
+  )
   getUsers(@Query() query: AdminUserQueryRequest) {
     return this.adminService.getUsers(query);
   }
@@ -103,7 +113,12 @@ export class AdminController {
   @ResponseMessage('강의 목록 조회에 성공했습니다.')
   @Get('courses')
   @ApiOperation({ summary: '전체 강의 목록을 조회합니다.' })
-  @SwaggerResponse(AdminCourseResponse, true, 200, '강의 목록 조회에 성공했습니다.')
+  @SwaggerResponse(
+    AdminCourseResponse,
+    true,
+    200,
+    '강의 목록 조회에 성공했습니다.',
+  )
   getCourses(@Query() query: AdminCourseQueryRequest) {
     return this.adminService.getCourses(query);
   }
@@ -122,7 +137,12 @@ export class AdminController {
   @ResponseMessage('신고 목록 조회에 성공했습니다.')
   @Get('reports')
   @ApiOperation({ summary: '신고 목록을 조회합니다.' })
-  @SwaggerResponse(AdminReportResponse, true, 200, '신고 목록 조회에 성공했습니다.')
+  @SwaggerResponse(
+    AdminReportResponse,
+    true,
+    200,
+    '신고 목록 조회에 성공했습니다.',
+  )
   getReports(@Query() query: AdminReportQueryRequest) {
     return this.adminService.getReports(query);
   }
