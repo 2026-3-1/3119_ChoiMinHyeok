@@ -18,8 +18,11 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           password: ${{ secrets.EC2_PASSWORD }}
+          command_timeout: 30m
           script: |
+            set -e
             cd ${{ secrets.EC2_PROJECT_PATH }}
-            git pull origin P3
+            git fetch origin P3
+            git reset --hard origin/P3
             docker compose up --build -d
             docker image prune -f

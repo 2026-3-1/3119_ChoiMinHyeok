@@ -157,8 +157,6 @@ export class CommerceController {
     return this.commerceService.prepareTossPayment(data);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('STUDENT')
   @ResponseMessage('결제가 완료되었습니다.')
   @Post('payments/toss/confirm')
   @HttpCode(201)
