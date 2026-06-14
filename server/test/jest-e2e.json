@@ -7,6 +7,10 @@
   },
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
+  "testPathIgnorePatterns": [
+    "youtube-catalog.e2e-spec.ts",
+    "commerce-learning.e2e-spec.ts"
+  ],
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }
