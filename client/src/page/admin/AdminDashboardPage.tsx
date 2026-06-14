@@ -241,7 +241,7 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* 시스템 모니터링 */}
-          {sysData && (
+          {sysData && sysData.memory && (
             <div
               style={{
                 background: "var(--surface-secondary)",
