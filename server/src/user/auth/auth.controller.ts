@@ -9,20 +9,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-
-const REFRESH_COOKIE = 'refresh_token';
-const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
-
-function setRefreshCookie(res: Response, token: string) {
-  const isSecure = process.env.COOKIE_SECURE === 'true';
-  res.cookie(REFRESH_COOKIE, token, {
-    httpOnly: true,
-    secure: isSecure,
-    sameSite: isSecure ? 'strict' : 'lax',
-    maxAge: REFRESH_MAX_AGE_MS,
-    path: '/',
-  });
-}
+import { REFRESH_COOKIE, setRefreshCookie } from './cookie.util';
 
 @ApiTags('auth')
 @Controller('/api/v1/auth')

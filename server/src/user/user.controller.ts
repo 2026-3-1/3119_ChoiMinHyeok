@@ -20,19 +20,7 @@ import { RegisterRequest } from './dto/register.request';
 import { UpdateProfileRequest } from './dto/update-profile.request';
 import { UserProfileResponse } from './dto/user.response';
 import { UserService } from './user.service';
-
-const REFRESH_COOKIE = 'refresh_token';
-const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
-
-function setRefreshCookie(res: Response, token: string) {
-  res.cookie(REFRESH_COOKIE, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-    maxAge: REFRESH_MAX_AGE_MS,
-    path: '/',
-  });
-}
+import { setRefreshCookie } from './auth/cookie.util';
 
 @ApiTags('users')
 @Controller('/api/v1')
