@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCart, prepareTossPayment, removeCartItem } from "../features/shared/api/api";
+import { checkoutCart, getCart, prepareTossPayment, removeCartItem } from "../features/shared/api/api";
 import { useAuth } from "../features/shared/context/AuthContext";
 import { SiteHeader } from "../features/shared/layout/SiteHeader";
 import { SiteFooter } from "../features/shared/layout/SiteFooter";
@@ -39,6 +39,20 @@ export default function CartPage() {
     },
   });
 
+  const freeMutation = useMutation({
+    mutationFn: () => checkoutCart({ userId: user!.id, cartItemIds: checkedItems, provider: "DEMO" }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["my-learning", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["learning-status", user?.id] });
+      navigate("/my-learning");
+    },
+    onError: (err: unknown) => {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setCheckoutError(msg ?? "수강 신청 중 오류가 발생했습니다.");
+    },
+  });
+
   const checkoutMutation = useMutation({
     mutationFn: () => prepareTossPayment({ userId: user!.id, cartItemIds: checkedItems }),
     onSuccess: (prepared) => {
@@ -56,6 +70,15 @@ export default function CartPage() {
       setCheckoutError(msg ?? "결제 준비 중 오류가 발생했습니다.");
     },
   });
+
+  const handleCheckout = () => {
+    setCheckoutError(null);
+    if (selectedTotal === 0) {
+      freeMutation.mutate();
+    } else {
+      checkoutMutation.mutate();
+    }
+  };
 
   const toggleItem = (itemId: number) => {
     setCheckedItems((prev) =>
@@ -136,8 +159,8 @@ export default function CartPage() {
                   selectedCount={selectedItems.length}
                   selectedTotal={selectedTotal}
                   checkoutError={checkoutError}
-                  isCheckingOut={checkoutMutation.isPending}
-                  onCheckout={() => { setCheckoutError(null); checkoutMutation.mutate(); }}
+                  isCheckingOut={checkoutMutation.isPending || freeMutation.isPending}
+                  onCheckout={handleCheckout}
                 />
               </div>
             )}

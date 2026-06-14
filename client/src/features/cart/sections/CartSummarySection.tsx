@@ -44,7 +44,11 @@ export function CartSummarySection({
         disabled={selectedCount === 0 || isCheckingOut}
         onClick={onCheckout}
       >
-        {isCheckingOut ? "결제 처리 중..." : `${formatPrice(selectedTotal)} 결제하기`}
+        {isCheckingOut
+        ? "처리 중..."
+        : selectedTotal === 0
+          ? "무료 수강신청"
+          : `${formatPrice(selectedTotal)} 결제하기`}
       </button>
 
       <p className="cart-summary-panel__notice">
