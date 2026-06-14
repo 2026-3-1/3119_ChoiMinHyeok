@@ -5,6 +5,7 @@ import type {
   AdminReport,
   AdminUser,
   ApiResponse,
+  SystemHealth,
   CartSummary,
   Category,
   CancellationReason,
@@ -76,9 +77,14 @@ export const refreshAccessToken = async (): Promise<string | null> => {
     const token = res.data.data.accessToken;
     setAccessToken(token);
     return token;
-  } catch {
+  } catch (err) {
     setAccessToken(null);
-    return null;
+    // 401 = refresh token expired/invalid → caller should logout
+    // anything else (network, 5xx) → caller should NOT logout
+    if (axios.isAxiosError(err) && err.response?.status === 401) {
+      return null;
+    }
+    throw err;
   }
 };
 
@@ -119,13 +125,18 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       _isRefreshing = true;
 
-      const newToken = await refreshAccessToken();
-      _isRefreshing = false;
-      notifyRefreshSubscribers(newToken);
+      try {
+        const newToken = await refreshAccessToken();
+        _isRefreshing = false;
+        notifyRefreshSubscribers(newToken);
 
-      if (newToken) {
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return api(originalRequest);
+        if (newToken) {
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return api(originalRequest);
+        }
+      } catch {
+        _isRefreshing = false;
+        notifyRefreshSubscribers(null);
       }
     }
 
@@ -794,3 +805,8 @@ export const resolveAdminReport = async (
   unwrapResponse(
     api.patch<ApiResponse<void>>(`/api/v1/admin/reports/${reportId}`, { isResolved })
   );
+
+export const getSystemHealth = async (): Promise<SystemHealth> => {
+  const res = await api.get<SystemHealth>("/health/system");
+  return res.data;
+};

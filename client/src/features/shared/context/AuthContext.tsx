@@ -41,12 +41,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    refreshAccessToken().then((token) => {
-      if (!token) {
-        setUserState(null);
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    }).finally(() => setAuthReady(true));
+    refreshAccessToken()
+      .then((token) => {
+        // null = 401, refresh token is definitively invalid → logout
+        if (token === null) {
+          setUserState(null);
+          localStorage.removeItem(STORAGE_KEY);
+        }
+        // string = success, keep user logged in with new access token
+      })
+      .catch(() => {
+        // network/server error → keep user logged in (don't auto-logout on transient errors)
+        // protected API calls will retry refresh via the interceptor
+      })
+      .finally(() => setAuthReady(true));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

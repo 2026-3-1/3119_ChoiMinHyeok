@@ -9,6 +9,7 @@
     "build": "nest build",
     "db:clear:youtube-test": "npm run build && node dist/prisma/youtube-test-clear.js",
     "db:seed:youtube-test": "npm run build && node dist/prisma/youtube-test-seed.js",
+    "db:seed:admin": "ts-node -r tsconfig-paths/register prisma/seed.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

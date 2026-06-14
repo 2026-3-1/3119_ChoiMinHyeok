@@ -317,6 +317,22 @@ export interface InstructorLecture {
 
 /* ─── Admin ─────────────────────────────────────────────────────── */
 
+export interface AdminDashboardRecentOrder {
+  id: number;
+  amount: number;
+  userName: string;
+  userEmail: string;
+  createdAt: string;
+}
+
+export interface AdminDashboardRecentSignup {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+}
+
 export interface AdminDashboard {
   totalUsers: number;
   totalCourses: number;
@@ -325,6 +341,19 @@ export interface AdminDashboard {
   totalRevenue: number;
   newUsersToday: number;
   monthlyRevenue: number;
+  courseStatusBreakdown: { open: number; draft: number; canceled: number };
+  recentOrders: AdminDashboardRecentOrder[];
+  recentSignups: AdminDashboardRecentSignup[];
+}
+
+export interface SystemHealth {
+  status: string;
+  uptime: number;
+  nodeVersion: string;
+  platform: string;
+  memory: { rss: number; heapUsed: number; heapTotal: number; external: number };
+  environment: string;
+  timestamp: string;
 }
 
 export interface AdminUser {

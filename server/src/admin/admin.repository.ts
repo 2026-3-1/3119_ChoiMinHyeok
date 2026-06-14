@@ -5,6 +5,7 @@ import {
   ReportType,
   EnrollmentStatus,
   OrderStatus,
+  CourseLifecycleStatus,
 } from '../../prisma/generated/prisma/enums';
 import prisma from '../../prisma/prisma.client';
 
@@ -27,6 +28,11 @@ export class AdminRepository {
       revenueAgg,
       newUsersToday,
       monthlyRevenueAgg,
+      openCourses,
+      draftCourses,
+      canceledCourses,
+      recentOrders,
+      recentSignups,
     ] = await Promise.all([
       prisma.users.count(),
       prisma.courses.count(),
@@ -46,6 +52,25 @@ export class AdminRepository {
           created_at: { gte: monthStart },
         },
       }),
+      prisma.courses.count({ where: { status: CourseLifecycleStatus.OPEN } }),
+      prisma.courses.count({ where: { status: CourseLifecycleStatus.DRAFT } }),
+      prisma.courses.count({ where: { status: CourseLifecycleStatus.CANCELED } }),
+      prisma.orders.findMany({
+        where: { status: { in: [OrderStatus.PAID, OrderStatus.PARTIALLY_REFUNDED] } },
+        select: {
+          id: true,
+          paid_amount: true,
+          created_at: true,
+          users: { select: { name: true, email: true } },
+        },
+        orderBy: { created_at: 'desc' },
+        take: 5,
+      }),
+      prisma.users.findMany({
+        select: { id: true, name: true, email: true, role: true, created_at: true },
+        orderBy: { created_at: 'desc' },
+        take: 5,
+      }),
     ]);
 
     return {
@@ -56,6 +81,21 @@ export class AdminRepository {
       totalRevenue: revenueAgg._sum.paid_amount ?? 0,
       newUsersToday,
       monthlyRevenue: monthlyRevenueAgg._sum.paid_amount ?? 0,
+      courseStatusBreakdown: { open: openCourses, draft: draftCourses, canceled: canceledCourses },
+      recentOrders: recentOrders.map((o) => ({
+        id: o.id,
+        amount: o.paid_amount,
+        userName: o.users?.name ?? '알 수 없음',
+        userEmail: o.users?.email ?? '',
+        createdAt: o.created_at,
+      })),
+      recentSignups: recentSignups.map((u) => ({
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        role: u.role,
+        createdAt: u.created_at,
+      })),
     };
   }
 

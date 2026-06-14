@@ -1,5 +1,27 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
+export class CourseStatusBreakdown {
+  @ApiProperty({ example: 30 }) open!: number;
+  @ApiProperty({ example: 5 }) draft!: number;
+  @ApiProperty({ example: 2 }) canceled!: number;
+}
+
+export class RecentOrderItem {
+  @ApiProperty({ example: 42 }) id!: number;
+  @ApiProperty({ example: 29000 }) amount!: number;
+  @ApiProperty({ example: '홍길동' }) userName!: string;
+  @ApiProperty({ example: 'hong@example.com' }) userEmail!: string;
+  @ApiProperty() createdAt!: Date;
+}
+
+export class RecentSignupItem {
+  @ApiProperty({ example: 5 }) id!: number;
+  @ApiProperty({ example: '김철수' }) name!: string;
+  @ApiProperty({ example: 'kim@example.com' }) email!: string;
+  @ApiProperty({ example: 'STUDENT' }) role!: string;
+  @ApiProperty() createdAt!: Date;
+}
+
 export class AdminDashboardResponse {
   @ApiProperty({ example: 320 })
   totalUsers!: number;
@@ -15,6 +37,21 @@ export class AdminDashboardResponse {
 
   @ApiProperty({ example: 4500000 })
   totalRevenue!: number;
+
+  @ApiProperty({ example: 450000 })
+  monthlyRevenue!: number;
+
+  @ApiProperty({ example: 3 })
+  newUsersToday!: number;
+
+  @ApiProperty({ type: CourseStatusBreakdown })
+  courseStatusBreakdown!: CourseStatusBreakdown;
+
+  @ApiProperty({ type: [RecentOrderItem] })
+  recentOrders!: RecentOrderItem[];
+
+  @ApiProperty({ type: [RecentSignupItem] })
+  recentSignups!: RecentSignupItem[];
 }
 
 export class AdminUserResponse {
