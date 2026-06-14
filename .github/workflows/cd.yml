@@ -20,6 +20,6 @@ jobs:
           password: ${{ secrets.EC2_PASSWORD }}
           script: |
             cd ${{ secrets.EC2_PROJECT_PATH }}
-            git pull origin main
+            git pull origin P3
             docker compose up --build -d
             docker image prune -f
