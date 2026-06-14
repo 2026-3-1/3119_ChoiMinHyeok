@@ -806,7 +806,5 @@ export const resolveAdminReport = async (
     api.patch<ApiResponse<void>>(`/api/v1/admin/reports/${reportId}`, { isResolved })
   );
 
-export const getSystemHealth = async (): Promise<SystemHealth> => {
-  const res = await api.get<SystemHealth>("/health/system");
-  return res.data;
-};
+export const getSystemHealth = async (): Promise<SystemHealth> =>
+  unwrapResponse(api.get<ApiResponse<SystemHealth>>("/health/system"));
