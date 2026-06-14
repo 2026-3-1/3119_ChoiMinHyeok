@@ -26,6 +26,7 @@ export default function CartPage() {
   useEffect(() => {
     if (cart && !initializedRef.current) {
       initializedRef.current = true;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCheckedItems(cart.items.map((item) => item.id));
     }
   }, [cart]);

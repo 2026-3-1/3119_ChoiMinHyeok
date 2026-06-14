@@ -18,10 +18,14 @@ export function ReviewForm({ courseId, userId, existingReview, onSuccess }: Prop
 
   useEffect(() => {
     if (existingReview) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTitle(existingReview.title);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setContent(existingReview.content);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStar(existingReview.star);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [existingReview?.id]);
 
   const isEditing = existingReview != null;

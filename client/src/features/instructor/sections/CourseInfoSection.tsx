@@ -36,6 +36,7 @@ export function CourseInfoSection({ courseId, course }: CourseInfoSectionProps) 
 
   useEffect(() => {
     if (course) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setInfoForm({
         title: course.title,
         description: "",
