@@ -14,10 +14,11 @@ const REFRESH_COOKIE = 'refresh_token';
 const REFRESH_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 function setRefreshCookie(res: Response, token: string) {
+  const isSecure = process.env.COOKIE_SECURE === 'true';
   res.cookie(REFRESH_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: isSecure,
+    sameSite: isSecure ? 'strict' : 'lax',
     maxAge: REFRESH_MAX_AGE_MS,
     path: '/',
   });
