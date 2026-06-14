@@ -28,6 +28,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
       const res = exception.getResponse();
+      const isProd = process.env.NODE_ENV === 'production';
 
       if (status >= 500) {
         this.log.error(exception.message, exception.stack);
@@ -38,8 +39,13 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         );
       }
 
+      const body =
+        typeof res === 'string'
+          ? { message: isProd && status >= 500 ? '서버 오류가 발생했습니다.' : res }
+          : { ...res, ...(isProd && status >= 500 ? { message: '서버 오류가 발생했습니다.' } : {}) };
+
       return response.status(status).json({
-        ...(typeof res === 'string' ? { message: res } : res),
+        ...body,
         timestamp: new Date().toISOString(),
         path: request.url,
         method: request.method,

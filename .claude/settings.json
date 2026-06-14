@@ -8,7 +8,11 @@
       "Bash(mkdir -p \"d:/pr0j3ct/pr0j3t/.github/workflows\")",
       "Bash(npx jest *)",
       "Bash(Get-ChildItem -Path \"d:\\\\pr0j3ct\\\\pr0j3t\\\\client\\\\src\" -Recurse -File)",
-      "Bash(Select-Object -First 50)"
+      "Bash(Select-Object -First 50)",
+      "Bash(ls -la *.md)",
+      "Bash(ls .github/)",
+      "Bash(ls docs/)",
+      "Bash(npm test *)"
     ],
     "additionalDirectories": [
       "d:\\pr0j3ct\\pr0j3t\\sec101",

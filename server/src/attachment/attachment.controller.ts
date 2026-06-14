@@ -29,6 +29,31 @@ import { AttachmentService } from './attachment.service';
 
 const FILE_SIZE_LIMIT = 50 * 1024 * 1024; // 50 MB
 
+const ALLOWED_MIME_TYPES = new Set([
+  'application/pdf',
+  'application/zip',
+  'application/x-zip-compressed',
+  'text/plain',
+  'image/png',
+  'image/jpeg',
+  'image/gif',
+  'image/webp',
+  'video/mp4',
+  'audio/mpeg',
+]);
+
+function mimeFilter(
+  _req: Express.Request,
+  file: Express.Multer.File,
+  cb: (err: Error | null, accept: boolean) => void,
+) {
+  if (ALLOWED_MIME_TYPES.has(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error(`허용되지 않는 파일 형식입니다: ${file.mimetype}`), false);
+  }
+}
+
 @ApiTags('attachments')
 @Controller('/api/v1')
 export class AttachmentController {
@@ -47,6 +72,7 @@ export class AttachmentController {
     FileInterceptor('file', {
       storage: memoryStorage(),
       limits: { fileSize: FILE_SIZE_LIMIT },
+      fileFilter: mimeFilter,
     }),
   )
   @ResponseMessage('파일이 업로드되었습니다.')

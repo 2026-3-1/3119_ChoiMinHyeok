@@ -395,7 +395,6 @@ export default function LecturePage() {
       const elapsedSeconds = (now - intervalStartTimeRef.current) / 1000;
       intervalStartTimeRef.current = now;
 
-      console.log("elapsed:", elapsedSeconds, "watchedSeconds:", watchedSecondsRef.current);
       watchedSecondsRef.current += elapsedSeconds;
 
       saveProgress("PROGRESS");
@@ -530,11 +529,9 @@ export default function LecturePage() {
     isPlayingRef.current = playing;
     intervalStartTimeRef.current = Date.now();
     if (!playing) {
-      console.log("일시정지 시점 watchedSeconds:", watchedSecondsRef.current);
       saveProgressRef.current("PROGRESS");
-    } else {
-      console.log("재생 시작");
     }
+
   }, []);
 
   const handleLectureEnd = useCallback(() => {

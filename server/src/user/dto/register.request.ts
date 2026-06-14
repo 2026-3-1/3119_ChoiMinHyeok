@@ -5,6 +5,7 @@ import {
   IsIn,
   IsOptional,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -30,6 +31,9 @@ export class RegisterRequest {
   @IsString()
   @MinLength(8)
   @MaxLength(100)
+  @Matches(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/, {
+    message: '비밀번호는 영문자와 숫자를 포함해야 합니다.',
+  })
   @ApiProperty({ example: 'password123!' })
   password!: string;
 

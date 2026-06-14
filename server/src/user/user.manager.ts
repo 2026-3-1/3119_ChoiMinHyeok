@@ -7,7 +7,7 @@ export class UserManager {
   constructor(private readonly userRepository: UserRepository) {}
 
   async hashPassword(password: string) {
-    return bcrypt.hash(password, 10);
+    return bcrypt.hash(password, 12);
   }
 
   async comparePassword(password: string, passwordHash: string) {

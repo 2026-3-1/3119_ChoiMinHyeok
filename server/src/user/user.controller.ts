@@ -10,6 +10,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { ResponseMessage } from '../global/global_decorator/decorator.message';
@@ -27,6 +28,7 @@ import { setRefreshCookie } from './auth/cookie.util';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Throttle({ default: { ttl: 900_000, limit: 20 } })
   @ResponseMessage('회원가입이 완료되었습니다.')
   @Post('auth/register')
   @HttpCode(201)
@@ -50,6 +52,7 @@ export class UserController {
     return { user, accessToken };
   }
 
+  @Throttle({ default: { ttl: 900_000, limit: 20 } })
   @ResponseMessage('로그인이 완료되었습니다.')
   @Post('auth/login')
   @HttpCode(200)
