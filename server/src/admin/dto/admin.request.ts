@@ -118,3 +118,9 @@ export class ChangeRoleRequest {
   @ApiProperty({ enum: Roles, enumName: 'Roles', example: 'STUDENT' })
   role!: Roles;
 }
+
+export class AdminCourseStatusRequest {
+  @IsString()
+  @ApiProperty({ example: 'OPEN', description: 'OPEN | DRAFT | CLOSED' })
+  status!: string;
+}

@@ -81,6 +81,10 @@ export class AdminService {
     };
   }
 
+  async setCourseStatus(courseId: number, status: string) {
+    await this.adminRepository.setCourseStatus(courseId, status);
+  }
+
   async deleteCourse(courseId: number) {
     await this.adminRepository.deleteCourse(courseId);
   }

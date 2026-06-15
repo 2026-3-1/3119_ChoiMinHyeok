@@ -212,6 +212,15 @@ export class AdminRepository {
     return { data, total };
   }
 
+  async setCourseStatus(courseId: number, status: string) {
+    const course = await prisma.courses.findUnique({ where: { id: courseId } });
+    if (!course) throw new NotFoundException('강의를 찾을 수 없습니다.');
+    return prisma.courses.update({
+      where: { id: courseId },
+      data: { status: status as any },
+    });
+  }
+
   async deleteCourse(courseId: number) {
     const course = await prisma.courses.findUnique({ where: { id: courseId } });
     if (!course) throw new NotFoundException('강의를 찾을 수 없습니다.');

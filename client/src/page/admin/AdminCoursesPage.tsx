@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { deleteAdminCourse, getAdminCourses } from "../../features/shared/api/api";
+import { deleteAdminCourse, getAdminCourses, setAdminCourseStatus } from "../../features/shared/api/api";
 
 const difficultyLabel: Record<string, string> = { EASY: "입문", MEDIUM: "중급", HARD: "고급" };
 const statusLabel: Record<string, string> = { OPEN: "공개", CLOSED: "비공개", DRAFT: "초안" };
@@ -21,6 +21,12 @@ export default function AdminCoursesPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["admin-courses", search, status, page],
     queryFn: () => getAdminCourses({ search: search || undefined, status: status || undefined, page, limit }),
+  });
+
+  const statusMutation = useMutation({
+    mutationFn: ({ courseId, status }: { courseId: number; status: string }) =>
+      setAdminCourseStatus(courseId, status),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-courses"] }),
   });
 
   const deleteMutation = useMutation({
@@ -94,9 +100,31 @@ export default function AdminCoursesPage() {
                     <td>{difficultyLabel[c.difficulty] ?? c.difficulty}</td>
                     <td>{formatPrice(c.price)}</td>
                     <td>
-                      <span className={`badge badge--${c.status === "OPEN" ? "success" : "neutral"}`}>
-                        {statusLabel[c.status] ?? c.status}
-                      </span>
+                      <select
+                        className="auth-form__input"
+                        style={{
+                          fontSize: 12,
+                          padding: "3px 8px",
+                          minHeight: 28,
+                          width: "auto",
+                          color:
+                            c.status === "OPEN"
+                              ? "var(--success, #22c55e)"
+                              : c.status === "DRAFT"
+                              ? "var(--text-muted)"
+                              : "var(--error, #ef4444)",
+                        }}
+                        value={c.status}
+                        disabled={statusMutation.isPending}
+                        onChange={(e) => {
+                          if (e.target.value !== c.status)
+                            statusMutation.mutate({ courseId: c.id, status: e.target.value });
+                        }}
+                      >
+                        <option value="OPEN">공개</option>
+                        <option value="DRAFT">초안</option>
+                        <option value="CLOSED">비공개</option>
+                      </select>
                     </td>
                     <td style={{ fontSize: 13, color: "var(--text-muted)" }}>
                       {new Date(c.createdAt).toLocaleDateString("ko-KR")}

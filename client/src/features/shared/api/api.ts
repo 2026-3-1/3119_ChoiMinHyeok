@@ -790,6 +790,9 @@ export const getAdminCourses = async (
 export const deleteAdminCourse = async (courseId: number): Promise<void> =>
   unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/admin/courses/${courseId}`));
 
+export const setAdminCourseStatus = async (courseId: number, status: string): Promise<void> =>
+  unwrapResponse(api.patch<ApiResponse<void>>(`/api/v1/admin/courses/${courseId}/status`, { status }));
+
 export interface AdminReportsParams {
   isResolved?: boolean;
   type?: string;

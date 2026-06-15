@@ -26,6 +26,7 @@ import { Roles } from '../global/global_decorator/decorator.roles';
 import { AdminService } from './admin.service';
 import {
   AdminCourseQueryRequest,
+  AdminCourseStatusRequest,
   AdminReportQueryRequest,
   AdminUserQueryRequest,
   ChangeRoleRequest,
@@ -121,6 +122,19 @@ export class AdminController {
   )
   getCourses(@Query() query: AdminCourseQueryRequest) {
     return this.adminService.getCourses(query);
+  }
+
+  @ResponseMessage('강의 상태가 변경되었습니다.')
+  @Patch('courses/:courseId/status')
+  @ApiOperation({ summary: '강의 상태를 변경합니다.' })
+  @ApiParam({ name: 'courseId', type: Number })
+  @ApiBody({ type: AdminCourseStatusRequest })
+  @SwaggerResponse(null, false, 200, '강의 상태가 변경되었습니다.')
+  setCourseStatus(
+    @Param('courseId', ParseIntPipe) courseId: number,
+    @Body() data: AdminCourseStatusRequest,
+  ) {
+    return this.adminService.setCourseStatus(courseId, data.status);
   }
 
   @ResponseMessage('강의가 삭제되었습니다.')
