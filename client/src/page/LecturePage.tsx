@@ -40,7 +40,7 @@ function CommentSection({
   const queryClient = useQueryClient();
   const [text, setText] = useState("");
 
-  const { data: comments = [], isLoading } = useQuery({
+  const { data: comments = [], isLoading, isError } = useQuery({
     queryKey: ["lecture-comments", lectureId],
     queryFn: () => getLectureComments(lectureId),
     enabled: Number.isFinite(lectureId),
@@ -103,6 +103,8 @@ function CommentSection({
 
       {isLoading ? (
         <p style={{ color: "var(--text-muted)", fontSize: 13 }}>댓글 불러오는 중...</p>
+      ) : isError ? (
+        <p style={{ color: "var(--text-muted)", fontSize: 13 }}>댓글을 불러오지 못했습니다.</p>
       ) : comments.length === 0 ? (
         <p style={{ color: "var(--text-muted)", fontSize: 13 }}>아직 댓글이 없습니다.</p>
       ) : (

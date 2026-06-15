@@ -3,12 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addToCart,
+  cancelOrder,
   createReport,
   getCart,
   getChapters,
   getCourseLearningStatus,
   getCourseDetail,
   getLectures,
+  getOrders,
 } from "../features/shared/api/api";
 import { useCategories } from "../features/shared/hooks/useCourseList";
 import { useAuth } from "../features/shared/context/AuthContext";
@@ -44,6 +46,8 @@ export default function CourseDetailPage() {
   const [reportContent, setReportContent] = useState("");
   const [reportDone, setReportDone] = useState(false);
 
+  const [showRefundModal, setShowRefundModal] = useState(false);
+
   const { data: categories = [] } = useCategories();
 
   const courseQuery = useQuery({
@@ -77,6 +81,34 @@ export default function CourseDetailPage() {
     queryFn: () => getCart(user!.id),
     enabled: isLoggedIn && !!user && !isInstructor,
     staleTime: 1000 * 30,
+  });
+
+  const ordersQuery = useQuery({
+    queryKey: ["orders", user?.id],
+    queryFn: () => getOrders(user!.id),
+    enabled: isLoggedIn && !!user && (learningStatusQuery.data?.isEnrolled ?? false),
+    staleTime: 1000 * 30,
+  });
+
+  const refundableOrder = ordersQuery.data?.find((order) =>
+    order.items.some((item) => item.course.id === numericCourseId && item.status === "ENROLLED")
+  );
+  const refundableItem = refundableOrder?.items.find(
+    (item) => item.course.id === numericCourseId && item.status === "ENROLLED"
+  );
+
+  const refundMutation = useMutation({
+    mutationFn: () =>
+      cancelOrder(refundableOrder!.id, {
+        userId: user!.id,
+        orderItemIds: [refundableItem!.id],
+        reason: "USER_REQUEST",
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["learning-status", user?.id, numericCourseId] });
+      queryClient.invalidateQueries({ queryKey: ["orders", user?.id] });
+      setShowRefundModal(false);
+    },
   });
 
   const addToCartMutation = useMutation({
@@ -222,6 +254,19 @@ export default function CourseDetailPage() {
                 </div>
               )}
 
+              {isEnrolled && refundableItem && (
+                <div style={{ marginTop: 14 }}>
+                  <button
+                    type="button"
+                    className="button button--ghost"
+                    style={{ width: "100%", fontSize: "0.82rem", color: "var(--error, #ef4444)", opacity: 0.8 }}
+                    onClick={() => setShowRefundModal(true)}
+                  >
+                    환불 요청
+                  </button>
+                </div>
+              )}
+
               {isLoggedIn && !isOwnCourse && (
                 <div style={{ marginTop: 14 }}>
                   <button
@@ -240,6 +285,91 @@ export default function CourseDetailPage() {
       </main>
 
       <SiteFooter />
+
+      {showRefundModal && (
+        <div
+          style={{
+            position: "fixed", inset: 0, zIndex: 1000,
+            background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "16px",
+          }}
+          onClick={() => setShowRefundModal(false)}
+        >
+          <div
+            style={{
+              background: "var(--surface-primary, #18181b)",
+              border: "1px solid var(--border-subtle)",
+              borderRadius: 20,
+              width: "100%", maxWidth: 420,
+              boxShadow: "0 24px 64px rgba(0,0,0,0.5)",
+              overflow: "hidden",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 24px 0" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 18, background: "rgba(239,68,68,0.12)", color: "#ef4444", borderRadius: 8, padding: "6px 8px" }}>
+                  ↩
+                </span>
+                <span style={{ fontWeight: 700, fontSize: 16 }}>환불 요청</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowRefundModal(false)}
+                style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-muted)", fontSize: 20, padding: "4px 6px", borderRadius: 6 }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ height: 1, background: "var(--border-subtle)", margin: "16px 0 0" }} />
+
+            {refundMutation.isSuccess ? (
+              <div style={{ padding: "40px 24px 28px", textAlign: "center" }}>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(34,197,94,0.12)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 26 }}>
+                  ✓
+                </div>
+                <p style={{ fontWeight: 700, fontSize: "1.05rem", marginBottom: 6 }}>환불이 요청되었습니다</p>
+                <p style={{ color: "var(--text-muted)", fontSize: "0.875rem", lineHeight: 1.5 }}>
+                  처리까지 영업일 기준 3~5일이 소요될 수 있습니다.
+                </p>
+                <button type="button" className="button button--primary" style={{ marginTop: 24, width: "100%" }} onClick={() => setShowRefundModal(false)}>
+                  확인
+                </button>
+              </div>
+            ) : (
+              <div style={{ padding: "20px 24px 24px" }}>
+                <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--text-muted)", marginBottom: 20 }}>
+                  <strong style={{ color: "var(--text-primary)" }}>{course?.title}</strong> 강의를 환불하시겠습니까?<br />
+                  환불 후에는 강의에 접근할 수 없습니다.
+                </p>
+
+                {refundMutation.isError && (
+                  <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 8, padding: "10px 14px", marginBottom: 14 }}>
+                    <p style={{ color: "#ef4444", fontSize: 13 }}>환불 처리 중 오류가 발생했습니다. 다시 시도해주세요.</p>
+                  </div>
+                )}
+
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button type="button" className="button button--ghost" style={{ flex: 1 }} onClick={() => setShowRefundModal(false)}>
+                    취소
+                  </button>
+                  <button
+                    type="button"
+                    className="button button--primary"
+                    style={{ flex: 2, background: "var(--error, #ef4444)", borderColor: "var(--error, #ef4444)" }}
+                    disabled={refundMutation.isPending}
+                    onClick={() => refundMutation.mutate()}
+                  >
+                    {refundMutation.isPending ? "처리 중..." : "환불 확인"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {showReportModal && (
         <div

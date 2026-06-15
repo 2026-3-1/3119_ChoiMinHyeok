@@ -23,7 +23,7 @@ export function CourseReviewsSection({
 }: Props) {
   const queryClient = useQueryClient();
 
-  const { data: reviews = [] } = useQuery({
+  const { data: reviews = [], isError: reviewsError } = useQuery({
     queryKey: ["reviews", courseId],
     queryFn: () => getCourseReviews(courseId),
     enabled: Number.isFinite(courseId),
@@ -46,7 +46,12 @@ export function CourseReviewsSection({
         <span className="section-copy">{reviews.length}개의 리뷰</span>
       </div>
 
-      {reviews.length === 0 ? (
+      {reviewsError ? (
+        <div className="empty-state" style={{ marginTop: 0 }}>
+          <strong>리뷰를 불러오지 못했습니다</strong>
+          <p>잠시 후 다시 시도해주세요.</p>
+        </div>
+      ) : reviews.length === 0 ? (
         <div className="empty-state" style={{ marginTop: 0 }}>
           <strong>아직 리뷰가 없습니다</strong>
           <p>이 강의를 80% 이상 수료하면 리뷰를 남길 수 있어요.</p>

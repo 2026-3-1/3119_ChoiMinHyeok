@@ -21,6 +21,10 @@ export class CategoryRepository {
     return prisma.categories.update({ where: { id }, data: { name } });
   }
 
+  async countCoursesByCategory(id: number) {
+    return prisma.courses.count({ where: { category_id: id } });
+  }
+
   async delete(id: number) {
     return prisma.categories.delete({ where: { id } });
   }

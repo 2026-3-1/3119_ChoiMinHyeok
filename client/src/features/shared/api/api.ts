@@ -23,6 +23,7 @@ import type {
   LectureAttachment,
   LectureBookmark,
   LectureComment,
+  MyBookmark,
   LectureDetail,
   LecturePlaybackEventType,
   LectureProgress,
@@ -441,6 +442,11 @@ export const updateLectureProgress = async (
 ): Promise<LectureProgress> =>
   unwrapResponse(
     api.put<ApiResponse<LectureProgress>>(`/api/v1/lectures/${lectureId}/progress`, payload)
+  );
+
+export const getMyBookmarks = async (userId: number): Promise<MyBookmark[]> =>
+  unwrapResponse(
+    api.get<ApiResponse<MyBookmark[]>>(`/api/v1/bookmarks`, { params: { userId } })
   );
 
 export const getLectureBookmarks = async (

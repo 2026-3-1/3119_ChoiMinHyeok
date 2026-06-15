@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import {
   createCategory,
   deleteCategory,
@@ -13,6 +14,7 @@ export default function AdminCategoriesPage() {
   const [newName, setNewName] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingName, setEditingName] = useState("");
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
@@ -37,7 +39,14 @@ export default function AdminCategoriesPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteCategory(id),
+    onMutate: () => setDeleteError(null),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["categories"] }),
+    onError: (err) => {
+      const message = axios.isAxiosError(err)
+        ? (err.response?.data?.message ?? "삭제에 실패했습니다.")
+        : "삭제에 실패했습니다.";
+      setDeleteError(message);
+    },
   });
 
   const startEdit = (cat: Category) => {
@@ -176,6 +185,31 @@ export default function AdminCategoriesPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {deleteError && (
+        <div
+          style={{
+            marginTop: 16,
+            background: "rgba(239,68,68,0.08)",
+            border: "1px solid rgba(239,68,68,0.25)",
+            borderRadius: 8,
+            padding: "10px 14px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+          }}
+        >
+          <p style={{ color: "#ef4444", fontSize: 13 }}>{deleteError}</p>
+          <button
+            type="button"
+            onClick={() => setDeleteError(null)}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: 16, lineHeight: 1, padding: "2px 4px" }}
+          >
+            ✕
+          </button>
         </div>
       )}
     </div>

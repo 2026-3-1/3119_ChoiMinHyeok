@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CategoryRepository } from './category.repository';
 import { createCategory, updateCategory } from './dto/category.request';
 
@@ -49,6 +49,13 @@ export class CategoryService {
   async deleteCategory(categoryId: number) {
     const category = await this.categoryRepository.findById(categoryId);
     if (!category) throw new NotFoundException('카테고리를 찾을 수 없습니다.');
+
+    const courseCount = await this.categoryRepository.countCoursesByCategory(categoryId);
+    if (courseCount > 0) {
+      throw new BadRequestException(
+        `해당 카테고리에 강의가 ${courseCount}개 있어 삭제할 수 없습니다. 강의를 먼저 이동하거나 삭제해주세요.`,
+      );
+    }
 
     await this.categoryRepository.delete(categoryId);
   }

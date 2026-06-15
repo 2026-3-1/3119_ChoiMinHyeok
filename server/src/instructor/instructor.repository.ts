@@ -77,6 +77,11 @@ export class InstructorRepository {
     });
   }
 
+  async hasOrderItems(courseId: number): Promise<boolean> {
+    const count = await prisma.order_items.count({ where: { course_id: courseId } });
+    return count > 0;
+  }
+
   async deleteCourse(courseId: number) {
     return prisma.courses.delete({ where: { id: courseId } });
   }

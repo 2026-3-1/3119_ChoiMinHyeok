@@ -8,7 +8,7 @@ export function MyLearningSection() {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useAuth();
 
-  const { data: courses = [], isLoading } = useQuery({
+  const { data: courses = [], isLoading, isError } = useQuery({
     queryKey: ["my-learning", user?.id],
     queryFn: () => getMyLearning(user!.id),
     enabled: isLoggedIn && !!user,
@@ -36,6 +36,14 @@ export function MyLearningSection() {
               </div>
             </div>
           ))}
+        </div>
+      ) : isError ? (
+        <div className="empty-state">
+          <strong>학습 목록을 불러오지 못했습니다</strong>
+          <p>잠시 후 다시 시도해주세요.</p>
+          <button className="button button--primary" onClick={() => window.location.reload()}>
+            새로고침
+          </button>
         </div>
       ) : courses.length === 0 ? (
         <div className="empty-state">

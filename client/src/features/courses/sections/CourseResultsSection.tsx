@@ -5,6 +5,7 @@ import type { CourseCardItem } from "../../shared/types";
 type CourseResultsSectionProps = {
   courses: CourseCardItem[];
   isLoading: boolean;
+  isError: boolean;
   page: number;
   totalPages: number;
   onCourseClick: (courseId: number) => void;
@@ -15,6 +16,7 @@ type CourseResultsSectionProps = {
 export function CourseResultsSection({
   courses,
   isLoading,
+  isError,
   page,
   totalPages,
   onCourseClick,
@@ -34,19 +36,26 @@ export function CourseResultsSection({
           </p>
         </div>
 
-        <div className="course-grid">
-          {isLoading
-            ? Array.from({ length: 12 }, (_, index) => <CourseCardSkeleton key={index} />)
-            : courses.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  course={course}
-                  onClick={onCourseClick}
-                />
-              ))}
-        </div>
+        {isError ? (
+          <div className="empty-state">
+            <strong>강의 목록을 불러오지 못했습니다</strong>
+            <p>잠시 후 다시 시도해주세요.</p>
+          </div>
+        ) : (
+          <div className="course-grid">
+            {isLoading
+              ? Array.from({ length: 12 }, (_, index) => <CourseCardSkeleton key={index} />)
+              : courses.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                    onClick={onCourseClick}
+                  />
+                ))}
+          </div>
+        )}
 
-        {!isLoading && courses.length === 0 ? (
+        {!isLoading && !isError && courses.length === 0 ? (
           <div className="empty-state">
             <strong>조건에 맞는 강의가 없습니다.</strong>
             <p>검색어를 바꾸거나 카테고리 필터를 해제해서 다시 확인해 보세요.</p>

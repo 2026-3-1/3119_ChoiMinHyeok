@@ -248,6 +248,17 @@ export interface LectureBookmark {
   created_at: string;
 }
 
+export interface MyBookmark {
+  id: number;
+  position: number;
+  note: string | null;
+  createdAt: string;
+  lectureId: number;
+  lectureTitle: string;
+  courseId: number;
+  courseTitle: string;
+}
+
 export interface LectureAttachment {
   id: number;
   filename: string;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { deleteInstructorCourse, getInstructorCourses, setInstructorCourseStatus } from "../../features/shared/api/api";
 import { useAuth } from "../../features/shared/context/AuthContext";
 import { SiteHeader } from "../../features/shared/layout/SiteHeader";
@@ -18,8 +19,9 @@ export default function InstructorCoursesPage() {
   const { user, isLoggedIn, isInstructor } = useAuth();
   const queryClient = useQueryClient();
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  const { data: courses = [], isLoading } = useQuery({
+  const { data: courses = [], isLoading, isError } = useQuery({
     queryKey: ["instructor-courses"],
     queryFn: getInstructorCourses,
     enabled: isLoggedIn && isInstructor,
@@ -27,8 +29,16 @@ export default function InstructorCoursesPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (courseId: number) => deleteInstructorCourse(courseId),
+    onMutate: () => setDeleteError(null),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["instructor-courses"] });
+      setConfirmDelete(null);
+    },
+    onError: (err) => {
+      const message = axios.isAxiosError(err)
+        ? (err.response?.data?.message ?? "삭제에 실패했습니다.")
+        : "삭제에 실패했습니다.";
+      setDeleteError(message);
       setConfirmDelete(null);
     },
   });
@@ -82,6 +92,11 @@ export default function InstructorCoursesPage() {
             {isLoading ? (
               <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
                 로딩 중...
+              </div>
+            ) : isError ? (
+              <div className="empty-state">
+                <strong>강의 목록을 불러오지 못했습니다</strong>
+                <p>잠시 후 다시 시도해주세요.</p>
               </div>
             ) : courses.length === 0 ? (
               <div className="empty-state">
@@ -189,6 +204,31 @@ export default function InstructorCoursesPage() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {deleteError && (
+              <div
+                style={{
+                  marginTop: 16,
+                  background: "rgba(239,68,68,0.08)",
+                  border: "1px solid rgba(239,68,68,0.25)",
+                  borderRadius: 8,
+                  padding: "10px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 12,
+                }}
+              >
+                <p style={{ color: "#ef4444", fontSize: 13 }}>{deleteError}</p>
+                <button
+                  type="button"
+                  onClick={() => setDeleteError(null)}
+                  style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: 16, lineHeight: 1, padding: "2px 4px" }}
+                >
+                  ✕
+                </button>
               </div>
             )}
           </section>

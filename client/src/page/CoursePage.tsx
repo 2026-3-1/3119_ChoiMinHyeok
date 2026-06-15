@@ -31,7 +31,7 @@ export default function CoursePage() {
   }, [searchInput]);
 
   const { data: categories = [] } = useCategories();
-  const { data, isLoading, isFetching } = useCourses({
+  const { data, isLoading, isFetching, isError } = useCourses({
     categoryId: categoryId ?? undefined,
     search: search || undefined,
     page,
@@ -77,6 +77,7 @@ export default function CoursePage() {
         <CourseResultsSection
           courses={courses}
           isLoading={isLoading}
+          isError={isError}
           page={page}
           totalPages={totalPages}
           onCourseClick={(courseId) => navigate(`/courses/${courseId}`)}

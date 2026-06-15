@@ -143,6 +143,16 @@ export class LearningController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('STUDENT')
+  @ResponseMessage('전체 북마크 조회에 성공했습니다.')
+  @Get('bookmarks')
+  @ApiOperation({ summary: '내 전체 북마크 목록을 조회합니다.' })
+  @ApiQuery({ name: 'userId', type: Number, description: '사용자 ID' })
+  getAllBookmarks(@Query() query: LearningUserQueryRequest) {
+    return this.learningService.getAllBookmarks(query.userId);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('STUDENT')
   @ResponseMessage('북마크 조회에 성공했습니다.')
   @Get('lectures/:lectureId/bookmarks')
   @ApiOperation({ summary: '강의 북마크 목록을 조회합니다.' })

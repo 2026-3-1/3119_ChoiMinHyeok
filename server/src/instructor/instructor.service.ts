@@ -105,6 +105,12 @@ export class InstructorService {
       courseId,
       instructorId,
     );
+    const hasOrders = await this.instructorRepository.hasOrderItems(courseId);
+    if (hasOrders) {
+      throw new BadRequestException(
+        '구매 이력이 있는 강의는 삭제할 수 없습니다. 대신 비공개(DRAFT) 처리해주세요.',
+      );
+    }
     await this.instructorRepository.deleteCourse(courseId);
   }
 

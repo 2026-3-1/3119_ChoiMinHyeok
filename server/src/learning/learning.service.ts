@@ -175,6 +175,21 @@ export class LearningService {
     return this.learningRepository.getLectureHistory(userId, lectureId);
   }
 
+  async getAllBookmarks(userId: number) {
+    await this.learningRepository.assertUserExists(userId);
+    const rows = await this.learningRepository.getAllBookmarks(userId);
+    return rows.map((bm) => ({
+      id: bm.id,
+      position: bm.position,
+      note: bm.note,
+      createdAt: bm.created_at,
+      lectureId: bm.lectures.id,
+      lectureTitle: bm.lectures.title,
+      courseId: bm.lectures.chapters.courses.id,
+      courseTitle: bm.lectures.chapters.courses.title,
+    }));
+  }
+
   async getLectureBookmarks(userId: number, lectureId: number) {
     const lecture =
       await this.learningRepository.findLectureWithCourse(lectureId);

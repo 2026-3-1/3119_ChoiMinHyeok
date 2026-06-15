@@ -237,6 +237,27 @@ export class LearningRepository {
     });
   }
 
+  getAllBookmarks(userId: number) {
+    return prisma.lecture_bookmark.findMany({
+      where: { user_id: userId },
+      include: {
+        lectures: {
+          select: {
+            id: true,
+            title: true,
+            chapters: {
+              select: {
+                course_id: true,
+                courses: { select: { id: true, title: true } },
+              },
+            },
+          },
+        },
+      },
+      orderBy: { created_at: 'desc' },
+    });
+  }
+
   createLectureBookmark(
     userId: number,
     lectureId: number,
