@@ -61,6 +61,7 @@ export class EnrollmentRepository {
       where: {
         user_id: userId,
         status: EnrollmentStatus.ACTIVE,
+        courses: { status: CourseLifecycleStatus.OPEN },
       },
       include: {
         courses: {
