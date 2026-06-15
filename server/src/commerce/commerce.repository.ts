@@ -550,4 +550,68 @@ export class CommerceRepository {
 
     return refundedAmount;
   }
+
+  async countLecturesByCourseIds(
+    courseIds: number[],
+  ): Promise<Record<number, number>> {
+    const result: Record<number, number> = {};
+    for (const courseId of courseIds) result[courseId] = 0;
+
+    const chapters = await prisma.chapter.findMany({
+      where: { course_id: { in: courseIds } },
+      select: { id: true, course_id: true },
+    });
+    if (chapters.length === 0) return result;
+
+    const chapterIds = chapters.map((c) => c.id);
+    const rows = await prisma.lectures.groupBy({
+      by: ['chapter_id'],
+      where: { chapter_id: { in: chapterIds } },
+      _count: { _all: true },
+    });
+
+    const chapterCourseMap = new Map(chapters.map((c) => [c.id, c.course_id]));
+    for (const row of rows) {
+      const cid = chapterCourseMap.get(row.chapter_id);
+      if (cid != null) result[cid] = (result[cid] ?? 0) + row._count._all;
+    }
+    return result;
+  }
+
+  async getRefundablePaymentsByCourseid(courseId: number) {
+    const enrollments = await prisma.enrollments.findMany({
+      where: { course_id: courseId, status: EnrollmentStatus.ACTIVE },
+      include: { order_item: true },
+    });
+
+    const orderIds = [
+      ...new Set(
+        enrollments
+          .map((e) => e.order_item?.order_id)
+          .filter((id): id is number => id != null),
+      ),
+    ];
+
+    if (orderIds.length === 0) return [];
+
+    const orders = await prisma.orders.findMany({
+      where: { id: { in: orderIds } },
+      include: {
+        payment_transactions: {
+          where: { transaction_type: PaymentTransactionType.PAYMENT },
+          orderBy: { created_at: 'asc' },
+          take: 1,
+        },
+      },
+    });
+
+    return orders.map((order) => ({
+      orderId: order.id,
+      provider: order.provider,
+      paymentKey: order.payment_transactions[0]?.payment_key ?? null,
+      refundAmount: enrollments
+        .filter((e) => e.order_item?.order_id === order.id)
+        .reduce((sum, e) => sum + (e.order_item?.price ?? 0), 0),
+    }));
+  }
 }

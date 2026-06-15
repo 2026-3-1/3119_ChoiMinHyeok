@@ -34,7 +34,7 @@ export class InstructorRepository {
       data: {
         ...data,
         instructor_id: instructorId,
-        status: CourseLifecycleStatus.OPEN,
+        status: CourseLifecycleStatus.DRAFT,
       },
     });
   }
@@ -171,6 +171,17 @@ export class InstructorRepository {
 
   async deleteLecture(lectureId: number) {
     return prisma.lectures.delete({ where: { id: lectureId } });
+  }
+
+  async countLecturesByCourseId(courseId: number): Promise<number> {
+    const chapters = await prisma.chapter.findMany({
+      where: { course_id: courseId },
+      select: { id: true },
+    });
+    if (chapters.length === 0) return 0;
+    return prisma.lectures.count({
+      where: { chapter_id: { in: chapters.map((c) => c.id) } },
+    });
   }
 
   async getStudents(courseId: number) {

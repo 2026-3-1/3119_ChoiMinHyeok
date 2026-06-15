@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InstructorRepository } from './instructor.repository';
 import {
   CreateChapterRequest,
@@ -117,6 +117,17 @@ export class InstructorService {
       courseId,
       instructorId,
     );
+
+    if (status === 'OPEN') {
+      const lectureCount =
+        await this.instructorRepository.countLecturesByCourseId(courseId);
+      if (lectureCount === 0) {
+        throw new BadRequestException(
+          '강의 영상이 없는 강의는 공개할 수 없습니다.',
+        );
+      }
+    }
+
     const updated = await this.instructorRepository.updateCourse(courseId, {
       status: status as any,
     });

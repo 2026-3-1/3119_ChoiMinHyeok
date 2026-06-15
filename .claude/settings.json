@@ -12,7 +12,12 @@
       "Bash(ls -la *.md)",
       "Bash(ls .github/)",
       "Bash(ls docs/)",
-      "Bash(npm test *)"
+      "Bash(npm test *)",
+      "PowerShell(python --version)",
+      "PowerShell(pip show python-pptx 2>&1)",
+      "PowerShell(pip install python-pptx 2>&1)",
+      "PowerShell(pip3 install python-pptx 2>&1)",
+      "PowerShell(python -m pip install python-pptx 2>&1)"
     ],
     "additionalDirectories": [
       "d:\\pr0j3ct\\pr0j3t\\sec101",

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PaymentProvider } from '../../prisma/generated/prisma/enums';
 import { NotificationService } from '../notification/notification.service';
 import { WebhookService } from '../webhook/webhook.service';
@@ -16,6 +16,8 @@ import { TossPaymentService } from './toss-payment.service';
 
 @Injectable()
 export class CommerceService {
+  private readonly logger = new Logger(CommerceService.name);
+
   constructor(
     private readonly commerceRepository: CommerceRepository,
     private readonly commerceManager: CommerceManager,
@@ -78,6 +80,7 @@ export class CommerceService {
       data.cartItemIds,
     );
     this.commerceManager.assertCoursesPurchasable(cartItems);
+    await this.assertCoursesHaveLectures(cartItems.map((item) => item.course_id));
 
     const activeEnrollments =
       await this.commerceRepository.findActiveEnrollmentsForCourses(
@@ -147,6 +150,26 @@ export class CommerceService {
       order,
       data.orderItemIds,
     );
+
+    const refundAmount = order.items
+      .filter((item) => orderItemIds.includes(item.id))
+      .reduce((sum, item) => sum + item.price, 0);
+
+    const paymentTx = order.payment_transactions.find(
+      (tx) => tx.transaction_type === 'PAYMENT' && tx.payment_key,
+    );
+
+    if (
+      order.provider === PaymentProvider.TOSS &&
+      paymentTx?.payment_key
+    ) {
+      await this.tossPaymentService.cancelPayment(
+        paymentTx.payment_key,
+        refundAmount,
+        data.reasonDetail ?? data.reason,
+      );
+    }
+
     const updatedOrder = await this.commerceRepository.refundOrderItems(
       orderId,
       data.userId,
@@ -176,6 +199,7 @@ export class CommerceService {
       data.cartItemIds,
     );
     this.commerceManager.assertCoursesPurchasable(cartItems);
+    await this.assertCoursesHaveLectures(cartItems.map((item) => item.course_id));
 
     const activeEnrollments =
       await this.commerceRepository.findActiveEnrollmentsForCourses(
@@ -213,6 +237,7 @@ export class CommerceService {
       data.cartItemIds,
     );
     this.commerceManager.assertCoursesPurchasable(cartItems);
+    await this.assertCoursesHaveLectures(cartItems.map((item) => item.course_id));
 
     const expectedAmount = cartItems.reduce(
       (sum, item) => sum + item.courses.price,
@@ -269,10 +294,39 @@ export class CommerceService {
 
   async cancelCourse(courseId: number, data: CancelCourseRequest) {
     this.commerceManager.assertCourseCancellationReason(data.reason);
+
+    const payments =
+      await this.commerceRepository.getRefundablePaymentsByCourseid(courseId);
+
+    const tossRefunds = payments.filter(
+      (p) => p.provider === PaymentProvider.TOSS && p.paymentKey,
+    );
+
+    await Promise.allSettled(
+      tossRefunds.map((p) =>
+        this.tossPaymentService.cancelPayment(
+          p.paymentKey!,
+          p.refundAmount,
+          data.note ?? data.reason,
+        ),
+      ),
+    );
+
     return this.commerceRepository.cancelCourseAndRefund(
       courseId,
       data.reason,
       data.note,
     );
+  }
+
+  private async assertCoursesHaveLectures(courseIds: number[]) {
+    const counts =
+      await this.commerceRepository.countLecturesByCourseIds(courseIds);
+    const empty = courseIds.filter((id) => (counts[id] ?? 0) === 0);
+    if (empty.length > 0) {
+      throw new BadRequestException(
+        '강의 영상이 없는 강의는 구매할 수 없습니다.',
+      );
+    }
   }
 }
