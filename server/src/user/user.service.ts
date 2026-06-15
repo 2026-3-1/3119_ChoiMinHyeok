@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -8,6 +9,7 @@ import { RegisterRequest } from './dto/register.request';
 import { UserRepository } from './user.repository';
 import { UserManager } from './user.manager';
 import { AuthService } from './auth/auth.service';
+import { EmailService } from '../notification/email.service';
 import { Roles } from '../../prisma/generated/prisma/enums';
 
 @Injectable()
@@ -16,6 +18,7 @@ export class UserService {
     private readonly userRepository: UserRepository,
     private readonly userManager: UserManager,
     private readonly authService: AuthService,
+    private readonly emailService: EmailService,
   ) {}
 
   async createUser(data: RegisterRequest) {
@@ -69,6 +72,13 @@ export class UserService {
     }
 
     return this.toProfile(user);
+  }
+
+  async submitBanAppeal(email: string, message: string) {
+    const user = await this.userRepository.findUserByEmail(email);
+    if (!user) throw new NotFoundException('존재하지 않는 이메일입니다.');
+    if (!user.is_banned) throw new ForbiddenException('정지된 계정이 아닙니다.');
+    await this.emailService.sendBanAppealToAdmin(user.email, user.name, message);
   }
 
   async updateUserProfile(

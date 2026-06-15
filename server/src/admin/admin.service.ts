@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Roles } from '../../prisma/generated/prisma/enums';
+import { EmailService } from '../notification/email.service';
 import { AdminRepository } from './admin.repository';
 import {
   AdminCourseQueryRequest,
@@ -10,7 +11,10 @@ import {
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly adminRepository: AdminRepository) {}
+  constructor(
+    private readonly adminRepository: AdminRepository,
+    private readonly emailService: EmailService,
+  ) {}
 
   async getDashboard() {
     return this.adminRepository.getDashboard();
@@ -47,7 +51,10 @@ export class AdminService {
   }
 
   async banUser(userId: number) {
-    await this.adminRepository.banUser(userId);
+    const user = await this.adminRepository.banUser(userId);
+    this.emailService
+      .sendBanNotification(user.name, user.email)
+      .catch(() => null);
   }
 
   async unbanUser(userId: number) {

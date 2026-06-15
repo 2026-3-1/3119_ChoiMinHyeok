@@ -39,6 +39,92 @@ export class EmailService {
     });
   }
 
+  async sendBanNotification(userName: string, userEmail: string): Promise<void> {
+    if (!this.enabled) return;
+    const adminEmail = process.env.ADMIN_EMAIL ?? this.from;
+    const html = `
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:'Apple SD Gothic Neo',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <tr><td style="background:#dc2626;padding:32px 40px;">
+          <h1 style="margin:0;color:#fff;font-size:22px;">⚠ 계정 이용이 정지되었습니다</h1>
+        </td></tr>
+        <tr><td style="padding:32px 40px;">
+          <p style="margin:0 0 12px;color:#333;font-size:16px;">안녕하세요, <strong>${userName}</strong>님.</p>
+          <p style="margin:0 0 24px;color:#555;font-size:14px;line-height:1.7;">
+            관리자에 의해 계정이 정지되었습니다.<br>
+            정지 해제를 원하시면 아래 버튼을 클릭하거나 관리자에게 직접 문의해 주세요.
+          </p>
+          <a href="mailto:${adminEmail}?subject=정지 해제 요청 (${userEmail})" style="display:inline-block;background:#4F46E5;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;">
+            정지 해제 요청하기
+          </a>
+        </td></tr>
+        <tr><td style="background:#f8f8f8;padding:16px 40px;text-align:center;">
+          <p style="margin:0;color:#aaa;font-size:12px;">본 메일은 자동 발송되었습니다.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+    try {
+      await withRetry(
+        () => this.transporter.sendMail({
+          from: `"강의 플랫폼" <${this.from}>`,
+          to: userEmail,
+          subject: '[계정 정지] 계정 이용이 정지되었습니다',
+          html,
+        }),
+        { maxAttempts: 3, baseDelayMs: 1000 },
+      );
+      this.logger.log(`정지 알림 발송 → ${userEmail}`);
+    } catch (err) {
+      this.logger.error(`정지 알림 발송 실패 → ${userEmail}`, err);
+    }
+  }
+
+  async sendBanAppealToAdmin(userEmail: string, userName: string, message: string): Promise<void> {
+    if (!this.enabled) return;
+    const adminEmail = process.env.ADMIN_EMAIL ?? this.from;
+    const html = `
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:'Apple SD Gothic Neo',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <tr><td style="background:#4F46E5;padding:32px 40px;">
+          <h1 style="margin:0;color:#fff;font-size:22px;">📩 정지 해제 요청</h1>
+        </td></tr>
+        <tr><td style="padding:32px 40px;">
+          <p style="margin:0 0 6px;color:#888;font-size:13px;">요청자</p>
+          <p style="margin:0 0 20px;color:#333;font-size:15px;font-weight:600;">${userName} (${userEmail})</p>
+          <p style="margin:0 0 6px;color:#888;font-size:13px;">요청 사유</p>
+          <div style="background:#f8f7ff;border-left:4px solid #4F46E5;padding:14px 16px;border-radius:0 4px 4px 0;color:#333;font-size:14px;line-height:1.7;white-space:pre-wrap;">${message}</div>
+        </td></tr>
+        <tr><td style="background:#f8f8f8;padding:16px 40px;text-align:center;">
+          <p style="margin:0;color:#aaa;font-size:12px;">관리자 패널에서 직접 정지 해제를 진행하세요.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+    try {
+      await withRetry(
+        () => this.transporter.sendMail({
+          from: `"강의 플랫폼" <${this.from}>`,
+          to: adminEmail,
+          subject: `[정지 해제 요청] ${userName} (${userEmail})`,
+          html,
+        }),
+        { maxAttempts: 3, baseDelayMs: 1000 },
+      );
+      this.logger.log(`정지 해제 요청 이메일 발송 → 관리자 (요청자: ${userEmail})`);
+    } catch (err) {
+      this.logger.error(`정지 해제 요청 이메일 발송 실패`, err);
+    }
+  }
+
   async sendPurchaseConfirmation(data: PurchaseEmailData): Promise<void> {
     if (!this.enabled) return;
 

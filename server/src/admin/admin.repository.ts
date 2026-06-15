@@ -165,6 +165,7 @@ export class AdminRepository {
     return prisma.users.update({
       where: { id: userId },
       data: { is_banned: true },
+      select: { id: true, name: true, email: true },
     });
   }
 

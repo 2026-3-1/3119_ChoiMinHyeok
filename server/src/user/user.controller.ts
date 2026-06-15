@@ -71,6 +71,15 @@ export class UserController {
     return { user, accessToken };
   }
 
+  @Throttle({ default: { ttl: 3_600_000, limit: 5 } })
+  @ResponseMessage('정지 해제 요청이 전송되었습니다.')
+  @Post('auth/ban-appeal')
+  @HttpCode(200)
+  @ApiOperation({ summary: '정지 해제 요청 이메일을 관리자에게 전송합니다.' })
+  submitBanAppeal(@Body() body: { email: string; message: string }) {
+    return this.userService.submitBanAppeal(body.email, body.message);
+  }
+
   @ResponseMessage('사용자 목록 조회에 성공했습니다.')
   @Get('users')
   @ApiOperation({ summary: '전체 사용자 목록을 조회합니다.' })

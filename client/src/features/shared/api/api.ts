@@ -820,3 +820,6 @@ export const resolveAdminReport = async (
 
 export const getSystemHealth = async (): Promise<SystemHealth> =>
   unwrapResponse(api.get<ApiResponse<SystemHealth>>("/health/system"));
+
+export const submitBanAppeal = async (email: string, message: string): Promise<void> =>
+  unwrapResponse(api.post<ApiResponse<void>>("/api/v1/auth/ban-appeal", { email, message }));
