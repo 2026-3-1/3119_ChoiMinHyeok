@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../../prisma/generated/prisma/client';
 import {
   Roles,
@@ -215,7 +215,27 @@ export class AdminRepository {
   async deleteCourse(courseId: number) {
     const course = await prisma.courses.findUnique({ where: { id: courseId } });
     if (!course) throw new NotFoundException('강의를 찾을 수 없습니다.');
-    return prisma.courses.delete({ where: { id: courseId } });
+
+    const orderCount = await prisma.order_items.count({ where: { course_id: courseId } });
+    if (orderCount > 0) {
+      throw new BadRequestException(
+        '구매 이력이 있는 강의는 삭제할 수 없습니다. 대신 비공개(DRAFT) 처리해주세요.',
+      );
+    }
+
+    try {
+      return await prisma.courses.delete({ where: { id: courseId } });
+    } catch (e) {
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === 'P2003'
+      ) {
+        throw new BadRequestException(
+          '연결된 데이터가 있어 강의를 삭제할 수 없습니다.',
+        );
+      }
+      throw e;
+    }
   }
 
   async getReports(params: {

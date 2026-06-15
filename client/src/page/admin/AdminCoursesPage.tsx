@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { deleteAdminCourse, getAdminCourses } from "../../features/shared/api/api";
 
 const difficultyLabel: Record<string, string> = { EASY: "입문", MEDIUM: "중급", HARD: "고급" };
@@ -14,6 +15,7 @@ export default function AdminCoursesPage() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const limit = 20;
 
   const { data, isLoading } = useQuery({
@@ -23,7 +25,14 @@ export default function AdminCoursesPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (courseId: number) => deleteAdminCourse(courseId),
+    onMutate: () => setDeleteError(null),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-courses"] }),
+    onError: (err) => {
+      const message = axios.isAxiosError(err)
+        ? (err.response?.data?.message ?? "삭제에 실패했습니다.")
+        : "삭제에 실패했습니다.";
+      setDeleteError(message);
+    },
   });
 
   const totalPages = data?.pagination.totalPages ?? 1;
@@ -111,6 +120,31 @@ export default function AdminCoursesPage() {
               </tbody>
             </table>
           </div>
+
+          {deleteError && (
+            <div
+              style={{
+                marginTop: 16,
+                background: "rgba(239,68,68,0.08)",
+                border: "1px solid rgba(239,68,68,0.25)",
+                borderRadius: 8,
+                padding: "10px 14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
+              }}
+            >
+              <p style={{ color: "#ef4444", fontSize: 13 }}>{deleteError}</p>
+              <button
+                type="button"
+                onClick={() => setDeleteError(null)}
+                style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: 16, lineHeight: 1, padding: "2px 4px" }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
 
           <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 24 }}>
             <button

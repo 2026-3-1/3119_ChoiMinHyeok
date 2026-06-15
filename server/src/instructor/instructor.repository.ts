@@ -1,9 +1,11 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Prisma } from '../../prisma/generated/prisma/client';
 import {
   CourseLifecycleStatus,
   EnrollmentStatus,
@@ -83,7 +85,19 @@ export class InstructorRepository {
   }
 
   async deleteCourse(courseId: number) {
-    return prisma.courses.delete({ where: { id: courseId } });
+    try {
+      return await prisma.courses.delete({ where: { id: courseId } });
+    } catch (e) {
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === 'P2003'
+      ) {
+        throw new BadRequestException(
+          '연결된 데이터가 있어 강의를 삭제할 수 없습니다.',
+        );
+      }
+      throw e;
+    }
   }
 
   async addChapter(courseId: number, title: string, position: number) {
