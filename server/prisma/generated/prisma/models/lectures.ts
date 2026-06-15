@@ -552,10 +552,6 @@ export type lecturesUncheckedUpdateManyWithoutChaptersNestedInput = {
   deleteMany?: Prisma.lecturesScalarWhereInput | Prisma.lecturesScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type lecturesCreateNestedOneWithoutAttachmentsInput = {
   create?: Prisma.XOR<Prisma.lecturesCreateWithoutAttachmentsInput, Prisma.lecturesUncheckedCreateWithoutAttachmentsInput>
   connectOrCreate?: Prisma.lecturesCreateOrConnectWithoutAttachmentsInput

@@ -1873,6 +1873,7 @@ export const UsersScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
+  is_banned: 'is_banned',
   description: 'description',
   updated_at: 'updated_at',
   created_at: 'created_at'
@@ -2232,6 +2233,13 @@ export type ListEnumRolesFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2298,13 +2306,6 @@ export type EnumCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'CancellationReason[]'
  */
 export type ListEnumCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CancellationReason[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
