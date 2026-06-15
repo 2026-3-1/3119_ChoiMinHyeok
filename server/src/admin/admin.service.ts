@@ -30,6 +30,7 @@ export class AdminService {
         name: u.name,
         email: u.email,
         role: u.role,
+        isBanned: u.is_banned,
         createdAt: u.created_at,
       })),
       pagination: {
@@ -47,6 +48,10 @@ export class AdminService {
 
   async banUser(userId: number) {
     await this.adminRepository.banUser(userId);
+  }
+
+  async unbanUser(userId: number) {
+    await this.adminRepository.unbanUser(userId);
   }
 
   async changeUserRole(userId: number, role: Roles) {

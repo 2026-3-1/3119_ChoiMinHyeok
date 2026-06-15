@@ -1,6 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
+import prisma from '../../../prisma/prisma.client';
 import { RedisService } from './redis.service';
 
 export interface AccessTokenPayload {
@@ -83,6 +84,15 @@ export class AuthService {
       throw new UnauthorizedException(
         '만료되었거나 이미 사용된 리프레시 토큰입니다.',
       );
+    }
+
+    const user = await prisma.users.findUnique({
+      where: { id: payload.sub },
+      select: { is_banned: true },
+    });
+    if (user?.is_banned) {
+      await this.redisService.del(`refresh:${payload.jti}`);
+      throw new ForbiddenException('정지된 계정입니다. 관리자에게 문의하세요.');
     }
 
     await this.redisService.del(`refresh:${payload.jti}`);

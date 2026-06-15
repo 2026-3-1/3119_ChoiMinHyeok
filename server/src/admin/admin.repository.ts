@@ -128,6 +128,7 @@ export class AdminRepository {
           name: true,
           email: true,
           role: true,
+          is_banned: true,
           created_at: true,
         },
         orderBy: { created_at: 'desc' },
@@ -163,7 +164,15 @@ export class AdminRepository {
     await this.findUserById(userId);
     return prisma.users.update({
       where: { id: userId },
-      data: { role: Roles.STUDENT },
+      data: { is_banned: true },
+    });
+  }
+
+  async unbanUser(userId: number) {
+    await this.findUserById(userId);
+    return prisma.users.update({
+      where: { id: userId },
+      data: { is_banned: false },
     });
   }
 

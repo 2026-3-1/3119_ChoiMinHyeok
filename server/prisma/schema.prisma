@@ -103,6 +103,7 @@ model users {
   email                    String                   @unique
   password                 String
   role                     Roles                    @default(STUDENT)
+  is_banned                Boolean                  @default(false)
   description              String?                  @default("")
   updated_at               DateTime                 @updatedAt
   created_at               DateTime                 @default(now())

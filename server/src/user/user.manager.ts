@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user.repository';
 
@@ -19,6 +19,10 @@ export class UserManager {
 
     if (!user) {
       throw new BadRequestException('존재하지 않는 이메일입니다.');
+    }
+
+    if (user.is_banned) {
+      throw new ForbiddenException('정지된 계정입니다. 관리자에게 문의하세요.');
     }
 
     const isMatch = await this.comparePassword(password, user.password);

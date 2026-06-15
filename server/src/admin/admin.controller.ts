@@ -89,11 +89,21 @@ export class AdminController {
   @ResponseMessage('사용자가 정지되었습니다.')
   @Post('users/:userId/ban')
   @HttpCode(200)
-  @ApiOperation({ summary: '사용자를 정지합니다 (역할 초기화).' })
+  @ApiOperation({ summary: '사용자를 정지합니다 (로그인 차단).' })
   @ApiParam({ name: 'userId', type: Number })
   @SwaggerResponse(null, false, 200, '사용자가 정지되었습니다.')
   banUser(@Param('userId', ParseIntPipe) userId: number) {
     return this.adminService.banUser(userId);
+  }
+
+  @ResponseMessage('정지가 해제되었습니다.')
+  @Post('users/:userId/unban')
+  @HttpCode(200)
+  @ApiOperation({ summary: '사용자 정지를 해제합니다.' })
+  @ApiParam({ name: 'userId', type: Number })
+  @SwaggerResponse(null, false, 200, '정지가 해제되었습니다.')
+  unbanUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.adminService.unbanUser(userId);
   }
 
   @ResponseMessage('역할이 변경되었습니다.')

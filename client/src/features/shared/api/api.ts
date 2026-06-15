@@ -769,6 +769,9 @@ export const deleteAdminUser = async (userId: number): Promise<void> =>
 export const banAdminUser = async (userId: number): Promise<void> =>
   unwrapResponse(api.post<ApiResponse<void>>(`/api/v1/admin/users/${userId}/ban`));
 
+export const unbanAdminUser = async (userId: number): Promise<void> =>
+  unwrapResponse(api.post<ApiResponse<void>>(`/api/v1/admin/users/${userId}/unban`));
+
 export const changeAdminUserRole = async (userId: number, role: UserRole): Promise<void> =>
   unwrapResponse(api.patch<ApiResponse<void>>(`/api/v1/admin/users/${userId}/role`, { role }));
 

@@ -5,6 +5,7 @@ import {
   changeAdminUserRole,
   deleteAdminUser,
   getAdminUsers,
+  unbanAdminUser,
 } from "../../features/shared/api/api";
 import type { UserRole } from "../../features/shared/types";
 
@@ -28,6 +29,11 @@ export default function AdminUsersPage() {
 
   const banMutation = useMutation({
     mutationFn: (userId: number) => banAdminUser(userId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-users"] }),
+  });
+
+  const unbanMutation = useMutation({
+    mutationFn: (userId: number) => unbanAdminUser(userId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin-users"] }),
   });
 
@@ -95,16 +101,29 @@ export default function AdminUsersPage() {
               </thead>
               <tbody>
                 {data.data.map((u) => (
-                  <tr key={u.id}>
+                  <tr key={u.id} style={{ opacity: u.isBanned ? 0.6 : 1 }}>
                     <td style={{ color: "var(--text-muted)", fontSize: 13 }}>{u.id}</td>
-                    <td>{u.name}</td>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        {u.name}
+                        {u.isBanned && (
+                          <span style={{
+                            fontSize: 11, fontWeight: 700, padding: "2px 6px",
+                            borderRadius: 4, background: "rgba(239,68,68,0.15)",
+                            color: "#ef4444", letterSpacing: "0.03em",
+                          }}>
+                            정지됨
+                          </span>
+                        )}
+                      </div>
+                    </td>
                     <td style={{ fontSize: 13 }}>{u.email}</td>
                     <td>
                       <select
                         className="auth-form__input"
                         style={{ fontSize: 12, minHeight: 30, padding: "0 8px", maxWidth: 110 }}
                         value={u.role}
-                        disabled={roleMutation.isPending}
+                        disabled={roleMutation.isPending || u.isBanned}
                         onChange={(e) => {
                           if (window.confirm(`역할을 "${ROLE_LABELS[e.target.value]}"으로 변경하시겠습니까?`)) {
                             roleMutation.mutate({ userId: u.id, role: e.target.value as UserRole });
@@ -121,14 +140,29 @@ export default function AdminUsersPage() {
                     </td>
                     <td>
                       <div style={{ display: "flex", gap: 8 }}>
-                        <button
-                          className="button button--ghost"
-                          style={{ fontSize: 12, padding: "3px 10px" }}
-                          disabled={banMutation.isPending}
-                          onClick={() => banMutation.mutate(u.id)}
-                        >
-                          정지
-                        </button>
+                        {u.isBanned ? (
+                          <button
+                            className="button button--ghost"
+                            style={{ fontSize: 12, padding: "3px 10px", color: "var(--success, #22c55e)" }}
+                            disabled={unbanMutation.isPending}
+                            onClick={() => unbanMutation.mutate(u.id)}
+                          >
+                            정지 해제
+                          </button>
+                        ) : (
+                          <button
+                            className="button button--ghost"
+                            style={{ fontSize: 12, padding: "3px 10px", color: "var(--error)" }}
+                            disabled={banMutation.isPending}
+                            onClick={() => {
+                              if (window.confirm(`"${u.name}" 사용자를 정지하시겠습니까?\n정지된 사용자는 로그인할 수 없습니다.`)) {
+                                banMutation.mutate(u.id);
+                              }
+                            }}
+                          >
+                            정지
+                          </button>
+                        )}
                         <button
                           className="button button--ghost"
                           style={{ fontSize: 12, padding: "3px 10px", color: "var(--error)" }}
