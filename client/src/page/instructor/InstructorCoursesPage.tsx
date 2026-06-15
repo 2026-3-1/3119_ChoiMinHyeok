@@ -8,7 +8,7 @@ import { SiteHeader } from "../../features/shared/layout/SiteHeader";
 import { SiteFooter } from "../../features/shared/layout/SiteFooter";
 
 const difficultyLabel: Record<string, string> = { EASY: "입문", MEDIUM: "중급", HARD: "고급" };
-const statusLabel: Record<string, string> = { OPEN: "공개", CLOSED: "비공개", DRAFT: "초안" };
+const statusLabel: Record<string, string> = { OPEN: "공개", DRAFT: "초안", CANCELED: "취소됨" };
 
 function formatPrice(n: number) {
   return n === 0 ? "무료" : `₩${n.toLocaleString("ko-KR")}`;

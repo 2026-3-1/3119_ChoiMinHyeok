@@ -4,7 +4,7 @@ import axios from "axios";
 import { deleteAdminCourse, getAdminCourses, setAdminCourseStatus } from "../../features/shared/api/api";
 
 const difficultyLabel: Record<string, string> = { EASY: "입문", MEDIUM: "중급", HARD: "고급" };
-const statusLabel: Record<string, string> = { OPEN: "공개", CLOSED: "비공개", DRAFT: "초안" };
+const statusLabel: Record<string, string> = { OPEN: "공개", DRAFT: "초안", CANCELED: "취소됨" };
 
 function formatPrice(n: number) {
   return n === 0 ? "무료" : `₩${n.toLocaleString("ko-KR")}`;
@@ -123,7 +123,7 @@ export default function AdminCoursesPage() {
                       >
                         <option value="OPEN">공개</option>
                         <option value="DRAFT">초안</option>
-                        <option value="CLOSED">비공개</option>
+                        <option value="CANCELED">취소됨</option>
                       </select>
                     </td>
                     <td style={{ fontSize: 13, color: "var(--text-muted)" }}>

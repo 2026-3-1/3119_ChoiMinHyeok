@@ -82,7 +82,11 @@ export class AdminService {
   }
 
   async setCourseStatus(courseId: number, status: string) {
-    await this.adminRepository.setCourseStatus(courseId, status);
+    const valid = ['OPEN', 'DRAFT', 'CANCELED'];
+    if (!valid.includes(status)) {
+      throw new Error(`유효하지 않은 상태값입니다: ${status}`);
+    }
+    await this.adminRepository.setCourseStatus(courseId, status as any);
   }
 
   async deleteCourse(courseId: number) {
