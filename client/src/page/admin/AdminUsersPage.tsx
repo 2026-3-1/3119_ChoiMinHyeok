@@ -8,6 +8,7 @@ import {
   unbanAdminUser,
 } from "../../features/shared/api/api";
 import type { UserRole } from "../../features/shared/types";
+import { useAuth } from "../../features/shared/context/AuthContext";
 
 const ROLE_LABELS: Record<string, string> = {
   STUDENT: "학생",
@@ -16,6 +17,7 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 export default function AdminUsersPage() {
+  const { user: currentUser } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [role, setRole] = useState("");
@@ -144,7 +146,7 @@ export default function AdminUsersPage() {
                           <button
                             className="button button--ghost"
                             style={{ fontSize: 12, padding: "3px 10px", color: "var(--success, #22c55e)" }}
-                            disabled={unbanMutation.isPending}
+                            disabled={unbanMutation.isPending || u.id === currentUser?.id}
                             onClick={() => unbanMutation.mutate(u.id)}
                           >
                             정지 해제
@@ -153,7 +155,7 @@ export default function AdminUsersPage() {
                           <button
                             className="button button--ghost"
                             style={{ fontSize: 12, padding: "3px 10px", color: "var(--error)" }}
-                            disabled={banMutation.isPending}
+                            disabled={banMutation.isPending || u.id === currentUser?.id}
                             onClick={() => {
                               if (window.confirm(`"${u.name}" 사용자를 정지하시겠습니까?\n정지된 사용자는 로그인할 수 없습니다.`)) {
                                 banMutation.mutate(u.id);
@@ -166,7 +168,7 @@ export default function AdminUsersPage() {
                         <button
                           className="button button--ghost"
                           style={{ fontSize: 12, padding: "3px 10px", color: "var(--error)" }}
-                          disabled={deleteMutation.isPending}
+                          disabled={deleteMutation.isPending || u.id === currentUser?.id}
                           onClick={() => {
                             if (window.confirm(`"${u.name}" 사용자를 삭제하시겠습니까?`)) {
                               deleteMutation.mutate(u.id);
