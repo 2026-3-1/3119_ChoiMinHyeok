@@ -11,6 +11,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { User } from '../global/global_decorator/decorator.user';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -82,8 +83,11 @@ export class AdminController {
   @ApiOperation({ summary: '사용자를 삭제합니다.' })
   @ApiParam({ name: 'userId', type: Number })
   @SwaggerResponse(null, false, 200, '사용자가 삭제되었습니다.')
-  deleteUser(@Param('userId', ParseIntPipe) userId: number) {
-    return this.adminService.deleteUser(userId);
+  deleteUser(
+    @Param('userId', ParseIntPipe) userId: number,
+    @User('sub') currentUserId: number,
+  ) {
+    return this.adminService.deleteUser(userId, currentUserId);
   }
 
   @ResponseMessage('사용자가 정지되었습니다.')
@@ -92,8 +96,11 @@ export class AdminController {
   @ApiOperation({ summary: '사용자를 정지합니다 (로그인 차단).' })
   @ApiParam({ name: 'userId', type: Number })
   @SwaggerResponse(null, false, 200, '사용자가 정지되었습니다.')
-  banUser(@Param('userId', ParseIntPipe) userId: number) {
-    return this.adminService.banUser(userId);
+  banUser(
+    @Param('userId', ParseIntPipe) userId: number,
+    @User('sub') currentUserId: number,
+  ) {
+    return this.adminService.banUser(userId, currentUserId);
   }
 
   @ResponseMessage('정지가 해제되었습니다.')

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Roles } from '../../prisma/generated/prisma/enums';
 import { EmailService } from '../notification/email.service';
 import { AdminRepository } from './admin.repository';
@@ -46,11 +46,17 @@ export class AdminService {
     };
   }
 
-  async deleteUser(userId: number) {
+  async deleteUser(userId: number, currentUserId: number) {
+    if (userId === currentUserId) {
+      throw new BadRequestException('자기 자신의 계정은 삭제할 수 없습니다.');
+    }
     await this.adminRepository.deleteUser(userId);
   }
 
-  async banUser(userId: number) {
+  async banUser(userId: number, currentUserId: number) {
+    if (userId === currentUserId) {
+      throw new BadRequestException('자기 자신의 계정은 정지할 수 없습니다.');
+    }
     const user = await this.adminRepository.banUser(userId);
     this.emailService
       .sendBanNotification(user.name, user.email)
