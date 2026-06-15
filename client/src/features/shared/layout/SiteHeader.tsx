@@ -32,6 +32,7 @@ export function SiteHeader() {
 
         <nav className="site-header__nav">
           <Link to="/courses" className="site-header__link">강의</Link>
+          <Link to="/board" className="site-header__link">게시판</Link>
           {isLoggedIn && !isInstructor && (
             <Link to="/my-learning" className="site-header__link">내 학습</Link>
           )}

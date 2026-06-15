@@ -134,3 +134,13 @@ export type course_report = Prisma.course_reportModel
  * 
  */
 export type webhook_endpoints = Prisma.webhook_endpointsModel
+/**
+ * Model board_posts
+ * 
+ */
+export type board_posts = Prisma.board_postsModel
+/**
+ * Model board_comments
+ * 
+ */
+export type board_comments = Prisma.board_commentsModel

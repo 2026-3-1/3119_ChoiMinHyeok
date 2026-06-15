@@ -22,6 +22,7 @@ import { AdminModule } from './admin/admin.module';
 import { ReportModule } from './report/report.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { LectureCommentModule } from './lectures_feature/lecture-comment/lecture-comment.module';
+import { BoardModule } from './board/board.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { LectureCommentModule } from './lectures_feature/lecture-comment/lecture
     ReportModule,
     AttachmentModule,
     LectureCommentModule,
+    BoardModule,
   ],
   controllers: [AppController],
   providers: [

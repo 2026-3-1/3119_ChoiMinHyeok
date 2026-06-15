@@ -823,3 +823,54 @@ export const getSystemHealth = async (): Promise<SystemHealth> =>
 
 export const submitBanAppeal = async (email: string, message: string): Promise<void> =>
   unwrapResponse(api.post<ApiResponse<void>>("/api/v1/auth/ban-appeal", { email, message }));
+
+// ─── Board ────────────────────────────────────────────────────────────────────
+
+export const getBoardPosts = async (params?: {
+  search?: string;
+  page?: number;
+  limit?: number;
+}): Promise<PaginatedData<import("../types").BoardPostSummary>> =>
+  unwrapResponse(api.get<ApiResponse<PaginatedData<import("../types").BoardPostSummary>>>("/api/v1/board/posts", { params }));
+
+export const getBoardPost = async (postId: number): Promise<import("../types").BoardPost> =>
+  unwrapResponse(api.get<ApiResponse<import("../types").BoardPost>>(`/api/v1/board/posts/${postId}`));
+
+export const createBoardPost = async (data: {
+  title: string;
+  content: string;
+  announcement?: boolean;
+}): Promise<void> =>
+  unwrapResponse(
+    api.post<ApiResponse<void>>(
+      "/api/v1/board/posts",
+      { title: data.title, content: data.content },
+      { params: { announcement: data.announcement ?? false } },
+    )
+  );
+
+export const updateBoardPost = async (
+  postId: number,
+  data: { title?: string; content?: string },
+): Promise<void> =>
+  unwrapResponse(api.patch<ApiResponse<void>>(`/api/v1/board/posts/${postId}`, data));
+
+export const deleteBoardPost = async (postId: number): Promise<void> =>
+  unwrapResponse(api.delete<ApiResponse<void>>(`/api/v1/board/posts/${postId}`));
+
+export const createBoardComment = async (postId: number, content: string): Promise<void> =>
+  unwrapResponse(api.post<ApiResponse<void>>(`/api/v1/board/posts/${postId}/comments`, { content }));
+
+export const updateBoardComment = async (
+  postId: number,
+  commentId: number,
+  content: string,
+): Promise<void> =>
+  unwrapResponse(
+    api.patch<ApiResponse<void>>(`/api/v1/board/posts/${postId}/comments/${commentId}`, { content })
+  );
+
+export const deleteBoardComment = async (postId: number, commentId: number): Promise<void> =>
+  unwrapResponse(
+    api.delete<ApiResponse<void>>(`/api/v1/board/posts/${postId}/comments/${commentId}`)
+  );

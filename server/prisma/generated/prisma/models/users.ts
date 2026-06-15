@@ -259,6 +259,8 @@ export type usersWhereInput = {
   lecture_playback_history?: Prisma.Lecture_playback_historyListRelationFilter
   lecture_bookmarks?: Prisma.Lecture_bookmarkListRelationFilter
   payment_transactions?: Prisma.Payment_transactionsListRelationFilter
+  board_posts?: Prisma.Board_postsListRelationFilter
+  board_comments?: Prisma.Board_commentsListRelationFilter
 }
 
 export type usersOrderByWithRelationInput = {
@@ -282,6 +284,8 @@ export type usersOrderByWithRelationInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyOrderByRelationAggregateInput
   lecture_bookmarks?: Prisma.lecture_bookmarkOrderByRelationAggregateInput
   payment_transactions?: Prisma.payment_transactionsOrderByRelationAggregateInput
+  board_posts?: Prisma.board_postsOrderByRelationAggregateInput
+  board_comments?: Prisma.board_commentsOrderByRelationAggregateInput
 }
 
 export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +312,8 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   lecture_playback_history?: Prisma.Lecture_playback_historyListRelationFilter
   lecture_bookmarks?: Prisma.Lecture_bookmarkListRelationFilter
   payment_transactions?: Prisma.Payment_transactionsListRelationFilter
+  board_posts?: Prisma.Board_postsListRelationFilter
+  board_comments?: Prisma.Board_commentsListRelationFilter
 }, "id" | "email">
 
 export type usersOrderByWithAggregationInput = {
@@ -362,6 +368,8 @@ export type usersCreateInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateInput = {
@@ -385,6 +393,8 @@ export type usersUncheckedCreateInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersUpdateInput = {
@@ -407,6 +417,8 @@ export type usersUpdateInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateInput = {
@@ -430,6 +442,8 @@ export type usersUncheckedUpdateInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateManyInput = {
@@ -698,6 +712,34 @@ export type usersUpdateOneRequiredWithoutLecture_bookmarksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutLecture_bookmarksInput, Prisma.usersUpdateWithoutLecture_bookmarksInput>, Prisma.usersUncheckedUpdateWithoutLecture_bookmarksInput>
 }
 
+export type usersCreateNestedOneWithoutBoard_postsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutBoard_postsInput, Prisma.usersUncheckedCreateWithoutBoard_postsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutBoard_postsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneRequiredWithoutBoard_postsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutBoard_postsInput, Prisma.usersUncheckedCreateWithoutBoard_postsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutBoard_postsInput
+  upsert?: Prisma.usersUpsertWithoutBoard_postsInput
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutBoard_postsInput, Prisma.usersUpdateWithoutBoard_postsInput>, Prisma.usersUncheckedUpdateWithoutBoard_postsInput>
+}
+
+export type usersCreateNestedOneWithoutBoard_commentsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutBoard_commentsInput, Prisma.usersUncheckedCreateWithoutBoard_commentsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutBoard_commentsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneRequiredWithoutBoard_commentsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutBoard_commentsInput, Prisma.usersUncheckedCreateWithoutBoard_commentsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutBoard_commentsInput
+  upsert?: Prisma.usersUpsertWithoutBoard_commentsInput
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutBoard_commentsInput, Prisma.usersUpdateWithoutBoard_commentsInput>, Prisma.usersUncheckedUpdateWithoutBoard_commentsInput>
+}
+
 export type usersCreateWithoutCart_itemsInput = {
   name: string
   email: string
@@ -717,6 +759,8 @@ export type usersCreateWithoutCart_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutCart_itemsInput = {
@@ -739,6 +783,8 @@ export type usersUncheckedCreateWithoutCart_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutCart_itemsInput = {
@@ -776,6 +822,8 @@ export type usersUpdateWithoutCart_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCart_itemsInput = {
@@ -798,6 +846,8 @@ export type usersUncheckedUpdateWithoutCart_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutOrdersInput = {
@@ -819,6 +869,8 @@ export type usersCreateWithoutOrdersInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutOrdersInput = {
@@ -841,6 +893,8 @@ export type usersUncheckedCreateWithoutOrdersInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutOrdersInput = {
@@ -878,6 +932,8 @@ export type usersUpdateWithoutOrdersInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutOrdersInput = {
@@ -900,6 +956,8 @@ export type usersUncheckedUpdateWithoutOrdersInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutOrder_itemsInput = {
@@ -921,6 +979,8 @@ export type usersCreateWithoutOrder_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutOrder_itemsInput = {
@@ -943,6 +1003,8 @@ export type usersUncheckedCreateWithoutOrder_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutOrder_itemsInput = {
@@ -980,6 +1042,8 @@ export type usersUpdateWithoutOrder_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutOrder_itemsInput = {
@@ -1002,6 +1066,8 @@ export type usersUncheckedUpdateWithoutOrder_itemsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutPayment_transactionsInput = {
@@ -1023,6 +1089,8 @@ export type usersCreateWithoutPayment_transactionsInput = {
   lecture_progress?: Prisma.lectures_progressCreateNestedManyWithoutUsersInput
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutPayment_transactionsInput = {
@@ -1045,6 +1113,8 @@ export type usersUncheckedCreateWithoutPayment_transactionsInput = {
   lecture_progress?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutUsersInput
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutPayment_transactionsInput = {
@@ -1082,6 +1152,8 @@ export type usersUpdateWithoutPayment_transactionsInput = {
   lecture_progress?: Prisma.lectures_progressUpdateManyWithoutUsersNestedInput
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutPayment_transactionsInput = {
@@ -1104,6 +1176,8 @@ export type usersUncheckedUpdateWithoutPayment_transactionsInput = {
   lecture_progress?: Prisma.lectures_progressUncheckedUpdateManyWithoutUsersNestedInput
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutEnrollmentsInput = {
@@ -1125,6 +1199,8 @@ export type usersCreateWithoutEnrollmentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutEnrollmentsInput = {
@@ -1147,6 +1223,8 @@ export type usersUncheckedCreateWithoutEnrollmentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutEnrollmentsInput = {
@@ -1184,6 +1262,8 @@ export type usersUpdateWithoutEnrollmentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1206,6 +1286,8 @@ export type usersUncheckedUpdateWithoutEnrollmentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutEnrollment_historiesInput = {
@@ -1227,6 +1309,8 @@ export type usersCreateWithoutEnrollment_historiesInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutEnrollment_historiesInput = {
@@ -1249,6 +1333,8 @@ export type usersUncheckedCreateWithoutEnrollment_historiesInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutEnrollment_historiesInput = {
@@ -1286,6 +1372,8 @@ export type usersUpdateWithoutEnrollment_historiesInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutEnrollment_historiesInput = {
@@ -1308,6 +1396,8 @@ export type usersUncheckedUpdateWithoutEnrollment_historiesInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutCourse_commentsInput = {
@@ -1329,6 +1419,8 @@ export type usersCreateWithoutCourse_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutCourse_commentsInput = {
@@ -1351,6 +1443,8 @@ export type usersUncheckedCreateWithoutCourse_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutCourse_commentsInput = {
@@ -1388,6 +1482,8 @@ export type usersUpdateWithoutCourse_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCourse_commentsInput = {
@@ -1410,6 +1506,8 @@ export type usersUncheckedUpdateWithoutCourse_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutLecture_commentsInput = {
@@ -1431,6 +1529,8 @@ export type usersCreateWithoutLecture_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutLecture_commentsInput = {
@@ -1453,6 +1553,8 @@ export type usersUncheckedCreateWithoutLecture_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutLecture_commentsInput = {
@@ -1490,6 +1592,8 @@ export type usersUpdateWithoutLecture_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutLecture_commentsInput = {
@@ -1512,6 +1616,8 @@ export type usersUncheckedUpdateWithoutLecture_commentsInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutLecture_progressInput = {
@@ -1533,6 +1639,8 @@ export type usersCreateWithoutLecture_progressInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutLecture_progressInput = {
@@ -1555,6 +1663,8 @@ export type usersUncheckedCreateWithoutLecture_progressInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutLecture_progressInput = {
@@ -1592,6 +1702,8 @@ export type usersUpdateWithoutLecture_progressInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutLecture_progressInput = {
@@ -1614,6 +1726,8 @@ export type usersUncheckedUpdateWithoutLecture_progressInput = {
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutLecture_playback_historyInput = {
@@ -1635,6 +1749,8 @@ export type usersCreateWithoutLecture_playback_historyInput = {
   lecture_progress?: Prisma.lectures_progressCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutLecture_playback_historyInput = {
@@ -1657,6 +1773,8 @@ export type usersUncheckedCreateWithoutLecture_playback_historyInput = {
   lecture_progress?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutUsersInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutLecture_playback_historyInput = {
@@ -1694,6 +1812,8 @@ export type usersUpdateWithoutLecture_playback_historyInput = {
   lecture_progress?: Prisma.lectures_progressUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutLecture_playback_historyInput = {
@@ -1716,6 +1836,8 @@ export type usersUncheckedUpdateWithoutLecture_playback_historyInput = {
   lecture_progress?: Prisma.lectures_progressUncheckedUpdateManyWithoutUsersNestedInput
   lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersCreateWithoutLecture_bookmarksInput = {
@@ -1737,6 +1859,8 @@ export type usersCreateWithoutLecture_bookmarksInput = {
   lecture_progress?: Prisma.lectures_progressCreateNestedManyWithoutUsersInput
   lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutLecture_bookmarksInput = {
@@ -1759,6 +1883,8 @@ export type usersUncheckedCreateWithoutLecture_bookmarksInput = {
   lecture_progress?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutUsersInput
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
   payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type usersCreateOrConnectWithoutLecture_bookmarksInput = {
@@ -1796,6 +1922,8 @@ export type usersUpdateWithoutLecture_bookmarksInput = {
   lecture_progress?: Prisma.lectures_progressUpdateManyWithoutUsersNestedInput
   lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutLecture_bookmarksInput = {
@@ -1818,6 +1946,228 @@ export type usersUncheckedUpdateWithoutLecture_bookmarksInput = {
   lecture_progress?: Prisma.lectures_progressUncheckedUpdateManyWithoutUsersNestedInput
   lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
   payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
+}
+
+export type usersCreateWithoutBoard_postsInput = {
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Roles
+  is_banned?: boolean
+  description?: string | null
+  updated_at?: Date | string
+  created_at?: Date | string
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutUsersInput
+  orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutUsersInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutUsersInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutUsersInput
+  course_comments?: Prisma.course_commentCreateNestedManyWithoutUsersInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutUsersInput
+  lecture_progress?: Prisma.lectures_progressCreateNestedManyWithoutUsersInput
+  lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
+  payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutBoard_postsInput = {
+  id?: number
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Roles
+  is_banned?: boolean
+  description?: string | null
+  updated_at?: Date | string
+  created_at?: Date | string
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutUsersInput
+  orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutUsersInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutUsersInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutUsersInput
+  course_comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutUsersInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutUsersInput
+  lecture_progress?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutUsersInput
+  lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
+  payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_comments?: Prisma.board_commentsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutBoard_postsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutBoard_postsInput, Prisma.usersUncheckedCreateWithoutBoard_postsInput>
+}
+
+export type usersUpsertWithoutBoard_postsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutBoard_postsInput, Prisma.usersUncheckedUpdateWithoutBoard_postsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutBoard_postsInput, Prisma.usersUncheckedCreateWithoutBoard_postsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutBoard_postsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutBoard_postsInput, Prisma.usersUncheckedUpdateWithoutBoard_postsInput>
+}
+
+export type usersUpdateWithoutBoard_postsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  is_banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutUsersNestedInput
+  orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutUsersNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutUsersNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutUsersNestedInput
+  course_comments?: Prisma.course_commentUpdateManyWithoutUsersNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutUsersNestedInput
+  lecture_progress?: Prisma.lectures_progressUpdateManyWithoutUsersNestedInput
+  lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
+  payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutBoard_postsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  is_banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutUsersNestedInput
+  orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutUsersNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutUsersNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutUsersNestedInput
+  course_comments?: Prisma.course_commentUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_progress?: Prisma.lectures_progressUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
+  payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_comments?: Prisma.board_commentsUncheckedUpdateManyWithoutUsersNestedInput
+}
+
+export type usersCreateWithoutBoard_commentsInput = {
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Roles
+  is_banned?: boolean
+  description?: string | null
+  updated_at?: Date | string
+  created_at?: Date | string
+  cart_items?: Prisma.cart_itemsCreateNestedManyWithoutUsersInput
+  orders?: Prisma.ordersCreateNestedManyWithoutUsersInput
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutUsersInput
+  enrollments?: Prisma.enrollmentsCreateNestedManyWithoutUsersInput
+  enrollment_histories?: Prisma.enrollment_historyCreateNestedManyWithoutUsersInput
+  course_comments?: Prisma.course_commentCreateNestedManyWithoutUsersInput
+  lecture_comments?: Prisma.lecture_commentCreateNestedManyWithoutUsersInput
+  lecture_progress?: Prisma.lectures_progressCreateNestedManyWithoutUsersInput
+  lecture_playback_history?: Prisma.lecture_playback_historyCreateNestedManyWithoutUsersInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkCreateNestedManyWithoutUsersInput
+  payment_transactions?: Prisma.payment_transactionsCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutBoard_commentsInput = {
+  id?: number
+  name: string
+  email: string
+  password: string
+  role?: $Enums.Roles
+  is_banned?: boolean
+  description?: string | null
+  updated_at?: Date | string
+  created_at?: Date | string
+  cart_items?: Prisma.cart_itemsUncheckedCreateNestedManyWithoutUsersInput
+  orders?: Prisma.ordersUncheckedCreateNestedManyWithoutUsersInput
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutUsersInput
+  enrollments?: Prisma.enrollmentsUncheckedCreateNestedManyWithoutUsersInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedCreateNestedManyWithoutUsersInput
+  course_comments?: Prisma.course_commentUncheckedCreateNestedManyWithoutUsersInput
+  lecture_comments?: Prisma.lecture_commentUncheckedCreateNestedManyWithoutUsersInput
+  lecture_progress?: Prisma.lectures_progressUncheckedCreateNestedManyWithoutUsersInput
+  lecture_playback_history?: Prisma.lecture_playback_historyUncheckedCreateNestedManyWithoutUsersInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedCreateNestedManyWithoutUsersInput
+  payment_transactions?: Prisma.payment_transactionsUncheckedCreateNestedManyWithoutUsersInput
+  board_posts?: Prisma.board_postsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutBoard_commentsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutBoard_commentsInput, Prisma.usersUncheckedCreateWithoutBoard_commentsInput>
+}
+
+export type usersUpsertWithoutBoard_commentsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutBoard_commentsInput, Prisma.usersUncheckedUpdateWithoutBoard_commentsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutBoard_commentsInput, Prisma.usersUncheckedCreateWithoutBoard_commentsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutBoard_commentsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutBoard_commentsInput, Prisma.usersUncheckedUpdateWithoutBoard_commentsInput>
+}
+
+export type usersUpdateWithoutBoard_commentsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  is_banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cart_items?: Prisma.cart_itemsUpdateManyWithoutUsersNestedInput
+  orders?: Prisma.ordersUpdateManyWithoutUsersNestedInput
+  order_items?: Prisma.order_itemsUpdateManyWithoutUsersNestedInput
+  enrollments?: Prisma.enrollmentsUpdateManyWithoutUsersNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUpdateManyWithoutUsersNestedInput
+  course_comments?: Prisma.course_commentUpdateManyWithoutUsersNestedInput
+  lecture_comments?: Prisma.lecture_commentUpdateManyWithoutUsersNestedInput
+  lecture_progress?: Prisma.lectures_progressUpdateManyWithoutUsersNestedInput
+  lecture_playback_history?: Prisma.lecture_playback_historyUpdateManyWithoutUsersNestedInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkUpdateManyWithoutUsersNestedInput
+  payment_transactions?: Prisma.payment_transactionsUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutBoard_commentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  is_banned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cart_items?: Prisma.cart_itemsUncheckedUpdateManyWithoutUsersNestedInput
+  orders?: Prisma.ordersUncheckedUpdateManyWithoutUsersNestedInput
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutUsersNestedInput
+  enrollments?: Prisma.enrollmentsUncheckedUpdateManyWithoutUsersNestedInput
+  enrollment_histories?: Prisma.enrollment_historyUncheckedUpdateManyWithoutUsersNestedInput
+  course_comments?: Prisma.course_commentUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_comments?: Prisma.lecture_commentUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_progress?: Prisma.lectures_progressUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_playback_history?: Prisma.lecture_playback_historyUncheckedUpdateManyWithoutUsersNestedInput
+  lecture_bookmarks?: Prisma.lecture_bookmarkUncheckedUpdateManyWithoutUsersNestedInput
+  payment_transactions?: Prisma.payment_transactionsUncheckedUpdateManyWithoutUsersNestedInput
+  board_posts?: Prisma.board_postsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 
@@ -1837,6 +2187,8 @@ export type UsersCountOutputType = {
   lecture_playback_history: number
   lecture_bookmarks: number
   payment_transactions: number
+  board_posts: number
+  board_comments: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1851,6 +2203,8 @@ export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   lecture_playback_history?: boolean | UsersCountOutputTypeCountLecture_playback_historyArgs
   lecture_bookmarks?: boolean | UsersCountOutputTypeCountLecture_bookmarksArgs
   payment_transactions?: boolean | UsersCountOutputTypeCountPayment_transactionsArgs
+  board_posts?: boolean | UsersCountOutputTypeCountBoard_postsArgs
+  board_comments?: boolean | UsersCountOutputTypeCountBoard_commentsArgs
 }
 
 /**
@@ -1940,6 +2294,20 @@ export type UsersCountOutputTypeCountPayment_transactionsArgs<ExtArgs extends ru
   where?: Prisma.payment_transactionsWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountBoard_postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.board_postsWhereInput
+}
+
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountBoard_commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.board_commentsWhereInput
+}
+
 
 export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1962,6 +2330,8 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   lecture_playback_history?: boolean | Prisma.users$lecture_playback_historyArgs<ExtArgs>
   lecture_bookmarks?: boolean | Prisma.users$lecture_bookmarksArgs<ExtArgs>
   payment_transactions?: boolean | Prisma.users$payment_transactionsArgs<ExtArgs>
+  board_posts?: boolean | Prisma.users$board_postsArgs<ExtArgs>
+  board_comments?: boolean | Prisma.users$board_commentsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -2014,6 +2384,8 @@ export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   lecture_playback_history?: boolean | Prisma.users$lecture_playback_historyArgs<ExtArgs>
   lecture_bookmarks?: boolean | Prisma.users$lecture_bookmarksArgs<ExtArgs>
   payment_transactions?: boolean | Prisma.users$payment_transactionsArgs<ExtArgs>
+  board_posts?: boolean | Prisma.users$board_postsArgs<ExtArgs>
+  board_comments?: boolean | Prisma.users$board_commentsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type usersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2033,6 +2405,8 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     lecture_playback_history: Prisma.$lecture_playback_historyPayload<ExtArgs>[]
     lecture_bookmarks: Prisma.$lecture_bookmarkPayload<ExtArgs>[]
     payment_transactions: Prisma.$payment_transactionsPayload<ExtArgs>[]
+    board_posts: Prisma.$board_postsPayload<ExtArgs>[]
+    board_comments: Prisma.$board_commentsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2449,6 +2823,8 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
   lecture_playback_history<T extends Prisma.users$lecture_playback_historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$lecture_playback_historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_playback_historyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lecture_bookmarks<T extends Prisma.users$lecture_bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$lecture_bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lecture_bookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payment_transactions<T extends Prisma.users$payment_transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$payment_transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$payment_transactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  board_posts<T extends Prisma.users$board_postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$board_postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$board_postsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  board_comments<T extends Prisma.users$board_commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$board_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$board_commentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3141,6 +3517,54 @@ export type users$payment_transactionsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.Payment_transactionsScalarFieldEnum | Prisma.Payment_transactionsScalarFieldEnum[]
+}
+
+/**
+ * users.board_posts
+ */
+export type users$board_postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the board_posts
+   */
+  select?: Prisma.board_postsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the board_posts
+   */
+  omit?: Prisma.board_postsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.board_postsInclude<ExtArgs> | null
+  where?: Prisma.board_postsWhereInput
+  orderBy?: Prisma.board_postsOrderByWithRelationInput | Prisma.board_postsOrderByWithRelationInput[]
+  cursor?: Prisma.board_postsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Board_postsScalarFieldEnum | Prisma.Board_postsScalarFieldEnum[]
+}
+
+/**
+ * users.board_comments
+ */
+export type users$board_commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the board_comments
+   */
+  select?: Prisma.board_commentsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the board_comments
+   */
+  omit?: Prisma.board_commentsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.board_commentsInclude<ExtArgs> | null
+  where?: Prisma.board_commentsWhereInput
+  orderBy?: Prisma.board_commentsOrderByWithRelationInput | Prisma.board_commentsOrderByWithRelationInput[]
+  cursor?: Prisma.board_commentsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Board_commentsScalarFieldEnum | Prisma.Board_commentsScalarFieldEnum[]
 }
 
 /**

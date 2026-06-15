@@ -415,3 +415,37 @@ export interface InstructorStudent {
   email: string;
   enrolledAt: string;
 }
+
+export interface BoardAuthor {
+  id: number;
+  name: string;
+  role: string;
+}
+
+export interface BoardPostSummary {
+  id: number;
+  title: string;
+  isAnnouncement: boolean;
+  commentCount: number;
+  author: BoardAuthor;
+  createdAt: string;
+}
+
+export interface BoardComment {
+  id: number;
+  content: string;
+  author: BoardAuthor;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BoardPost {
+  id: number;
+  title: string;
+  content: string;
+  isAnnouncement: boolean;
+  author: BoardAuthor;
+  createdAt: string;
+  updatedAt: string;
+  comments: BoardComment[];
+}

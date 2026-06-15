@@ -25,6 +25,10 @@ const InstructorCoursesPage = lazy(() => import("./page/instructor/InstructorCou
 const InstructorCourseEditPage = lazy(() => import("./page/instructor/InstructorCourseEditPage"));
 const InstructorCreateCoursePage = lazy(() => import("./page/instructor/InstructorCreateCoursePage"));
 
+const BoardPage = lazy(() => import("./page/BoardPage"));
+const BoardDetailPage = lazy(() => import("./page/BoardDetailPage"));
+const BoardNewPage = lazy(() => import("./page/BoardNewPage"));
+
 const AdminLoginPage = lazy(() => import("./page/admin/AdminLoginPage"));
 const AdminLayout = lazy(() => import("./page/admin/AdminLayout"));
 const AdminDashboardPage = lazy(() => import("./page/admin/AdminDashboardPage"));
@@ -69,6 +73,11 @@ const router = createBrowserRouter([
       { path: "payment", element: <PaymentPage /> },
       { path: "payment/success", element: <PaymentSuccessPage /> },
       { path: "payment/fail", element: <PaymentFailPage /> },
+
+      // Board
+      { path: "board", element: <BoardPage /> },
+      { path: "board/new", element: <BoardNewPage /> },
+      { path: "board/:postId", element: <BoardDetailPage /> },
 
       // Instructor
       { path: "instructor/courses", element: <InstructorCoursesPage /> },

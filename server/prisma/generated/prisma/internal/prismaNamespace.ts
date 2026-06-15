@@ -402,7 +402,9 @@ export const ModelName = {
   lecture_playback_history: 'lecture_playback_history',
   lecture_bookmark: 'lecture_bookmark',
   course_report: 'course_report',
-  webhook_endpoints: 'webhook_endpoints'
+  webhook_endpoints: 'webhook_endpoints',
+  board_posts: 'board_posts',
+  board_comments: 'board_comments'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -418,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "categories" | "courses" | "chapter" | "lectures" | "lecture_attachment" | "cart_items" | "orders" | "order_items" | "payment_transactions" | "enrollments" | "enrollment_history" | "course_comment" | "lecture_comment" | "lectures_progress" | "lecture_playback_history" | "lecture_bookmark" | "course_report" | "webhook_endpoints"
+    modelProps: "users" | "categories" | "courses" | "chapter" | "lectures" | "lecture_attachment" | "cart_items" | "orders" | "order_items" | "payment_transactions" | "enrollments" | "enrollment_history" | "course_comment" | "lecture_comment" | "lectures_progress" | "lecture_playback_history" | "lecture_bookmark" | "course_report" | "webhook_endpoints" | "board_posts" | "board_comments"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1828,6 +1830,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    board_posts: {
+      payload: Prisma.$board_postsPayload<ExtArgs>
+      fields: Prisma.board_postsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.board_postsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.board_postsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>
+        }
+        findFirst: {
+          args: Prisma.board_postsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.board_postsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>
+        }
+        findMany: {
+          args: Prisma.board_postsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>[]
+        }
+        create: {
+          args: Prisma.board_postsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>
+        }
+        createMany: {
+          args: Prisma.board_postsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.board_postsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>[]
+        }
+        delete: {
+          args: Prisma.board_postsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>
+        }
+        update: {
+          args: Prisma.board_postsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>
+        }
+        deleteMany: {
+          args: Prisma.board_postsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.board_postsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.board_postsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>[]
+        }
+        upsert: {
+          args: Prisma.board_postsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_postsPayload>
+        }
+        aggregate: {
+          args: Prisma.Board_postsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBoard_posts>
+        }
+        groupBy: {
+          args: Prisma.board_postsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Board_postsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.board_postsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Board_postsCountAggregateOutputType> | number
+        }
+      }
+    }
+    board_comments: {
+      payload: Prisma.$board_commentsPayload<ExtArgs>
+      fields: Prisma.board_commentsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.board_commentsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.board_commentsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>
+        }
+        findFirst: {
+          args: Prisma.board_commentsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.board_commentsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>
+        }
+        findMany: {
+          args: Prisma.board_commentsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>[]
+        }
+        create: {
+          args: Prisma.board_commentsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>
+        }
+        createMany: {
+          args: Prisma.board_commentsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.board_commentsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>[]
+        }
+        delete: {
+          args: Prisma.board_commentsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>
+        }
+        update: {
+          args: Prisma.board_commentsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>
+        }
+        deleteMany: {
+          args: Prisma.board_commentsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.board_commentsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.board_commentsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>[]
+        }
+        upsert: {
+          args: Prisma.board_commentsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$board_commentsPayload>
+        }
+        aggregate: {
+          args: Prisma.Board_commentsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBoard_comments>
+        }
+        groupBy: {
+          args: Prisma.board_commentsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Board_commentsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.board_commentsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Board_commentsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2141,6 +2291,31 @@ export const Webhook_endpointsScalarFieldEnum = {
 } as const
 
 export type Webhook_endpointsScalarFieldEnum = (typeof Webhook_endpointsScalarFieldEnum)[keyof typeof Webhook_endpointsScalarFieldEnum]
+
+
+export const Board_postsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  user_id: 'user_id',
+  is_announcement: 'is_announcement',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Board_postsScalarFieldEnum = (typeof Board_postsScalarFieldEnum)[keyof typeof Board_postsScalarFieldEnum]
+
+
+export const Board_commentsScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  user_id: 'user_id',
+  post_id: 'post_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Board_commentsScalarFieldEnum = (typeof Board_commentsScalarFieldEnum)[keyof typeof Board_commentsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2576,6 +2751,8 @@ export type GlobalOmitConfig = {
   lecture_bookmark?: Prisma.lecture_bookmarkOmit
   course_report?: Prisma.course_reportOmit
   webhook_endpoints?: Prisma.webhook_endpointsOmit
+  board_posts?: Prisma.board_postsOmit
+  board_comments?: Prisma.board_commentsOmit
 }
 
 /* Types for Logging */

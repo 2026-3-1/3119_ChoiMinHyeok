@@ -118,6 +118,8 @@ model users {
   lecture_playback_history lecture_playback_history[]
   lecture_bookmarks        lecture_bookmark[]
   payment_transactions     payment_transactions[]
+  board_posts              board_posts[]
+  board_comments           board_comments[]
 }
 
 model categories {
@@ -409,4 +411,31 @@ model webhook_endpoints {
   created_at DateTime @default(now())
 
   @@index([event, is_active])
+}
+
+model board_posts {
+  id               Int              @id @default(autoincrement())
+  title            String
+  content          String
+  user_id          Int
+  is_announcement  Boolean          @default(false)
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @updatedAt
+  users            users            @relation(fields: [user_id], references: [id])
+  board_comments   board_comments[]
+
+  @@index([is_announcement, created_at])
+}
+
+model board_comments {
+  id          Int         @id @default(autoincrement())
+  content     String
+  user_id     Int
+  post_id     Int
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  users       users       @relation(fields: [user_id], references: [id])
+  board_posts board_posts @relation(fields: [post_id], references: [id], onDelete: Cascade)
+
+  @@index([post_id, created_at])
 }

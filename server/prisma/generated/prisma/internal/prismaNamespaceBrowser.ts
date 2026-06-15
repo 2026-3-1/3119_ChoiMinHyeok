@@ -69,7 +69,9 @@ export const ModelName = {
   lecture_playback_history: 'lecture_playback_history',
   lecture_bookmark: 'lecture_bookmark',
   course_report: 'course_report',
-  webhook_endpoints: 'webhook_endpoints'
+  webhook_endpoints: 'webhook_endpoints',
+  board_posts: 'board_posts',
+  board_comments: 'board_comments'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -362,6 +364,31 @@ export const Webhook_endpointsScalarFieldEnum = {
 } as const
 
 export type Webhook_endpointsScalarFieldEnum = (typeof Webhook_endpointsScalarFieldEnum)[keyof typeof Webhook_endpointsScalarFieldEnum]
+
+
+export const Board_postsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  user_id: 'user_id',
+  is_announcement: 'is_announcement',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Board_postsScalarFieldEnum = (typeof Board_postsScalarFieldEnum)[keyof typeof Board_postsScalarFieldEnum]
+
+
+export const Board_commentsScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  user_id: 'user_id',
+  post_id: 'post_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Board_commentsScalarFieldEnum = (typeof Board_commentsScalarFieldEnum)[keyof typeof Board_commentsScalarFieldEnum]
 
 
 export const SortOrder = {
